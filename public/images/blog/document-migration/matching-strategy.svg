@@ -1,0 +1,175 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 480" font-family="'Segoe UI', system-ui, sans-serif">
+  <defs>
+    <filter id="ds4" x="-3%" y="-3%" width="106%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#1F4E79" flood-opacity="0.1"/>
+    </filter>
+    <linearGradient id="hg4" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1F4E79"/>
+      <stop offset="100%" stop-color="#2A7F62"/>
+    </linearGradient>
+    <linearGradient id="cg4" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f0f4f8"/>
+    </linearGradient>
+    <marker id="a4" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#1F4E79"/>
+    </marker>
+    <marker id="a4t" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#2A7F62"/>
+    </marker>
+    <marker id="a4r" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#c0392b"/>
+    </marker>
+  </defs>
+
+  <rect width="920" height="480" fill="#f9fafb" rx="12"/>
+
+  <!-- Title -->
+  <rect x="0" y="0" width="920" height="56" fill="url(#hg4)" rx="12"/>
+  <rect x="0" y="28" width="920" height="28" fill="url(#hg4)"/>
+  <text x="460" y="36" text-anchor="middle" fill="#ffffff" font-size="18" font-weight="700" letter-spacing="0.5">Document-to-Account Matching — Three-Tier Resolution Strategy</text>
+
+  <!-- Tier labels -->
+  <text x="175" y="82" text-anchor="middle" fill="#1F4E79" font-size="11" font-weight="700" letter-spacing="1">TIER 1: DETERMINISTIC</text>
+  <text x="485" y="82" text-anchor="middle" fill="#2A7F62" font-size="11" font-weight="700" letter-spacing="1">TIER 2: FUZZY / PROBABILISTIC</text>
+  <text x="795" y="82" text-anchor="middle" fill="#c0392b" font-size="11" font-weight="700" letter-spacing="1">TIER 3: RAG PIPELINE</text>
+
+  <!-- Dotted separators -->
+  <line x1="330" y1="72" x2="330" y2="440" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="640" y1="72" x2="640" y2="440" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- TIER 1: Deterministic matching -->
+  <!-- Source metadata boxes -->
+  <g filter="url(#ds4)">
+    <rect x="30" y="100" width="130" height="50" rx="6" fill="url(#cg4)" stroke="#1F4E79" stroke-width="1.2"/>
+    <text x="95" y="122" text-anchor="middle" fill="#2C3E50" font-size="10" font-weight="600">Source Metadata</text>
+    <text x="95" y="138" text-anchor="middle" fill="#7f8c8d" font-size="9">CIF, AppID, LoanID</text>
+  </g>
+  <g filter="url(#ds4)">
+    <rect x="185" y="100" width="130" height="50" rx="6" fill="url(#cg4)" stroke="#1F4E79" stroke-width="1.2"/>
+    <text x="250" y="122" text-anchor="middle" fill="#2C3E50" font-size="10" font-weight="600">Account Master</text>
+    <text x="250" y="138" text-anchor="middle" fill="#7f8c8d" font-size="9">Servicing system IDs</text>
+  </g>
+
+  <!-- Arrows down -->
+  <line x1="95" y1="150" x2="95" y2="175" stroke="#1F4E79" stroke-width="1.2" marker-end="url(#a4)"/>
+  <line x1="250" y1="150" x2="250" y2="175" stroke="#1F4E79" stroke-width="1.2" marker-end="url(#a4)"/>
+
+  <!-- Join engine -->
+  <g filter="url(#ds4)">
+    <rect x="50" y="180" width="240" height="55" rx="8" fill="#1F4E79"/>
+    <text x="170" y="204" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">Exact-Key Join Engine</text>
+    <text x="170" y="222" text-anchor="middle" fill="#c8dff0" font-size="10">CIF ↔ Account, AppID ↔ Loan</text>
+  </g>
+
+  <!-- Output split -->
+  <line x1="170" y1="235" x2="170" y2="260" stroke="#1F4E79" stroke-width="1.5"/>
+  <!-- Matched -->
+  <line x1="170" y1="260" x2="100" y2="285" stroke="#2A7F62" stroke-width="1.5" marker-end="url(#a4t)"/>
+  <!-- Unmatched -->
+  <line x1="170" y1="260" x2="240" y2="285" stroke="#c0392b" stroke-width="1.5" marker-end="url(#a4r)"/>
+
+  <g filter="url(#ds4)">
+    <rect x="30" y="290" width="140" height="50" rx="6" fill="#e8f5f0" stroke="#2A7F62" stroke-width="1.5"/>
+    <text x="100" y="312" text-anchor="middle" fill="#2A7F62" font-size="11" font-weight="700">Matched</text>
+    <text x="100" y="328" text-anchor="middle" fill="#2C3E50" font-size="18" font-weight="700">~85%</text>
+  </g>
+  <g filter="url(#ds4)">
+    <rect x="185" y="290" width="130" height="50" rx="6" fill="#fff5f5" stroke="#c0392b" stroke-width="1.2"/>
+    <text x="250" y="312" text-anchor="middle" fill="#c0392b" font-size="11" font-weight="700">Unmatched</text>
+    <text x="250" y="328" text-anchor="middle" fill="#2C3E50" font-size="18" font-weight="700">~15%</text>
+  </g>
+
+  <!-- Arrow from unmatched to Tier 2 -->
+  <line x1="315" y1="315" x2="355" y2="145" stroke="#c0392b" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#a4r)"/>
+
+  <!-- TIER 2: Fuzzy matching -->
+  <g filter="url(#ds4)">
+    <rect x="350" y="100" width="270" height="55" rx="8" fill="url(#cg4)" stroke="#2A7F62" stroke-width="1.5"/>
+    <text x="485" y="122" text-anchor="middle" fill="#2C3E50" font-size="11" font-weight="600">Probabilistic Matching Rules</text>
+    <text x="485" y="140" text-anchor="middle" fill="#7f8c8d" font-size="10">SSN fragments, name similarity, date proximity, doc type heuristics</text>
+  </g>
+
+  <line x1="485" y1="155" x2="485" y2="175" stroke="#2A7F62" stroke-width="1.2" marker-end="url(#a4t)"/>
+
+  <!-- Matching logic blocks -->
+  <g filter="url(#ds4)">
+    <rect x="355" y="180" width="120" height="40" rx="5" fill="#e8f5f0" stroke="#2A7F62" stroke-width="1"/>
+    <text x="415" y="197" text-anchor="middle" fill="#2A7F62" font-size="9.5" font-weight="600">Name + Date</text>
+    <text x="415" y="211" text-anchor="middle" fill="#2A7F62" font-size="9.5" font-weight="600">Proximity</text>
+  </g>
+  <g filter="url(#ds4)">
+    <rect x="490" y="180" width="120" height="40" rx="5" fill="#e8f5f0" stroke="#2A7F62" stroke-width="1"/>
+    <text x="550" y="197" text-anchor="middle" fill="#2A7F62" font-size="9.5" font-weight="600">SSN Partial</text>
+    <text x="550" y="211" text-anchor="middle" fill="#2A7F62" font-size="9.5" font-weight="600">Match</text>
+  </g>
+
+  <line x1="415" y1="220" x2="485" y2="250" stroke="#2A7F62" stroke-width="1"/>
+  <line x1="550" y1="220" x2="485" y2="250" stroke="#2A7F62" stroke-width="1"/>
+
+  <!-- Confidence scoring -->
+  <g filter="url(#ds4)">
+    <rect x="380" y="250" width="210" height="48" rx="6" fill="#2A7F62"/>
+    <text x="485" y="272" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">Confidence Scoring Engine</text>
+    <text x="485" y="288" text-anchor="middle" fill="#d4edda" font-size="10">Weighted composite score 0–100</text>
+  </g>
+
+  <!-- Split output -->
+  <line x1="485" y1="298" x2="485" y2="315" stroke="#2A7F62" stroke-width="1.5"/>
+  <line x1="485" y1="315" x2="415" y2="340" stroke="#2A7F62" stroke-width="1.2" marker-end="url(#a4t)"/>
+  <line x1="485" y1="315" x2="555" y2="340" stroke="#c0392b" stroke-width="1.2" marker-end="url(#a4r)"/>
+
+  <g filter="url(#ds4)">
+    <rect x="350" y="345" width="130" height="50" rx="6" fill="#e8f5f0" stroke="#2A7F62" stroke-width="1.5"/>
+    <text x="415" y="367" text-anchor="middle" fill="#2A7F62" font-size="10" font-weight="700">High Confidence</text>
+    <text x="415" y="383" text-anchor="middle" fill="#2C3E50" font-size="16" font-weight="700">~12%</text>
+  </g>
+  <g filter="url(#ds4)">
+    <rect x="495" y="345" width="130" height="50" rx="6" fill="#fff5f5" stroke="#c0392b" stroke-width="1.2"/>
+    <text x="560" y="367" text-anchor="middle" fill="#c0392b" font-size="10" font-weight="700">Low Confidence</text>
+    <text x="560" y="383" text-anchor="middle" fill="#2C3E50" font-size="16" font-weight="700">~3%</text>
+  </g>
+
+  <!-- Arrow from low confidence to Tier 3 -->
+  <line x1="625" y1="370" x2="665" y2="180" stroke="#c0392b" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#a4r)"/>
+
+  <!-- TIER 3: Manual / RAG-Assisted -->
+  <g filter="url(#ds4)">
+    <rect x="660" y="100" width="240" height="200" rx="8" fill="url(#cg4)" stroke="#1F4E79" stroke-width="1.5"/>
+    <rect x="660" y="100" width="240" height="40" rx="8" fill="#1F4E79"/>
+    <rect x="660" y="125" width="240" height="15" fill="#1F4E79"/>
+    <text x="780" y="126" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">Full RAG Pipeline</text>
+  </g>
+
+  <rect x="676" y="152" width="208" height="32" rx="4" fill="#e8f5f0" stroke="#2A7F62" stroke-width="0.8"/>
+  <text x="780" y="172" text-anchor="middle" fill="#2A7F62" font-size="10" font-weight="600">R: Retrieve Candidates</text>
+
+  <rect x="676" y="192" width="208" height="32" rx="4" fill="#e8f0fe" stroke="#1F4E79" stroke-width="0.8"/>
+  <text x="780" y="212" text-anchor="middle" fill="#1F4E79" font-size="10" font-weight="600">A+G: SLM Match + Explain</text>
+
+  <rect x="676" y="232" width="208" height="32" rx="4" fill="#fef9e7" stroke="#d4a017" stroke-width="0.8"/>
+  <text x="780" y="252" text-anchor="middle" fill="#8a6d00" font-size="10" font-weight="600">Confidence-Based Routing</text>
+
+  <rect x="676" y="272" width="208" height="18" rx="3" fill="#e8f5f0"/>
+  <text x="780" y="285" text-anchor="middle" fill="#2A7F62" font-size="9.5" font-weight="600">Feedback loop → retrains scoring</text>
+
+  <!-- Final output -->
+  <g filter="url(#ds4)">
+    <rect x="660" y="320" width="240" height="55" rx="8" fill="#2A7F62"/>
+    <text x="780" y="343" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">Resolved: ~2.5–3%</text>
+    <text x="780" y="363" text-anchor="middle" fill="#d4edda" font-size="10">Remaining &lt;0.5% escalated to field ops</text>
+  </g>
+
+  <!-- Bottom summary bar -->
+  <rect x="30" y="420" width="860" height="48" rx="6" fill="#e8f0fe"/>
+  <text x="460" y="438" text-anchor="middle" fill="#1F4E79" font-size="11" font-weight="700">Cumulative Match Rate Progression</text>
+  <!-- Progress segments -->
+  <rect x="80" y="448" width="520" height="12" rx="3" fill="#2A7F62"/>
+  <rect x="600" y="448" width="100" height="12" rx="0" fill="#6db89b"/>
+  <rect x="700" y="448" width="46" height="12" rx="0" fill="#a8d5c2"/>
+  <rect x="746" y="448" width="20" height="12" rx="3" fill="#fef9e7"/>
+  <text x="80" y="446" fill="#2C3E50" font-size="8.5" font-weight="600">85% deterministic</text>
+  <text x="600" y="446" fill="#2C3E50" font-size="8.5" font-weight="600">+12% fuzzy</text>
+  <text x="700" y="446" fill="#2C3E50" font-size="8.5" font-weight="600">+2.5% RAG</text>
+  <text x="770" y="450" fill="#8a6d00" font-size="7.5">0.5%</text>
+</svg>

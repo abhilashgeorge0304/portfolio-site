@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 530" font-family="'Segoe UI', system-ui, sans-serif">
+  <defs>
+    <filter id="ds6" x="-3%" y="-3%" width="106%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#1F4E79" flood-opacity="0.1"/>
+    </filter>
+    <linearGradient id="hg6" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1F4E79"/>
+      <stop offset="100%" stop-color="#2A7F62"/>
+    </linearGradient>
+    <linearGradient id="cg6" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f0f4f8"/>
+    </linearGradient>
+    <marker id="a6" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#1F4E79"/>
+    </marker>
+    <marker id="a6t" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#2A7F62"/>
+    </marker>
+  </defs>
+
+  <rect width="940" height="530" fill="#f9fafb" rx="12"/>
+
+  <rect x="0" y="0" width="940" height="56" fill="url(#hg6)" rx="12"/>
+  <rect x="0" y="28" width="940" height="28" fill="url(#hg6)"/>
+  <text x="470" y="36" text-anchor="middle" fill="#ffffff" font-size="18" font-weight="700" letter-spacing="0.5">Deployment Reality — One-Off Migration vs. Recurring Workflow</text>
+
+  <!-- Left: What we actually built -->
+  <rect x="20" y="72" width="440" height="440" rx="8" fill="#e8f0fe" opacity="0.25"/>
+  <text x="240" y="92" text-anchor="middle" fill="#1F4E79" font-size="12" font-weight="700" letter-spacing="1">WHAT WE BUILT (ONE-OFF MIGRATION)</text>
+
+  <!-- Right: What recurring looks like -->
+  <rect x="480" y="72" width="440" height="440" rx="8" fill="#e8f5f0" opacity="0.25"/>
+  <text x="700" y="92" text-anchor="middle" fill="#2A7F62" font-size="12" font-weight="700" letter-spacing="1">RECURRING WORKFLOW PATTERN</text>
+
+  <!-- === LEFT SIDE === -->
+  <!-- Data warehouse -->
+  <g filter="url(#ds6)">
+    <rect x="35" y="110" width="410" height="48" rx="6" fill="#1F4E79"/>
+    <text x="240" y="132" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">Enterprise Data Warehouse (existing)</text>
+    <text x="240" y="148" text-anchor="middle" fill="#c8dff0" font-size="10">Account master + document metadata staging tables</text>
+  </g>
+
+  <line x1="240" y1="158" x2="240" y2="178" stroke="#1F4E79" stroke-width="1.2" marker-end="url(#a6)"/>
+
+  <!-- Batch scripts -->
+  <g filter="url(#ds6)">
+    <rect x="35" y="182" width="195" height="60" rx="6" fill="url(#cg6)" stroke="#1F4E79" stroke-width="1.2"/>
+    <text x="132" y="205" text-anchor="middle" fill="#2C3E50" font-size="11" font-weight="600">Batch Python Scripts</text>
+    <text x="132" y="222" text-anchor="middle" fill="#7f8c8d" font-size="9.5">Embedding generation,</text>
+    <text x="132" y="234" text-anchor="middle" fill="#7f8c8d" font-size="9.5">similarity scoring</text>
+  </g>
+
+  <!-- Vector DB (existing) -->
+  <g filter="url(#ds6)">
+    <rect x="250" y="182" width="195" height="60" rx="6" fill="#2A7F62"/>
+    <text x="347" y="205" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">Vector Database</text>
+    <text x="347" y="222" text-anchor="middle" fill="#d4edda" font-size="10">Existing enterprise instance</text>
+    <text x="347" y="234" text-anchor="middle" fill="#d4edda" font-size="10">New index for this use case</text>
+  </g>
+
+  <line x1="240" y1="242" x2="240" y2="262" stroke="#1F4E79" stroke-width="1.2" marker-end="url(#a6)"/>
+
+  <!-- LLM access -->
+  <g filter="url(#ds6)">
+    <rect x="55" y="266" width="370" height="48" rx="6" fill="url(#cg6)" stroke="#1F4E79" stroke-width="1.2"/>
+    <text x="240" y="287" text-anchor="middle" fill="#2C3E50" font-size="11" font-weight="600">LLM Inference (internal API or hosted model)</text>
+    <text x="240" y="303" text-anchor="middle" fill="#7f8c8d" font-size="9.5">Disambiguation + explanation generation — batch API calls</text>
+  </g>
+
+  <line x1="240" y1="314" x2="240" y2="334" stroke="#1F4E79" stroke-width="1.2" marker-end="url(#a6)"/>
+
+  <!-- HITL app -->
+  <g filter="url(#ds6)">
+    <rect x="55" y="338" width="370" height="48" rx="6" fill="url(#cg6)" stroke="#d4a017" stroke-width="1.5"/>
+    <text x="240" y="359" text-anchor="middle" fill="#2C3E50" font-size="11" font-weight="600">Lightweight Review Application</text>
+    <text x="240" y="375" text-anchor="middle" fill="#7f8c8d" font-size="9.5">Purpose-built for this migration — queues, approve/reject, audit log</text>
+  </g>
+
+  <line x1="240" y1="386" x2="240" y2="406" stroke="#1F4E79" stroke-width="1.2" marker-end="url(#a6)"/>
+
+  <!-- Audit trail -->
+  <g filter="url(#ds6)">
+    <rect x="55" y="410" width="370" height="40" rx="6" fill="#1F4E79"/>
+    <text x="240" y="434" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">Immutable Audit Trail (warehouse table)</text>
+  </g>
+
+  <!-- Key differentiator callout -->
+  <rect x="40" y="462" width="420" height="38" rx="5" fill="#fef9e7" stroke="#d4a017" stroke-width="1"/>
+  <text x="250" y="478" text-anchor="middle" fill="#8a6d00" font-size="10" font-weight="700">Key principle: optimize for time-to-resolution,</text>
+  <text x="250" y="492" text-anchor="middle" fill="#8a6d00" font-size="10" font-weight="700">not operational robustness. Retire tooling after migration.</text>
+
+  <!-- === RIGHT SIDE === -->
+  <!-- Container orchestration -->
+  <g filter="url(#ds6)">
+    <rect x="500" y="110" width="400" height="48" rx="6" fill="#2A7F62"/>
+    <text x="700" y="132" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">Container Orchestration (K8s / ECS)</text>
+    <text x="700" y="148" text-anchor="middle" fill="#d4edda" font-size="10">Auto-scaling, health checks, rolling deployments</text>
+  </g>
+
+  <line x1="700" y1="158" x2="700" y2="178" stroke="#2A7F62" stroke-width="1.2" marker-end="url(#a6t)"/>
+
+  <!-- Embedding service -->
+  <g filter="url(#ds6)">
+    <rect x="500" y="182" width="190" height="60" rx="6" fill="url(#cg6)" stroke="#2A7F62" stroke-width="1.2"/>
+    <text x="595" y="205" text-anchor="middle" fill="#2C3E50" font-size="10" font-weight="600">Embedding Service</text>
+    <text x="595" y="220" text-anchor="middle" fill="#7f8c8d" font-size="9">GPU-backed microservice</text>
+    <text x="595" y="233" text-anchor="middle" fill="#7f8c8d" font-size="9">REST API, versioned models</text>
+  </g>
+
+  <!-- Managed vector DB -->
+  <g filter="url(#ds6)">
+    <rect x="710" y="182" width="190" height="60" rx="6" fill="url(#cg6)" stroke="#2A7F62" stroke-width="1.2"/>
+    <text x="805" y="205" text-anchor="middle" fill="#2C3E50" font-size="10" font-weight="600">Managed Vector DB</text>
+    <text x="805" y="220" text-anchor="middle" fill="#7f8c8d" font-size="9">Pinecone / Weaviate</text>
+    <text x="805" y="233" text-anchor="middle" fill="#7f8c8d" font-size="9">Persistent, HA, backups</text>
+  </g>
+
+  <line x1="700" y1="242" x2="700" y2="262" stroke="#2A7F62" stroke-width="1.2" marker-end="url(#a6t)"/>
+
+  <!-- Pipeline orchestrator -->
+  <g filter="url(#ds6)">
+    <rect x="510" y="266" width="380" height="48" rx="6" fill="url(#cg6)" stroke="#2A7F62" stroke-width="1.2"/>
+    <text x="700" y="287" text-anchor="middle" fill="#2C3E50" font-size="11" font-weight="600">Pipeline Orchestrator (Airflow / Step Functions)</text>
+    <text x="700" y="303" text-anchor="middle" fill="#7f8c8d" font-size="9.5">Scheduled runs, retry logic, alerting, DAG management</text>
+  </g>
+
+  <line x1="700" y1="314" x2="700" y2="334" stroke="#2A7F62" stroke-width="1.2" marker-end="url(#a6t)"/>
+
+  <!-- Monitoring -->
+  <g filter="url(#ds6)">
+    <rect x="510" y="338" width="380" height="48" rx="6" fill="url(#cg6)" stroke="#2A7F62" stroke-width="1.2"/>
+    <text x="700" y="359" text-anchor="middle" fill="#2C3E50" font-size="11" font-weight="600">Model Monitoring &amp; Drift Detection</text>
+    <text x="700" y="375" text-anchor="middle" fill="#7f8c8d" font-size="9.5">Embedding drift, confidence score distributions, latency, cost tracking</text>
+  </g>
+
+  <line x1="700" y1="386" x2="700" y2="406" stroke="#2A7F62" stroke-width="1.2" marker-end="url(#a6t)"/>
+
+  <!-- Retraining / feedback -->
+  <g filter="url(#ds6)">
+    <rect x="510" y="410" width="380" height="40" rx="6" fill="#2A7F62"/>
+    <text x="700" y="434" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">Continuous Feedback Loop &amp; Retraining</text>
+  </g>
+
+  <rect x="500" y="462" width="420" height="38" rx="5" fill="#e8f5f0" stroke="#2A7F62" stroke-width="1"/>
+  <text x="710" y="478" text-anchor="middle" fill="#2A7F62" font-size="10" font-weight="700">Key principle: optimize for operational robustness.</text>
+  <text x="710" y="492" text-anchor="middle" fill="#2A7F62" font-size="10" font-weight="700">Monitoring, versioning, and rollback are first-class concerns.</text>
+
+  <!-- Bottom shared bar -->
+  <rect x="20" y="505" width="900" height="22" rx="4" fill="#e8f0fe"/>
+  <text x="470" y="520" text-anchor="middle" fill="#1F4E79" font-size="10" font-weight="600">Both patterns: all components within enterprise boundary · no PII leaves the perimeter · immutable audit trail for every decision</text>
+</svg>

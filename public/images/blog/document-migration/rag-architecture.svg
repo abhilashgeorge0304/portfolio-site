@@ -1,0 +1,203 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 600" font-family="'Segoe UI', system-ui, sans-serif">
+  <defs>
+    <filter id="ds5" x="-3%" y="-3%" width="106%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#1F4E79" flood-opacity="0.1"/>
+    </filter>
+    <linearGradient id="hg5" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1F4E79"/>
+      <stop offset="100%" stop-color="#2A7F62"/>
+    </linearGradient>
+    <linearGradient id="cg5" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f0f4f8"/>
+    </linearGradient>
+    <marker id="a5" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#1F4E79"/>
+    </marker>
+    <marker id="a5t" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#2A7F62"/>
+    </marker>
+    <marker id="a5g" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#7f8c8d"/>
+    </marker>
+  </defs>
+
+  <rect width="940" height="600" fill="#f9fafb" rx="12"/>
+
+  <!-- Title -->
+  <rect x="0" y="0" width="940" height="56" fill="url(#hg5)" rx="12"/>
+  <rect x="0" y="28" width="940" height="28" fill="url(#hg5)"/>
+  <text x="470" y="36" text-anchor="middle" fill="#ffffff" font-size="18" font-weight="700" letter-spacing="0.5">Tier 3 RAG Pipeline — Retrieve, Augment, Generate for Every Document</text>
+
+  <!-- Column labels -->
+  <text x="155" y="82" text-anchor="middle" fill="#1F4E79" font-size="10" font-weight="700" letter-spacing="1">INDEXING (BATCH)</text>
+  <text x="470" y="82" text-anchor="middle" fill="#2A7F62" font-size="10" font-weight="700" letter-spacing="1">RAG PIPELINE (PER DOCUMENT)</text>
+  <text x="810" y="82" text-anchor="middle" fill="#1F4E79" font-size="10" font-weight="700" letter-spacing="1">OUTPUT &amp; ROUTING</text>
+
+  <line x1="305" y1="72" x2="305" y2="570" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="680" y1="72" x2="680" y2="570" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- ===== LEFT: Indexing ===== -->
+  <g filter="url(#ds5)">
+    <rect x="20" y="100" width="270" height="48" rx="8" fill="url(#cg5)" stroke="#1F4E79" stroke-width="1.5"/>
+    <text x="155" y="121" text-anchor="middle" fill="#2C3E50" font-size="12" font-weight="700">Account Metadata Corpus</text>
+    <text x="155" y="139" text-anchor="middle" fill="#7f8c8d" font-size="10">All ~2M accounts with known attributes</text>
+  </g>
+  <line x1="155" y1="148" x2="155" y2="168" stroke="#1F4E79" stroke-width="1.5" marker-end="url(#a5)"/>
+
+  <!-- Labeled text assembly with example -->
+  <g filter="url(#ds5)">
+    <rect x="20" y="173" width="270" height="120" rx="6" fill="url(#cg5)" stroke="#1F4E79" stroke-width="1.2"/>
+    <text x="155" y="194" text-anchor="middle" fill="#2C3E50" font-size="11" font-weight="700">Labeled Text Assembly</text>
+    <line x1="40" y1="202" x2="270" y2="202" stroke="#e2e8f0" stroke-width="1"/>
+    <text x="35" y="219" fill="#1F4E79" font-size="9.5" font-family="'Consolas', monospace">Borrower: James A. Smith</text>
+    <text x="35" y="234" fill="#1F4E79" font-size="9.5" font-family="'Consolas', monospace">SSN Suffix: 4523</text>
+    <text x="35" y="249" fill="#1F4E79" font-size="9.5" font-family="'Consolas', monospace">Origination: 2015-03-10</text>
+    <text x="35" y="264" fill="#1F4E79" font-size="9.5" font-family="'Consolas', monospace">Program: Undergraduate</text>
+    <text x="35" y="279" fill="#1F4E79" font-size="9.5" font-family="'Consolas', monospace">Missing: Promissory Note</text>
+  </g>
+  <text x="155" y="305" text-anchor="middle" fill="#7f8c8d" font-size="8.5" font-style="italic">Labels give the embedding model semantic context</text>
+
+  <line x1="155" y1="312" x2="155" y2="332" stroke="#1F4E79" stroke-width="1.5" marker-end="url(#a5)"/>
+
+  <!-- Embedding model -->
+  <g filter="url(#ds5)">
+    <rect x="30" y="337" width="250" height="44" rx="8" fill="#1F4E79"/>
+    <text x="155" y="357" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">Embedding Model</text>
+    <text x="155" y="373" text-anchor="middle" fill="#c8dff0" font-size="9.5">text → 1536-dim vector</text>
+  </g>
+  <line x1="155" y1="381" x2="155" y2="401" stroke="#1F4E79" stroke-width="1.5" marker-end="url(#a5)"/>
+
+  <!-- Vector DB -->
+  <g filter="url(#ds5)">
+    <rect x="20" y="406" width="270" height="70" rx="8" fill="#2A7F62"/>
+    <text x="155" y="432" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="700">Vector Database</text>
+    <text x="155" y="452" text-anchor="middle" fill="#d4edda" font-size="10">~2M account embeddings · HNSW index</text>
+    <text x="155" y="466" text-anchor="middle" fill="#d4edda" font-size="10">Existing enterprise instance</text>
+  </g>
+
+  <rect x="35" y="490" width="240" height="20" rx="4" fill="#e8f0fe"/>
+  <text x="155" y="504" text-anchor="middle" fill="#1F4E79" font-size="9" font-weight="600">Refreshed as upstream match results update</text>
+
+  <!-- ===== CENTER: RAG Pipeline ===== -->
+  <!-- Unmatched document -->
+  <g filter="url(#ds5)">
+    <rect x="325" y="100" width="240" height="62" rx="8" fill="#fff5f5" stroke="#c0392b" stroke-width="1.5"/>
+    <text x="445" y="121" text-anchor="middle" fill="#c0392b" font-size="11" font-weight="700">Unmatched Document</text>
+    <text x="445" y="138" text-anchor="middle" fill="#7f8c8d" font-size="9.5">Sparse metadata fragments</text>
+    <text x="445" y="153" text-anchor="middle" fill="#c0392b" font-size="9.5" font-weight="600">+ OCR-extracted document text</text>
+  </g>
+  <line x1="445" y1="162" x2="445" y2="180" stroke="#2A7F62" stroke-width="1.5" marker-end="url(#a5t)"/>
+
+  <!-- Document text assembly -->
+  <g filter="url(#ds5)">
+    <rect x="325" y="185" width="240" height="85" rx="6" fill="url(#cg5)" stroke="#2A7F62" stroke-width="1.2"/>
+    <text x="445" y="205" text-anchor="middle" fill="#2C3E50" font-size="11" font-weight="700">Document Text Assembly</text>
+    <line x1="340" y1="213" x2="550" y2="213" stroke="#e2e8f0" stroke-width="1"/>
+    <text x="340" y="230" fill="#c0392b" font-size="9.5" font-family="'Consolas', monospace">Doc Type: Promissory Note</text>
+    <text x="340" y="245" fill="#c0392b" font-size="9.5" font-family="'Consolas', monospace">Created: 2015-03-12</text>
+    <text x="340" y="260" fill="#c0392b" font-size="9.5" font-family="'Consolas', monospace">OCR: "J. Smith...repay..."</text>
+  </g>
+  <line x1="445" y1="270" x2="445" y2="290" stroke="#2A7F62" stroke-width="1.5" marker-end="url(#a5t)"/>
+
+  <!-- R: Retrieve -->
+  <g filter="url(#ds5)">
+    <rect x="330" y="295" width="230" height="48" rx="8" fill="#2A7F62"/>
+    <text x="350" y="317" fill="#ffffff" font-size="12" font-weight="800">R</text>
+    <text x="370" y="317" fill="#ffffff" font-size="11" font-weight="700">Retrieve Top-K Candidates</text>
+    <text x="445" y="335" text-anchor="middle" fill="#d4edda" font-size="9.5">Cosine similarity against account index</text>
+  </g>
+
+  <!-- Vector DB connection -->
+  <line x1="290" y1="441" x2="330" y2="319" stroke="#7f8c8d" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#a5g)"/>
+  <text x="295" y="375" fill="#7f8c8d" font-size="8" transform="rotate(-40 295 375)">vector lookup</text>
+
+  <line x1="445" y1="343" x2="445" y2="363" stroke="#2A7F62" stroke-width="1.5" marker-end="url(#a5t)"/>
+
+  <!-- A: Augment -->
+  <g filter="url(#ds5)">
+    <rect x="330" y="368" width="230" height="48" rx="8" fill="#1F4E79"/>
+    <text x="350" y="390" fill="#ffffff" font-size="12" font-weight="800">A</text>
+    <text x="370" y="390" fill="#ffffff" font-size="11" font-weight="700">Augment SLM Prompt</text>
+    <text x="445" y="408" text-anchor="middle" fill="#c8dff0" font-size="9.5">Doc metadata + OCR + candidate profiles</text>
+  </g>
+  <line x1="445" y1="416" x2="445" y2="436" stroke="#1F4E79" stroke-width="1.5" marker-end="url(#a5)"/>
+
+  <!-- G: Generate -->
+  <g filter="url(#ds5)">
+    <rect x="330" y="441" width="230" height="58" rx="8" fill="#2A7F62"/>
+    <text x="350" y="465" fill="#ffffff" font-size="12" font-weight="800">G</text>
+    <text x="370" y="465" fill="#ffffff" font-size="11" font-weight="700">Generate Decision</text>
+    <text x="445" y="483" text-anchor="middle" fill="#d4edda" font-size="9.5">Match decision + confidence score</text>
+    <text x="445" y="496" text-anchor="middle" fill="#d4edda" font-size="9.5">+ natural-language explanation</text>
+  </g>
+
+  <!-- SLM callout -->
+  <g filter="url(#ds5)">
+    <rect x="575" y="378" width="95" height="52" rx="6" fill="url(#cg5)" stroke="#1F4E79" stroke-width="1.2"/>
+    <text x="622" y="398" text-anchor="middle" fill="#1F4E79" font-size="10" font-weight="700">SLM (7B)</text>
+    <text x="622" y="414" text-anchor="middle" fill="#7f8c8d" font-size="8.5">Batch inference</text>
+    <text x="622" y="426" text-anchor="middle" fill="#7f8c8d" font-size="8.5">Single GPU</text>
+  </g>
+  <line x1="575" y1="404" x2="560" y2="404" stroke="#1F4E79" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- Output arrow to right column -->
+  <line x1="560" y1="470" x2="695" y2="300" stroke="#1F4E79" stroke-width="1.5" marker-end="url(#a5)"/>
+
+  <!-- ===== RIGHT: Output & Routing ===== -->
+
+  <!-- Explanation example panel -->
+  <g filter="url(#ds5)">
+    <rect x="700" y="100" width="220" height="190" rx="8" fill="url(#cg5)" stroke="#1F4E79" stroke-width="1.2"/>
+    <rect x="700" y="100" width="220" height="32" rx="8" fill="#1F4E79"/>
+    <rect x="700" y="120" width="220" height="12" fill="#1F4E79"/>
+    <text x="810" y="121" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">SLM-Generated Explanation</text>
+  </g>
+  <text x="715" y="152" fill="#2C3E50" font-size="9.5" font-weight="600">Document:</text>
+  <rect x="715" y="158" width="190" height="28" rx="3" fill="#fff5f5"/>
+  <text x="722" y="172" fill="#c0392b" font-size="8.5">Scanned PNote · OCR: "J. Smith"</text>
+  <text x="722" y="183" fill="#c0392b" font-size="8.5">Created: 2015-03-12 · No CIF/AppID</text>
+  <text x="715" y="204" fill="#2C3E50" font-size="9.5" font-weight="600">Explanation:</text>
+  <rect x="715" y="210" width="190" height="65" rx="3" fill="#e8f0fe"/>
+  <text x="722" y="224" fill="#1F4E79" font-size="8.5" font-style="italic">"Matched to Acct #A-8821.</text>
+  <text x="722" y="237" fill="#1F4E79" font-size="8.5" font-style="italic">Borrower 'James Smith' matches</text>
+  <text x="722" y="250" fill="#1F4E79" font-size="8.5" font-style="italic">OCR text. Origination 2015-03-10</text>
+  <text x="722" y="263" fill="#1F4E79" font-size="8.5" font-style="italic">within 2 days. SSN: ****4523."</text>
+
+  <!-- Confidence routing -->
+  <g filter="url(#ds5)">
+    <rect x="700" y="310" width="220" height="80" rx="8" fill="#e8f5f0" stroke="#2A7F62" stroke-width="1.5"/>
+    <rect x="700" y="310" width="220" height="28" rx="8" fill="#2A7F62"/>
+    <rect x="700" y="328" width="220" height="10" fill="#2A7F62"/>
+    <text x="810" y="329" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">High Confidence → Auto-Accept</text>
+    <text x="810" y="358" text-anchor="middle" fill="#2C3E50" font-size="9.5">Explanation logged to audit trail</text>
+    <text x="810" y="375" text-anchor="middle" fill="#7f8c8d" font-size="9" font-style="italic">No human review unless spot-checked</text>
+  </g>
+
+  <g filter="url(#ds5)">
+    <rect x="700" y="405" width="220" height="95" rx="8" fill="url(#cg5)" stroke="#d4a017" stroke-width="1.5"/>
+    <rect x="700" y="405" width="220" height="28" rx="8" fill="#d4a017"/>
+    <rect x="700" y="423" width="220" height="10" fill="#d4a017"/>
+    <text x="810" y="424" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">All Others → Human Review Queue</text>
+    <text x="810" y="453" text-anchor="middle" fill="#2C3E50" font-size="9.5">Analyst sees: document + candidates</text>
+    <text x="810" y="468" text-anchor="middle" fill="#2C3E50" font-size="9.5">+ SLM explanation</text>
+    <text x="810" y="485" text-anchor="middle" fill="#2C3E50" font-size="9.5">→ Approve / Reject / Reassign</text>
+  </g>
+
+  <!-- Audit trail -->
+  <g filter="url(#ds5)">
+    <rect x="700" y="515" width="220" height="42" rx="6" fill="#1F4E79"/>
+    <text x="810" y="535" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">Immutable Audit Trail</text>
+    <text x="810" y="550" text-anchor="middle" fill="#c8dff0" font-size="9">Both paths write: decision + explanation</text>
+  </g>
+  <line x1="810" y1="390" x2="810" y2="405" stroke="#7f8c8d" stroke-width="0.8" stroke-dasharray="3,2"/>
+  <line x1="810" y1="500" x2="810" y2="515" stroke="#7f8c8d" stroke-width="0.8" stroke-dasharray="3,2"/>
+
+  <!-- Review time callout -->
+  <rect x="700" y="562" width="220" height="20" rx="4" fill="#e8f5f0"/>
+  <text x="810" y="576" text-anchor="middle" fill="#2A7F62" font-size="9" font-weight="600">Explanation cuts review time: ~5 min → ~45 sec</text>
+
+  <!-- Bottom bar -->
+  <rect x="20" y="570" width="660" height="22" rx="4" fill="#e8f0fe"/>
+  <text x="350" y="585" text-anchor="middle" fill="#1F4E79" font-size="9.5" font-weight="600">Every Tier 3 document gets a full RAG cycle · SLM generates explanation for all · confidence determines routing · all decisions auditable</text>
+</svg>
