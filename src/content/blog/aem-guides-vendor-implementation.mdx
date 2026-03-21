@@ -1,0 +1,398 @@
+---
+title: "AEM Guides: From Dormant Platform to Managed Implementation"
+date: "2026-03-19"
+description: "How I took an unused enterprise content platform and drove it to active implementation — from diagnosing the problem as a Functional Engineer to owning the full vendor lifecycle as Product Owner."
+tags: ["AEM", "Product Owner", "Vendor Management", "DITA", "Content Operations", "Stakeholder Management"]
+contentType: "case-study"
+traits: ["vendor-lifecycle", "stakeholder-alignment", "product-ownership", "case-study"]
+heroImage: ""
+---
+
+{/* Hero section */}
+
+### A €50K Platform Gathering Dust
+
+AEM Guides had been part of our organisation's content stack for nearly two years — officially adopted, practically unused. The platform runs on DITA-OT, a structured authoring format with its own technical demands, and a customised Antora CSS layer on top. The team's technical writers simply didn't have the expertise to work with it. A €50K investment was going nowhere.
+
+Nobody had been formally assigned to fix this. I took it on anyway — first as a Functional Engineer trying to solve it technically, and later as Product Owner driving the full implementation. This is the story of the decisions, dependencies, and coordination that got it there.
+
+### The Decision Path
+
+Before diving into the details, here's the decision logic that shaped the entire project. Each branch point was a genuine fork — not a formality.
+
+<svg width="100%" viewBox="0 0 760 560" xmlns="http://www.w3.org/2000/svg" style={{maxWidth: '760px', margin: '2rem auto', display: 'block'}}>
+  <defs>
+    <marker id="dt" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#2A7F62" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </marker>
+    <marker id="dtNo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#c0392b" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </marker>
+    <marker id="dtWarn" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#d4a017" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </marker>
+  </defs>
+
+  <rect x="260" y="10" width="240" height="44" rx="8" fill="#1F4E79"/>
+  <text x="380" y="37" textAnchor="middle" fontSize="12" fontWeight="600" fill="#f9fafb" fontFamily="sans-serif">Platform underutilised for 2 years</text>
+  <line x1="380" y1="54" x2="380" y2="78" stroke="#2C3E50" strokeWidth="1.2"/>
+
+  <rect x="260" y="78" width="240" height="44" rx="22" fill="none" stroke="#1F4E79" strokeWidth="1.5"/>
+  <text x="380" y="98" textAnchor="middle" fontSize="11" fontWeight="500" fill="#1F4E79" fontFamily="sans-serif">Can the internal team upskill</text>
+  <text x="380" y="112" textAnchor="middle" fontSize="11" fontWeight="500" fill="#1F4E79" fontFamily="sans-serif">on DITA-OT?</text>
+  <line x1="260" y1="100" x2="150" y2="100" stroke="#c0392b" strokeWidth="1.2" markerEnd="url(#dtNo)"/>
+  <text x="205" y="92" textAnchor="middle" fontSize="10" fontWeight="600" fill="#c0392b" fontFamily="sans-serif">No — skills audit</text>
+  <rect x="28" y="82" width="120" height="36" rx="6" fill="#f5e6e6" stroke="#c0392b" strokeWidth="0.8"/>
+  <text x="88" y="99" textAnchor="middle" fontSize="10" fill="#c0392b" fontFamily="sans-serif">No DITA expertise</text>
+  <text x="88" y="111" textAnchor="middle" fontSize="10" fill="#c0392b" fontFamily="sans-serif">found in-house</text>
+
+  <line x1="380" y1="122" x2="380" y2="150" stroke="#2C3E50" strokeWidth="1.2"/>
+  <rect x="260" y="150" width="240" height="44" rx="22" fill="none" stroke="#1F4E79" strokeWidth="1.5"/>
+  <text x="380" y="170" textAnchor="middle" fontSize="11" fontWeight="500" fill="#1F4E79" fontFamily="sans-serif">Can an LLM automate</text>
+  <text x="380" y="184" textAnchor="middle" fontSize="11" fontWeight="500" fill="#1F4E79" fontFamily="sans-serif">DITA-OT authoring?</text>
+  <line x1="500" y1="172" x2="590" y2="172" stroke="#d4a017" strokeWidth="1.2"/>
+  <text x="545" y="164" textAnchor="middle" fontSize="10" fontWeight="600" fill="#d4a017" fontFamily="sans-serif">Partial</text>
+  <rect x="592" y="154" width="140" height="36" rx="6" fill="#fef9e7" stroke="#d4a017" strokeWidth="0.8"/>
+  <text x="662" y="171" textAnchor="middle" fontSize="10" fill="#8a6d00" fontFamily="sans-serif">Prototype built but</text>
+  <text x="662" y="183" textAnchor="middle" fontSize="10" fill="#8a6d00" fontFamily="sans-serif">not production-ready</text>
+
+  <line x1="380" y1="194" x2="380" y2="222" stroke="#2C3E50" strokeWidth="1.2"/>
+  <rect x="270" y="222" width="220" height="38" rx="8" fill="#2C3E50"/>
+  <text x="380" y="246" textAnchor="middle" fontSize="12" fontWeight="600" fill="#f9fafb" fontFamily="sans-serif">Specialist vendor required</text>
+
+  <line x1="380" y1="260" x2="380" y2="288" stroke="#2C3E50" strokeWidth="1.2"/>
+  <rect x="250" y="288" width="260" height="44" rx="22" fill="none" stroke="#d4a017" strokeWidth="1.5"/>
+  <text x="380" y="308" textAnchor="middle" fontSize="11" fontWeight="500" fill="#d4a017" fontFamily="sans-serif">Initial vendor evaluation</text>
+  <text x="380" y="322" textAnchor="middle" fontSize="11" fontWeight="500" fill="#d4a017" fontFamily="sans-serif">5 firms — structured scoring</text>
+  <line x1="510" y1="310" x2="600" y2="310" stroke="#d4a017" strokeWidth="1.2" markerEnd="url(#dtWarn)"/>
+  <rect x="602" y="292" width="140" height="36" rx="6" fill="#fef9e7" stroke="#d4a017" strokeWidth="0.8"/>
+  <text x="672" y="309" textAnchor="middle" fontSize="10" fill="#8a6d00" fontFamily="sans-serif">Pitches fell short —</text>
+  <text x="672" y="321" textAnchor="middle" fontSize="10" fill="#8a6d00" fontFamily="sans-serif">limited niche expertise</text>
+
+  <line x1="380" y1="332" x2="380" y2="360" stroke="#2C3E50" strokeWidth="1.2"/>
+  <rect x="260" y="360" width="240" height="38" rx="8" fill="#1F4E79" opacity="0.8"/>
+  <text x="380" y="384" textAnchor="middle" fontSize="11" fontWeight="600" fill="#f9fafb" fontFamily="sans-serif">Expanded search — leveraged Adobe</text>
+  <rect x="555" y="352" width="180" height="52" rx="6" fill="#e8f5f0" stroke="#2A7F62" strokeWidth="0.8"/>
+  <text x="645" y="371" textAnchor="middle" fontSize="10" fill="#2A7F62" fontFamily="sans-serif">Adobe recommendation</text>
+  <text x="645" y="385" textAnchor="middle" fontSize="10" fill="#2A7F62" fontFamily="sans-serif">2 near-identical implementations</text>
+  <text x="645" y="399" textAnchor="middle" fontSize="10" fill="#2A7F62" fontFamily="sans-serif">Competitive pricing</text>
+  <line x1="555" y1="379" x2="502" y2="379" stroke="#2A7F62" strokeWidth="1" markerEnd="url(#dt)"/>
+
+  <line x1="380" y1="398" x2="380" y2="430" stroke="#2A7F62" strokeWidth="1.2"/>
+  <rect x="250" y="430" width="260" height="44" rx="8" fill="#2A7F62" opacity="0.9"/>
+  <text x="380" y="450" textAnchor="middle" fontSize="11" fontWeight="600" fill="#f9fafb" fontFamily="sans-serif">Pitch immediately convincing</text>
+  <text x="380" y="464" textAnchor="middle" fontSize="10" fill="#a8dfc9" fontFamily="sans-serif">Due diligence confirmed the decision</text>
+
+  <line x1="380" y1="474" x2="380" y2="502" stroke="#2A7F62" strokeWidth="1.2"/>
+  <rect x="280" y="502" width="200" height="40" rx="8" fill="#2A7F62"/>
+  <text x="380" y="520" textAnchor="middle" fontSize="11" fontWeight="600" fill="#f9fafb" fontFamily="sans-serif">Selected vendor engaged</text>
+  <text x="380" y="534" textAnchor="middle" fontSize="10" fill="#a8dfc9" fontFamily="sans-serif">Non-partner — procurement required</text>
+</svg>
+
+<span style={{display: 'block', textAlign: 'center', fontSize: '0.85rem', color: '#6b7280', marginTop: '-0.5rem', marginBottom: '2rem'}}>Decision tree — the vendor selection was a two-stage process, not a single evaluation</span>
+
+### Decision 1: Can We Solve This Internally?
+
+The first instinct was to find a way around the expertise gap rather than through it. I understood enough about why the platform wasn't being used — the DITA-OT authoring format was the wall, and there was no one in the organisation who could help writers over it. But before jumping to external help, I wanted to test whether technology could close the gap.
+
+Drawing on hands-on experience with large language models from my engineering background, I self-hosted a private LLM — running entirely within company policy, with no external data exposure — and explored whether it could automate DITA-OT authoring for the technical writers. The goal was ambitious: eliminate the technical burden entirely so writers could focus on content.
+
+The experiment didn't scale to production. But it wasn't wasted work — it gave me a precise understanding of what the problem actually required. Structured documentation in DITA-OT demanded specialist knowledge, not pattern-matching. That clarity is what made the next decision straightforward.
+
+I also ran a formal skills audit across the organisation. Nobody had DITA expertise. The conclusion was clear: this couldn't be solved in-house.
+
+### Decision 2: Which Vendor?
+
+With internal options exhausted, I built the business case for a €40K specialist vendor engagement and presented it to senior leadership. Getting approval meant showing not just why we needed a vendor, but why the €50K already invested in the platform was at risk of being written off entirely.
+
+**The first round didn't give us what we needed.** We evaluated five firms through a structured scoring process. I coordinated discussions between Digital and Business stakeholders and ran scope-of-work, budget, and technical conversations with senior representatives at each firm. To make the evaluation rigorous, I designed a scoring matrix across five technical dimensions — each scored out of 10 independently by the cross-functional team.
+
+<svg width="100%" viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" style={{maxWidth: '720px', margin: '2rem auto', display: 'block'}}>
+  <rect x="0" y="0" width="720" height="36" rx="6" fill="#d4a017"/>
+  <text x="20" y="23" fontSize="12" fontWeight="700" fill="#ffffff" fontFamily="sans-serif">Initial Technical Evaluation — 5 Vendors</text>
+  <text x="700" y="23" textAnchor="end" fontSize="10" fill="#fef9e7" fontFamily="sans-serif">Max 10 per parameter | None selected</text>
+
+  <rect x="0" y="40" width="200" height="30" fill="#f0f4f8" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="100" y="59" textAnchor="middle" fontSize="10" fontWeight="600" fill="#2C3E50" fontFamily="sans-serif">Technical Parameters</text>
+  <rect x="200" y="40" width="104" height="30" fill="#f0f4f8" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="252" y="59" textAnchor="middle" fontSize="10" fontWeight="600" fill="#2C3E50" fontFamily="sans-serif">Vendor A</text>
+  <rect x="304" y="40" width="104" height="30" fill="#f0f4f8" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="356" y="59" textAnchor="middle" fontSize="10" fontWeight="600" fill="#2C3E50" fontFamily="sans-serif">Vendor B</text>
+  <rect x="408" y="40" width="104" height="30" fill="#f0f4f8" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="460" y="59" textAnchor="middle" fontSize="10" fontWeight="600" fill="#2C3E50" fontFamily="sans-serif">Vendor C</text>
+  <rect x="512" y="40" width="104" height="30" fill="#f0f4f8" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="564" y="59" textAnchor="middle" fontSize="10" fontWeight="600" fill="#2C3E50" fontFamily="sans-serif">Vendor D</text>
+  <rect x="616" y="40" width="104" height="30" fill="#f0f4f8" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="668" y="59" textAnchor="middle" fontSize="10" fontWeight="600" fill="#2C3E50" fontFamily="sans-serif">Vendor E</text>
+
+  <rect x="0" y="70" width="200" height="32" fill="#ffffff" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="12" y="90" fontSize="10" fontWeight="500" fill="#2C3E50" fontFamily="sans-serif">Previous Experience &amp; Use Cases</text>
+  <rect x="200" y="70" width="104" height="32" fill="#ffffff" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="252" y="90" textAnchor="middle" fontSize="11" fill="#2C3E50" fontFamily="sans-serif">6</text>
+  <rect x="304" y="70" width="104" height="32" fill="#ffffff" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="356" y="90" textAnchor="middle" fontSize="11" fill="#2C3E50" fontFamily="sans-serif">10</text>
+  <rect x="408" y="70" width="104" height="32" fill="#ffffff" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="460" y="90" textAnchor="middle" fontSize="11" fill="#2C3E50" fontFamily="sans-serif">3</text>
+  <rect x="512" y="70" width="104" height="32" fill="#ffffff" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="564" y="90" textAnchor="middle" fontSize="11" fill="#6b7280" fontFamily="sans-serif">5</text>
+  <rect x="616" y="70" width="104" height="32" fill="#ffffff" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="668" y="90" textAnchor="middle" fontSize="11" fill="#6b7280" fontFamily="sans-serif">4</text>
+
+  <rect x="0" y="102" width="200" height="32" fill="#f9fafb" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="12" y="122" fontSize="10" fontWeight="500" fill="#2C3E50" fontFamily="sans-serif">Approach to Requirement</text>
+  <rect x="200" y="102" width="104" height="32" fill="#f9fafb" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="252" y="122" textAnchor="middle" fontSize="11" fill="#2C3E50" fontFamily="sans-serif">9</text>
+  <rect x="304" y="102" width="104" height="32" fill="#f9fafb" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="356" y="122" textAnchor="middle" fontSize="11" fill="#2C3E50" fontFamily="sans-serif">7</text>
+  <rect x="408" y="102" width="104" height="32" fill="#f9fafb" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="460" y="122" textAnchor="middle" fontSize="11" fill="#2C3E50" fontFamily="sans-serif">4</text>
+  <rect x="512" y="102" width="104" height="32" fill="#f9fafb" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="564" y="122" textAnchor="middle" fontSize="11" fill="#6b7280" fontFamily="sans-serif">6</text>
+  <rect x="616" y="102" width="104" height="32" fill="#f9fafb" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="668" y="122" textAnchor="middle" fontSize="11" fill="#6b7280" fontFamily="sans-serif">5</text>
+
+  <rect x="0" y="134" width="200" height="32" fill="#ffffff" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="12" y="154" fontSize="10" fontWeight="500" fill="#2C3E50" fontFamily="sans-serif">Overall Solution Provided</text>
+  <rect x="200" y="134" width="104" height="32" fill="#ffffff" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="252" y="154" textAnchor="middle" fontSize="11" fill="#2C3E50" fontFamily="sans-serif">8</text>
+  <rect x="304" y="134" width="104" height="32" fill="#ffffff" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="356" y="154" textAnchor="middle" fontSize="11" fill="#2C3E50" fontFamily="sans-serif">8</text>
+  <rect x="408" y="134" width="104" height="32" fill="#ffffff" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="460" y="154" textAnchor="middle" fontSize="11" fill="#2C3E50" fontFamily="sans-serif">6</text>
+  <rect x="512" y="134" width="104" height="32" fill="#ffffff" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="564" y="154" textAnchor="middle" fontSize="11" fill="#6b7280" fontFamily="sans-serif">7</text>
+  <rect x="616" y="134" width="104" height="32" fill="#ffffff" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="668" y="154" textAnchor="middle" fontSize="11" fill="#6b7280" fontFamily="sans-serif">5</text>
+
+  <rect x="0" y="166" width="200" height="32" fill="#f9fafb" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="12" y="186" fontSize="10" fontWeight="500" fill="#2C3E50" fontFamily="sans-serif">Timelines</text>
+  <rect x="200" y="166" width="104" height="32" fill="#f9fafb" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="252" y="186" textAnchor="middle" fontSize="11" fill="#2C3E50" fontFamily="sans-serif">8</text>
+  <rect x="304" y="166" width="104" height="32" fill="#f9fafb" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="356" y="186" textAnchor="middle" fontSize="11" fill="#2C3E50" fontFamily="sans-serif">4</text>
+  <rect x="408" y="166" width="104" height="32" fill="#f9fafb" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="460" y="186" textAnchor="middle" fontSize="11" fill="#2C3E50" fontFamily="sans-serif">6</text>
+  <rect x="512" y="166" width="104" height="32" fill="#f9fafb" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="564" y="186" textAnchor="middle" fontSize="11" fill="#6b7280" fontFamily="sans-serif">5</text>
+  <rect x="616" y="166" width="104" height="32" fill="#f9fafb" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="668" y="186" textAnchor="middle" fontSize="11" fill="#6b7280" fontFamily="sans-serif">6</text>
+
+  <rect x="0" y="198" width="200" height="32" fill="#ffffff" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="12" y="218" fontSize="10" fontWeight="500" fill="#2C3E50" fontFamily="sans-serif">JavaScript / Technical Work</text>
+  <rect x="200" y="198" width="104" height="32" fill="#ffffff" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="252" y="218" textAnchor="middle" fontSize="11" fill="#2C3E50" fontFamily="sans-serif">8</text>
+  <rect x="304" y="198" width="104" height="32" fill="#ffffff" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="356" y="218" textAnchor="middle" fontSize="11" fill="#2C3E50" fontFamily="sans-serif">4</text>
+  <rect x="408" y="198" width="104" height="32" fill="#ffffff" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="460" y="218" textAnchor="middle" fontSize="11" fill="#2C3E50" fontFamily="sans-serif">4</text>
+  <rect x="512" y="198" width="104" height="32" fill="#ffffff" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="564" y="218" textAnchor="middle" fontSize="11" fill="#6b7280" fontFamily="sans-serif">4</text>
+  <rect x="616" y="198" width="104" height="32" fill="#ffffff" stroke="#d1d9e0" strokeWidth="0.5"/>
+  <text x="668" y="218" textAnchor="middle" fontSize="11" fill="#6b7280" fontFamily="sans-serif">5</text>
+
+  <rect x="0" y="234" width="200" height="34" fill="#d4a017"/>
+  <text x="12" y="256" fontSize="10" fontWeight="700" fill="#ffffff" fontFamily="sans-serif">Overall Technical Score (/50)</text>
+  <rect x="200" y="234" width="104" height="34" fill="#d4a017" opacity="0.9"/>
+  <text x="252" y="256" textAnchor="middle" fontSize="12" fontWeight="700" fill="#ffffff" fontFamily="sans-serif">39</text>
+  <rect x="304" y="234" width="104" height="34" fill="#d4a017" opacity="0.9"/>
+  <text x="356" y="256" textAnchor="middle" fontSize="12" fontWeight="700" fill="#ffffff" fontFamily="sans-serif">33</text>
+  <rect x="408" y="234" width="104" height="34" fill="#d4a017" opacity="0.9"/>
+  <text x="460" y="256" textAnchor="middle" fontSize="12" fontWeight="700" fill="#ffffff" fontFamily="sans-serif">23</text>
+  <rect x="512" y="234" width="104" height="34" fill="#d4a017" opacity="0.9"/>
+  <text x="564" y="256" textAnchor="middle" fontSize="12" fontWeight="700" fill="#ffffff" fontFamily="sans-serif">27</text>
+  <rect x="616" y="234" width="104" height="34" fill="#d4a017" opacity="0.9"/>
+  <text x="668" y="256" textAnchor="middle" fontSize="12" fontWeight="700" fill="#ffffff" fontFamily="sans-serif">25</text>
+
+  <text x="12" y="290" fontSize="9" fill="#6b7280" fontFamily="sans-serif">Vendors D &amp; E approximate | No vendor from this round was selected — pitches lacked depth in DITA-OT specifically</text>
+  <text x="12" y="305" fontSize="9" fill="#8a6d00" fontWeight="500" fontFamily="sans-serif">The selected vendor came through a separate Adobe recommendation and was not part of this initial evaluation</text>
+</svg>
+
+<span style={{display: 'block', textAlign: 'center', fontSize: '0.85rem', color: '#6b7280', marginTop: '-0.5rem', marginBottom: '2rem'}}>Initial vendor scoring — none of the five firms met the bar for DITA-OT expertise</span>
+
+The scores told a clear story: even Vendor A, who led technically at 39/50, didn't have the specific DITA-OT depth we needed. AEM Guides implementation is a niche area, and none of the initial vendors had deep, proven experience with it. Pitches were generic. Proposals were light on specifics. We weren't confident any of them could deliver what the platform actually needed.
+
+**So we widened the search.** Through our Adobe relationship — we held an Ultimate support tier — we asked for their recommendation. They pointed us to a specialist firm that had completed near-identical AEM Guides implementations for two other organisations. When we saw their pitch, the difference was immediately clear: they understood the DITA-OT problem space deeply, their implementation approach was specific rather than generic, and their pricing was competitive — lower than several of the initial five.
+
+We still ran them through a formal due diligence evaluation for governance rigour. The decision was validated both subjectively — the pitch, the track record, the Adobe endorsement — and objectively through the scoring framework. That alignment made it an easy recommendation to take to senior leadership.
+
+### Mapping the Ecosystem Before Moving
+
+Before the vendor engagement could start, I needed to understand — and make visible to the team — exactly how many systems, teams, and access touchpoints were involved. Rather than figuring this out reactively during onboarding, I mapped every dependency upfront and planned the sequencing around them. I reached out to the right people across each system, understood the approval paths step by step, and made sure every access stream was either in-flight or ready to go before onboarding formally started. That preparation is what made the actual onboarding run smoothly.
+
+<svg width="100%" viewBox="0 0 760 500" xmlns="http://www.w3.org/2000/svg" style={{maxWidth: '760px', margin: '2rem auto', display: 'block'}}>
+  <defs>
+    <marker id="dep" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M2 2L8 5L2 8" fill="none" stroke="#2C3E50" strokeWidth="1.5" strokeLinecap="round"/>
+    </marker>
+  </defs>
+
+  <rect x="280" y="200" width="200" height="70" rx="10" fill="#1F4E79"/>
+  <text x="380" y="232" textAnchor="middle" fontSize="14" fontWeight="700" fill="#f9fafb" fontFamily="sans-serif">AEM Guides</text>
+  <text x="380" y="250" textAnchor="middle" fontSize="10" fill="#a8c4e0" fontFamily="sans-serif">DITA-OT + Antora CSS</text>
+
+  <rect x="30" y="210" width="160" height="50" rx="8" fill="#2C3E50"/>
+  <text x="110" y="234" textAnchor="middle" fontSize="11" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">AEM Assets</text>
+  <text x="110" y="248" textAnchor="middle" fontSize="9" fill="#b0bec5" fontFamily="sans-serif">Shared platform layer</text>
+  <line x1="190" y1="235" x2="278" y2="235" stroke="#2C3E50" strokeWidth="1.2" strokeDasharray="4,3" markerEnd="url(#dep)"/>
+
+  <rect x="290" y="50" width="180" height="50" rx="8" fill="#c0392b" opacity="0.85"/>
+  <text x="380" y="74" textAnchor="middle" fontSize="11" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">Adobe Support</text>
+  <text x="380" y="88" textAnchor="middle" fontSize="9" fill="#f9d5d5" fontFamily="sans-serif">Ultimate tier — escalations</text>
+  <line x1="380" y1="100" x2="380" y2="198" stroke="#c0392b" strokeWidth="1" strokeDasharray="4,3" markerEnd="url(#dep)"/>
+
+  <rect x="60" y="60" width="160" height="50" rx="8" fill="#6b7280"/>
+  <text x="140" y="84" textAnchor="middle" fontSize="11" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">Saviynt IAM</text>
+  <text x="140" y="98" textAnchor="middle" fontSize="9" fill="#d1d9e0" fontFamily="sans-serif">Account creation &amp; access</text>
+  <line x1="180" y1="110" x2="330" y2="198" stroke="#6b7280" strokeWidth="1" strokeDasharray="4,3" markerEnd="url(#dep)"/>
+
+  <rect x="540" y="140" width="190" height="55" rx="8" fill="#2A7F62"/>
+  <text x="635" y="163" textAnchor="middle" fontSize="11" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">Artifact Repository</text>
+  <text x="635" y="179" textAnchor="middle" fontSize="9" fill="#a8dfc9" fontFamily="sans-serif">Package transfer from vendor</text>
+  <line x1="540" y1="167" x2="482" y2="220" stroke="#2A7F62" strokeWidth="1.2" strokeDasharray="4,3" markerEnd="url(#dep)"/>
+
+  <rect x="540" y="280" width="190" height="55" rx="8" fill="#2A7F62"/>
+  <text x="635" y="303" textAnchor="middle" fontSize="11" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">Branding Portal</text>
+  <text x="635" y="319" textAnchor="middle" fontSize="9" fill="#a8dfc9" fontFamily="sans-serif">Branded logos &amp; assets for vendor</text>
+  <line x1="540" y1="307" x2="482" y2="255" stroke="#2A7F62" strokeWidth="1.2" strokeDasharray="4,3" markerEnd="url(#dep)"/>
+
+  <text x="380" y="320" textAnchor="middle" fontSize="10" fontWeight="600" fill="#1F4E79" fontFamily="sans-serif" letterSpacing="1.5">STAKEHOLDERS</text>
+  <line x1="180" y1="328" x2="580" y2="328" stroke="#d1d9e0" strokeWidth="0.5"/>
+
+  <rect x="40" y="345" width="120" height="40" rx="6" fill="#1F4E79" opacity="0.15" stroke="#1F4E79" strokeWidth="0.8"/>
+  <text x="100" y="362" textAnchor="middle" fontSize="10" fontWeight="500" fill="#1F4E79" fontFamily="sans-serif">Digital Team</text>
+  <text x="100" y="376" textAnchor="middle" fontSize="9" fill="#1F4E79" fontFamily="sans-serif">Platform owners</text>
+
+  <rect x="185" y="345" width="120" height="40" rx="6" fill="#1F4E79" opacity="0.15" stroke="#1F4E79" strokeWidth="0.8"/>
+  <text x="245" y="362" textAnchor="middle" fontSize="10" fontWeight="500" fill="#1F4E79" fontFamily="sans-serif">Business Team</text>
+  <text x="245" y="376" textAnchor="middle" fontSize="9" fill="#1F4E79" fontFamily="sans-serif">Content requirements</text>
+
+  <rect x="330" y="345" width="120" height="40" rx="6" fill="#2A7F62" opacity="0.15" stroke="#2A7F62" strokeWidth="0.8"/>
+  <text x="390" y="362" textAnchor="middle" fontSize="10" fontWeight="500" fill="#2A7F62" fontFamily="sans-serif">Vendor</text>
+  <text x="390" y="376" textAnchor="middle" fontSize="9" fill="#2A7F62" fontFamily="sans-serif">DITA specialists</text>
+
+  <rect x="475" y="345" width="120" height="40" rx="6" fill="#2C3E50" opacity="0.15" stroke="#2C3E50" strokeWidth="0.8"/>
+  <text x="535" y="362" textAnchor="middle" fontSize="10" fontWeight="500" fill="#2C3E50" fontFamily="sans-serif">Assets Team</text>
+  <text x="535" y="376" textAnchor="middle" fontSize="9" fill="#2C3E50" fontFamily="sans-serif">Shared AEM layer</text>
+
+  <rect x="620" y="345" width="110" height="40" rx="6" fill="#c0392b" opacity="0.1" stroke="#c0392b" strokeWidth="0.8"/>
+  <text x="675" y="362" textAnchor="middle" fontSize="10" fontWeight="500" fill="#c0392b" fontFamily="sans-serif">Adobe</text>
+  <text x="675" y="376" textAnchor="middle" fontSize="9" fill="#c0392b" fontFamily="sans-serif">Platform support</text>
+
+  <rect x="200" y="420" width="360" height="36" rx="6" fill="#1F4E79" opacity="0.08" stroke="#1F4E79" strokeWidth="1"/>
+  <text x="380" y="443" textAnchor="middle" fontSize="10" fontWeight="600" fill="#1F4E79" fontFamily="sans-serif">Single point of contact across all teams — weekly/biweekly sync cadence</text>
+
+  <text x="380" y="480" textAnchor="middle" fontSize="9" fill="#6b7280" fontFamily="sans-serif">12 people coordinated: 7 internal + 5 vendor specialists</text>
+</svg>
+
+<span style={{display: 'block', textAlign: 'center', fontSize: '0.85rem', color: '#6b7280', marginTop: '-0.5rem', marginBottom: '2rem'}}>Ecosystem map — systems, teams, and access dependencies that all needed to come together</span>
+
+The sequencing mattered. The **Artifact Repository** had to be accessible before the vendor could transfer their developed packages to us — so that access stream was prioritised early. The **Branding Portal** was needed so the vendor could work with branded logos and assets in the documentation they'd be producing. **AEM Guides access** had its own dependency chain: first, account creation through Saviynt; then, requesting AEM platform access; then, adding users into the AEM Guides group specifically. Each step had a different owner and a different approval path.
+
+Each of these streams had a different owner, a different approval path, and a different timeline. Mapping them upfront — and knowing which ones would block downstream work — meant I could push the critical-path items first rather than discovering dependencies when they became blockers.
+
+### The Full Vendor Lifecycle
+
+The selected vendor were not an existing partner. That meant the contract couldn't follow the standard path — and even with full approval in place, getting it across the line was harder than anyone anticipated. Procurement for a non-partner vendor involved layers of approval, legal review, and coordination that I hadn't been exposed to before. I wasn't directly in procurement, but I was pushing it forward constantly — following up, escalating blockers, and making sure the timeline didn't drift. Watching that process up close was one of the sharpest lessons of the entire project.
+
+Once onboarding began, I built the **vendor lifecycle tracker** — mapping every access requirement, system touchpoint, and responsibility across three phases. What started as a planning tool became the central coordination document for the entire engagement.
+
+<svg width="100%" viewBox="0 0 760 440" xmlns="http://www.w3.org/2000/svg" style={{maxWidth: '760px', margin: '2rem auto', display: 'block'}}>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </marker>
+  </defs>
+
+  {/* Onboarding */}
+  <rect x="20" y="30" width="210" height="260" rx="10" fill="#1F4E79"/>
+  <text x="125" y="58" textAnchor="middle" fontSize="14" fontWeight="600" fill="#f9fafb" fontFamily="sans-serif">Onboarding</text>
+  <line x1="35" y1="68" x2="215" y2="68" stroke="#a8c4e0" strokeWidth="0.5"/>
+  <text x="125" y="90" textAnchor="middle" fontSize="10.5" fill="#a8c4e0" fontFamily="sans-serif">External account creation</text>
+  <text x="125" y="106" textAnchor="middle" fontSize="9" fill="#7ba3c4" fontFamily="sans-serif">(Saviynt portal access)</text>
+  <text x="125" y="126" textAnchor="middle" fontSize="10.5" fill="#a8c4e0" fontFamily="sans-serif">AEM Guides access</text>
+  <text x="125" y="142" textAnchor="middle" fontSize="9" fill="#7ba3c4" fontFamily="sans-serif">(Add to AEM → Guides group)</text>
+  <text x="125" y="162" textAnchor="middle" fontSize="10.5" fill="#a8c4e0" fontFamily="sans-serif">Artifact Repository access</text>
+  <text x="125" y="178" textAnchor="middle" fontSize="9" fill="#7ba3c4" fontFamily="sans-serif">(Package transfer path)</text>
+  <text x="125" y="198" textAnchor="middle" fontSize="10.5" fill="#a8c4e0" fontFamily="sans-serif">Branding Portal access</text>
+  <text x="125" y="214" textAnchor="middle" fontSize="9" fill="#7ba3c4" fontFamily="sans-serif">(Branded logos &amp; assets)</text>
+  <text x="125" y="234" textAnchor="middle" fontSize="10.5" fill="#a8c4e0" fontFamily="sans-serif">Knowledge transfers</text>
+  <text x="125" y="250" textAnchor="middle" fontSize="9" fill="#7ba3c4" fontFamily="sans-serif">(Existing setup, Guides DAM)</text>
+  <text x="125" y="270" textAnchor="middle" fontSize="10.5" fill="#a8c4e0" fontFamily="sans-serif">Sample XMLs &amp; test cases</text>
+
+  <line x1="232" y1="160" x2="268" y2="160" stroke="#2A7F62" strokeWidth="1.5" markerEnd="url(#arrow)" fill="none"/>
+
+  {/* Implementation */}
+  <rect x="270" y="30" width="220" height="260" rx="10" fill="#2A7F62"/>
+  <text x="380" y="58" textAnchor="middle" fontSize="14" fontWeight="600" fill="#f9fafb" fontFamily="sans-serif">Implementation</text>
+  <line x1="285" y1="68" x2="475" y2="68" stroke="#a8dfc9" strokeWidth="0.5"/>
+  <text x="380" y="90" textAnchor="middle" fontSize="10.5" fill="#a8dfc9" fontFamily="sans-serif">DITA-OT setup &amp; config</text>
+  <text x="380" y="110" textAnchor="middle" fontSize="10.5" fill="#a8dfc9" fontFamily="sans-serif">Content authoring</text>
+  <text x="380" y="130" textAnchor="middle" fontSize="10.5" fill="#a8dfc9" fontFamily="sans-serif">Assets–Guides alignment</text>
+  <text x="380" y="150" textAnchor="middle" fontSize="10.5" fill="#a8dfc9" fontFamily="sans-serif">UAT &amp; stakeholder review</text>
+  <text x="380" y="170" textAnchor="middle" fontSize="10.5" fill="#a8dfc9" fontFamily="sans-serif">Deployment of packages</text>
+  <text x="380" y="186" textAnchor="middle" fontSize="9" fill="#7bc4a8" fontFamily="sans-serif">(Dev → Stage → Prod)</text>
+  <text x="380" y="206" textAnchor="middle" fontSize="10.5" fill="#a8dfc9" fontFamily="sans-serif">Testing in AEM Assets</text>
+  <text x="380" y="222" textAnchor="middle" fontSize="9" fill="#7bc4a8" fontFamily="sans-serif">(Ensure no conflicts)</text>
+  <text x="380" y="242" textAnchor="middle" fontSize="10.5" fill="#a8dfc9" fontFamily="sans-serif">Issue resolution</text>
+  <text x="380" y="262" textAnchor="middle" fontSize="10.5" fill="#a8dfc9" fontFamily="sans-serif">Risk monitoring</text>
+
+  <line x1="492" y1="160" x2="528" y2="160" stroke="#2C3E50" strokeWidth="1.5" markerEnd="url(#arrow)" fill="none"/>
+
+  {/* Offboarding */}
+  <rect x="530" y="30" width="200" height="200" rx="10" fill="#2C3E50"/>
+  <text x="630" y="58" textAnchor="middle" fontSize="14" fontWeight="600" fill="#f9fafb" fontFamily="sans-serif">Offboarding</text>
+  <line x1="545" y1="68" x2="715" y2="68" stroke="#b0bec5" strokeWidth="0.5"/>
+  <text x="630" y="92" textAnchor="middle" fontSize="10.5" fill="#b0bec5" fontFamily="sans-serif">Deliverable sign-off</text>
+  <text x="630" y="116" textAnchor="middle" fontSize="10.5" fill="#b0bec5" fontFamily="sans-serif">Documentation handover</text>
+  <text x="630" y="140" textAnchor="middle" fontSize="10.5" fill="#b0bec5" fontFamily="sans-serif">Knowledge transfer</text>
+  <text x="630" y="164" textAnchor="middle" fontSize="10.5" fill="#b0bec5" fontFamily="sans-serif">Access revocation</text>
+  <text x="630" y="188" textAnchor="middle" fontSize="10.5" fill="#b0bec5" fontFamily="sans-serif">Removing vendor from platforms</text>
+  <text x="630" y="212" textAnchor="middle" fontSize="10.5" fill="#b0bec5" fontFamily="sans-serif">Vendor exit review</text>
+
+  {/* Status bar */}
+  <rect x="278" y="308" width="204" height="26" rx="6" fill="#2A7F62" opacity="0.15" stroke="#2A7F62" strokeWidth="0.8"/>
+  <text x="380" y="325" textAnchor="middle" fontSize="11" fill="#2A7F62" fontFamily="sans-serif" fontWeight="500">Currently in implementation</text>
+
+  {/* Deployment pipeline detail */}
+  <rect x="20" y="358" width="720" height="60" rx="6" fill="#f0f4f8" stroke="#d1d9e0" strokeWidth="0.8"/>
+  <text x="40" y="380" fontSize="10" fontWeight="600" fill="#1F4E79" fontFamily="sans-serif">Deployment pipeline:</text>
+  <text x="40" y="400" fontSize="10" fill="#2C3E50" fontFamily="sans-serif">Vendor develops packages → Deploys to Dev (no approval needed) → Stage &amp; Prod (release cycle coordination with internal team) → Testing in AEM Assets to ensure no side effects</text>
+</svg>
+
+<span style={{display: 'block', textAlign: 'center', fontSize: '0.85rem', color: '#6b7280', marginTop: '-0.5rem', marginBottom: '2rem'}}>Vendor lifecycle tracker — three phases mapped end-to-end, with deployment pipeline detail</span>
+
+I was personally responsible across multiple access streams simultaneously and served as the escalation point for an internal team of seven whenever blockers arose.
+
+I maintained a **weekly sync cadence** with stakeholders across Digital and Business, and biweekly alignment sessions that included the vendor. These weren't status meetings — they were coordination touchpoints where I'd surface blockers, re-prioritise access streams based on what was unblocked, and make sure all parties had a shared picture of where things stood.
+
+**Success criteria** were defined early: the vendor would be assessed on their ability to deliver production-ready DITA content that passed internal QA, met branding standards, and could be published through the Guides pipeline without manual intervention. These criteria shaped every decision from onboarding sequencing to knowledge transfer scope.
+
+I also contributed to the **risk documentation** for the engagement — identifying risks around vendor underdelivery, platform instability from the AEM Assets conflict, internal team bandwidth for KT and review cycles, and timeline slippage from procurement delays. Having these documented early meant we had a shared language for escalation rather than reacting to surprises.
+
+On the deployment side, the vendor's developed packages follow a **dev → stage → prod** pipeline. For dev deployments, I handle it directly with no approval needed. Moving to stage and prod requires coordination with the internal team and alignment with the release cycle. Once packages are deployed, I'm also involved in **testing the Guides packages from the AEM Assets side** — making sure the new content doesn't create conflicts or side effects in the shared platform layer. Nobody else had taken on that testing responsibility, so I picked it up — it's one of those things that falls between teams if someone doesn't explicitly own it.
+
+{/* Add tracker screenshot here: ![Vendor lifecycle tracker](/images/blog/aem-guides-vendor-implementation/aem-guides-tracker.jpg) */}
+
+### Keeping Things Running
+
+Throughout the engagement I served as the single point of contact across Digital, Business, the vendor, Adobe, and the Assets team — owning the project plan and every alignment touchpoint between them.
+
+Two challenges stood out.
+
+First, **AEM Assets background processes were creating stability issues within Guides.** I identified the root cause and coordinated with Adobe to restrict post-processing workflows exclusively to Guides elements — restoring platform stability without disrupting the broader Assets team.
+
+Second, the **Assets and Guides teams had been operating in silos.** The Assets team had little visibility into how Guides worked or why it mattered. I ran knowledge transfer sessions to bring the vendor up to speed on our existing setup, and coordinated alignment sessions between Assets and Guides to close that gap. This is something I wish I'd done earlier — the lack of alignment created friction that could have been avoided if I'd brought the teams together from the start.
+
+### What I Learned
+
+Three things I'd do differently if I started this over.
+
+**I underestimated how much effort it takes to get internal teams to prioritise something that isn't on their roadmap.** Getting cooperation across teams that had no direct stake in AEM Guides required more relationship-building and internal selling than I expected. Next time, I'd front-load those conversations rather than trying to earn buy-in while the project was already in motion.
+
+**I'd align the Assets and Guides teams from day one.** Waiting until implementation was underway before bridging the silo cost time and created avoidable friction. The two teams had no shared context — building that context should have been one of the first things I did, not something I tackled midway through.
+
+**I grew in how I communicate with senior stakeholders.** Presenting a business case to leadership, running vendor discussions with senior representatives at consulting firms, pushing through procurement blockers — these were new muscles. I'm sharper at all of them now than when I started, and next time I'd prepare more deliberately for those conversations from the outset.
+
+### Where Things Stand
+
+The vendor's onboarding is complete and implementation is underway. A platform that sat dormant for nearly two years now has a specialist vendor engaged, a governance structure in place, defined success criteria, a deployment pipeline from dev through to production, and active testing to protect the shared AEM layer — built on structured evaluation, dependency mapping, persistent coordination, and a willingness to own a problem that nobody had asked me to solve.

@@ -8,14 +8,13 @@ import { Menu, X } from "lucide-react";
 
 const navLinks = [
   { href: "/about", label: "About", sectionId: "about" },
-  { href: "/expertise", label: "Expertise", sectionId: "expertise" },
-  { href: "/experience", label: "Experience", sectionId: "experience" },
-  { href: "/portfolio", label: "Portfolio", sectionId: "portfolio" },
+  { href: "/projects", label: "Projects", sectionId: "projects" },
+  { href: "/leadership", label: "Leadership", sectionId: "leadership" },
+  { href: "/side-projects", label: "Side Projects", sectionId: "side-projects" },
   { href: "/education", label: "Education", sectionId: "education" },
-  { href: "/certifications", label: "Certifications", sectionId: "certifications" },
   { href: "/blog", label: "Blog" },
+  { href: "/certifications", label: "Certifications", sectionId: "certifications" },
   { href: "/contact", label: "Contact", sectionId: "contact" },
-  { href: "/interests", label: "Interests" },
 ];
 
 const sectionLinks = navLinks.filter(
@@ -84,7 +83,7 @@ export default function Header() {
               scrolled ? "text-gray-100" : "text-white"
             }`}
           >
-            Rejo Z Mathew
+            Abhilash George
           </Link>
         </motion.div>
 

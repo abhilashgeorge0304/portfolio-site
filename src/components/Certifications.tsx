@@ -12,18 +12,17 @@ interface CertificationItem {
 }
 
 const certificationsList: CertificationItem[] = [
-  // ... (Keep existing certificationsList array) ...
   {
-    issuingBody: "DAMA International",
-    name: "Certified Data Management Professional (CDMP)",
+    issuingBody: "Datadog",
+    name: "Datadog Fundamentals",
   },
   {
-    issuingBody: "Amazon Web Services",
-    name: "AWS Certified Cloud Practitioner",
+    issuingBody: "Coursera / Google",
+    name: "Google Project Management Certificate",
   },
   {
-    issuingBody: "DeepLearning.AI",
-    name: "Machine Learning Engineering for Production (MLOps)",
+    issuingBody: "HackerRank",
+    name: "Python (Basic) Certification",
   },
 ];
 

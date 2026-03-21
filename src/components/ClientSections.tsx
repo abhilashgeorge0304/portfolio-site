@@ -1,22 +1,18 @@
 "use client"; // Mark this as a Client Component
 
 import React, { useEffect } from "react";
-import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import type { PortfolioProject } from "@/lib/getPortfolioData";
 
 // Import Server Components (can be used directly in Client Components)
 import Hero from "@/components/Hero"; // Reverted to standard import
+import Contact from "@/components/Contact";
 import About from "@/components/About";
+import Portfolio from "@/components/Portfolio";
 import Education from "@/components/Education";
 import Certifications from "@/components/Certifications";
-import Contact from "@/components/Contact";
-
-// Dynamically import components that might have client-specific hooks/interactions if needed
-// For simple display, direct import might be fine, but dynamic keeps flexibility
-const Expertise = dynamic(() => import("@/components/Expertise"), { ssr: true }); // Keep SSR for initial load if possible
-const Experience = dynamic(() => import("@/components/Experience"), { ssr: true });
-const Portfolio = dynamic(() => import("@/components/Portfolio"), { ssr: true });
+import Leadership from "@/components/Leadership";
+import SideProjects from "@/components/SideProjects";
 
 // Define animation variants for sections
 const sectionVariants = {
@@ -60,8 +56,10 @@ const ClientSections: React.FC<ClientSectionsProps> = ({
 
   return (
     <>
-      {/* Render Hero directly, animation will be handled inside Hero */}
+      {/* 1. Hero (light bg-gray-50 — handled inside Hero.tsx) */}
       <Hero />
+
+      {/* 2. Executive Summary (DARK — handled inside About.tsx) */}
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -70,22 +68,8 @@ const ClientSections: React.FC<ClientSectionsProps> = ({
       >
         <About />
       </motion.div>
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={defaultSectionViewport}
-        variants={sectionVariants}
-      >
-        <Expertise />
-      </motion.div>
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={defaultSectionViewport}
-        variants={sectionVariants}
-      >
-        <Experience />
-      </motion.div>
+
+      {/* 3. Featured Work / Projects (LIGHT — handled inside Portfolio.tsx) */}
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -94,6 +78,28 @@ const ClientSections: React.FC<ClientSectionsProps> = ({
       >
         <Portfolio projects={portfolioProjects} />
       </motion.div>
+
+      {/* 4. Leadership (DARK — handled inside Leadership.tsx) */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={defaultSectionViewport}
+        variants={sectionVariants}
+      >
+        <Leadership />
+      </motion.div>
+
+      {/* 5. Side Projects (LIGHT — handled inside SideProjects.tsx) */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={defaultSectionViewport}
+        variants={sectionVariants}
+      >
+        <SideProjects />
+      </motion.div>
+
+      {/* 6. Education (DARK — handled inside Education.tsx) */}
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -102,6 +108,8 @@ const ClientSections: React.FC<ClientSectionsProps> = ({
       >
         <Education />
       </motion.div>
+
+      {/* 7. Certifications (LIGHT — handled inside Certifications.tsx) */}
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -110,6 +118,8 @@ const ClientSections: React.FC<ClientSectionsProps> = ({
       >
         <Certifications />
       </motion.div>
+
+      {/* 8. Contact (DARK — handled inside Contact.tsx) */}
       <motion.div
         initial="hidden"
         whileInView="visible"

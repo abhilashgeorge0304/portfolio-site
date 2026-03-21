@@ -14,17 +14,19 @@ export interface PostMetadata {
   traits: string[];
 }
 
-type FilterType = 'all' | 'strategy' | 'technical';
+type FilterType = 'all' | 'case-study' | 'technical' | 'hobby';
 
 function formatContentType(ct: string): string {
   if (ct === 'technical') return 'Technical Deep Dive';
-  if (ct === 'strategy') return 'Strategy';
+  if (ct === 'case-study') return 'Case Study';
+  if (ct === 'hobby') return 'Hobby';
   return ct;
 }
 
 function contentTypeBadgeClass(ct: string): string {
   if (ct === 'technical') return 'bg-teal-100 text-teal-700';
-  if (ct === 'strategy') return 'bg-violet-100 text-violet-700';
+  if (ct === 'case-study') return 'bg-violet-100 text-violet-700';
+  if (ct === 'hobby') return 'bg-amber-100 text-amber-700';
   return 'bg-gray-100 text-gray-600';
 }
 
@@ -38,8 +40,9 @@ export default function BlogContent({ posts }: { posts: PostMetadata[] }) {
 
   const filters: { value: FilterType; label: string }[] = [
     { value: 'all', label: 'All' },
-    { value: 'strategy', label: 'Strategy' },
+    { value: 'case-study', label: 'Case Study' },
     { value: 'technical', label: 'Technical Deep Dive' },
+    { value: 'hobby', label: 'Hobby' },
   ];
 
   return (

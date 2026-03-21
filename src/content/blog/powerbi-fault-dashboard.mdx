@@ -1,0 +1,91 @@
+---
+title: "Building a Multi-Language Fault Reporting Dashboard with Automated Translation"
+date: "2026-03-19"
+description: "How I built a Power BI fault dashboard for lighting systems and solved the multi-language data problem with a Python translation layer featuring persistent caching and synonym normalisation."
+tags: ["Power BI", "Python", "Automation", "Data Visualisation", "Translation"]
+contentType: "technical"
+traits: ["data-engineering", "automation", "case-study"]
+heroImage: ""
+---
+
+{/* Hero section */}
+
+### One Dashboard, Many Languages
+
+Our organisation needed a fault reporting dashboard for lighting systems — a central view showing which systems were reporting faults, how frequently, and across which regions. The data existed. The problem was that it arrived in multiple languages.
+
+Reports covered installations across different countries, and fault descriptions, status fields, and notes were all recorded in the local language. A French installation would report *"aucun défaut signalé"* while a German one would log *"kein Fehler gemeldet"* — both meaning the same thing, but looking completely different to any aggregation logic or visual filter.
+
+The straightforward approach — maintaining manually translated lookup tables — would have been fragile and unsustainable. Every time a new fault description appeared in the data, someone would need to notice, translate it, and update the lookup. That's exactly the kind of invisible maintenance that gets neglected until a dashboard starts showing untranslated rows and stakeholders lose trust in the data.
+
+I built something different: a translation layer that runs automatically inside Power BI's data refresh pipeline, translates what it hasn't seen before, caches everything it has, and normalises known phrases to canonical forms. Adding a new language requires no manual intervention — the system handles it on the next refresh.
+
+### The Dashboard
+
+I gathered requirements from business stakeholders on what metrics to display: fault frequency by installation, fault type distribution, time-to-resolution patterns, and regional comparisons. The dashboard uses DAX measures for calculated KPIs — rolling fault rates, comparison against baselines, and conditional formatting to highlight installations that are trending worse over time.
+
+The data loads from Excel sources through Power BI's transformation pipeline, where the translation layer sits as a Python execution step before the data reaches the model.
+
+### The Translation Engine
+
+The translation runs as a Python script inside Power BI's data transformation step — sitting between raw data ingestion and the analytics model. The design priorities were: **translate only what's new** (don't re-translate cached values), **normalise known phrases** (so variants of the same meaning map to one canonical form), and **fail gracefully** (if translation fails, pass the original value through rather than breaking the refresh).
+
+<svg width="100%" viewBox="0 0 740 200" xmlns="http://www.w3.org/2000/svg" style={{maxWidth: '740px', margin: '2rem auto', display: 'block'}}>
+  <defs>
+    <marker id="tp" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M2 2L8 5L2 8" fill="none" stroke="#2A7F62" strokeWidth="1.5" strokeLinecap="round"/>
+    </marker>
+  </defs>
+
+  {/* Raw data */}
+  <rect x="10" y="60" width="140" height="70" rx="8" fill="#2C3E50"/>
+  <text x="80" y="85" textAnchor="middle" fontSize="11" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">Raw Data</text>
+  <text x="80" y="100" textAnchor="middle" fontSize="9" fill="#b0bec5" fontFamily="sans-serif">Multi-language</text>
+  <text x="80" y="114" textAnchor="middle" fontSize="9" fill="#b0bec5" fontFamily="sans-serif">Excel source</text>
+
+  <line x1="150" y1="95" x2="180" y2="95" stroke="#2A7F62" strokeWidth="1.2" markerEnd="url(#tp)"/>
+
+  {/* Translation layer */}
+  <rect x="182" y="30" width="280" height="130" rx="8" fill="#1F4E79"/>
+  <text x="322" y="55" textAnchor="middle" fontSize="11" fontWeight="600" fill="#f9fafb" fontFamily="sans-serif">Python Translation Layer</text>
+  <line x1="197" y1="64" x2="447" y2="64" stroke="#a8c4e0" strokeWidth="0.4"/>
+  <text x="322" y="84" textAnchor="middle" fontSize="9.5" fill="#a8c4e0" fontFamily="sans-serif">1. Check persistent JSON cache</text>
+  <text x="322" y="100" textAnchor="middle" fontSize="9.5" fill="#a8c4e0" fontFamily="sans-serif">2. Translate only uncached values</text>
+  <text x="322" y="116" textAnchor="middle" fontSize="9.5" fill="#a8c4e0" fontFamily="sans-serif">3. Normalise known phrase variants</text>
+  <text x="322" y="132" textAnchor="middle" fontSize="9.5" fill="#a8c4e0" fontFamily="sans-serif">4. Write updated cache to disk</text>
+  <text x="322" y="148" textAnchor="middle" fontSize="9.5" fill="#a8c4e0" fontFamily="sans-serif">5. Return cleaned dataframe</text>
+
+  <line x1="462" y1="95" x2="492" y2="95" stroke="#2A7F62" strokeWidth="1.2" markerEnd="url(#tp)"/>
+
+  {/* DAX model */}
+  <rect x="494" y="40" width="110" height="50" rx="6" fill="#2A7F62"/>
+  <text x="549" y="62" textAnchor="middle" fontSize="10" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">DAX Model</text>
+  <text x="549" y="78" textAnchor="middle" fontSize="9" fill="#a8dfc9" fontFamily="sans-serif">KPIs &amp; measures</text>
+
+  <line x1="549" y1="90" x2="549" y2="110" stroke="#2A7F62" strokeWidth="1"/>
+
+  <rect x="494" y="110" width="110" height="50" rx="6" fill="#2A7F62" opacity="0.7"/>
+  <text x="549" y="132" textAnchor="middle" fontSize="10" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">Dashboard</text>
+  <text x="549" y="148" textAnchor="middle" fontSize="9" fill="#a8dfc9" fontFamily="sans-serif">Visuals &amp; filters</text>
+
+  {/* Cache callout */}
+  <rect x="610" y="55" width="120" height="80" rx="6" fill="#fef9e7" stroke="#d4a017" strokeWidth="0.8"/>
+  <text x="670" y="78" textAnchor="middle" fontSize="9.5" fontWeight="600" fill="#8a6d00" fontFamily="sans-serif">Persistent Cache</text>
+  <text x="670" y="94" textAnchor="middle" fontSize="9" fill="#8a6d00" fontFamily="sans-serif">JSON on disk</text>
+  <text x="670" y="110" textAnchor="middle" fontSize="9" fill="#8a6d00" fontFamily="sans-serif">Survives across</text>
+  <text x="670" y="122" textAnchor="middle" fontSize="9" fill="#8a6d00" fontFamily="sans-serif">refreshes</text>
+</svg>
+
+<span style={{display: 'block', textAlign: 'center', fontSize: '0.85rem', color: '#6b7280', marginTop: '-0.5rem', marginBottom: '2rem'}}>Translation pipeline — translate once, cache forever, normalise known phrases</span>
+
+**Persistent caching** was the key design choice. The translation cache is stored as a JSON file on disk, structured by language and by translation type (canonical phrases vs. on-the-fly translations). On each Power BI refresh, the script loads the cache first and only calls the translation API for values it hasn't seen before. This means the first refresh for a new language is slow (every value needs translating), but subsequent refreshes are near-instant — hitting the cache for 95%+ of values.
+
+**Synonym normalisation** handles the reality that the same concept appears in multiple forms. Phrases like "no fault reported," "no faults reported," and minor spelling variations are all mapped to a single canonical form before translation. This prevents the cache from storing five slightly different translations of the same concept, and ensures that dashboard filters work consistently — a user filtering by "No fault reported" sees all the records, not just the ones that happened to use that exact phrasing.
+
+**Graceful failure** means that if the translation API is unreachable or throws an error for a specific value, the original text passes through unchanged. The dashboard still works — it just shows some untranslated values until the next successful refresh. No broken visuals, no empty cells.
+
+### What This Enabled
+
+The dashboard now supports multiple languages without any manual translation maintenance. When data from a new region appears, the translation layer detects the new language on the next refresh and translates automatically. The cache builds incrementally — within a few refresh cycles, virtually every value is cached and the translation step adds negligible time to the pipeline.
+
+For stakeholders, the experience is seamless: fault data from any region appears in the dashboard in a consistent language, filterable and comparable. The engineering work that makes this possible is invisible — which, for infrastructure like this, is exactly the point.

@@ -1,0 +1,124 @@
+---
+title: "Two Weeks to One Hour: Automating Enterprise Configuration Deployments"
+date: "2026-03-19"
+description: "How I scripted away weeks of manual CPQ template deployment and approval flow configuration — turning repetitive, error-prone processes into automated pipelines."
+tags: ["CPQ", "Automation", "Developer Productivity", "Scripting", "Process Improvement"]
+contentType: "case-study"
+traits: ["automation", "developer-productivity", "case-study"]
+heroImage: ""
+---
+
+{/* Hero section */}
+
+### The Work Nobody Wants to Do Twice
+
+Enterprise configuration platforms generate a particular kind of operational pain: the work that isn't intellectually hard but is tedious, repetitive, and brutally error-prone. Copying files. Renaming them to match naming conventions. Updating dynamic links. Deploying to sync servers. Triggering builds. Verifying outputs. Doing it again for the next sales organisation. And again for the next language.
+
+Our CPQ platform had exactly this problem — across two separate workstreams that I encountered within weeks of each other. In both cases, the same instinct kicked in: this is a scripting problem, not a staffing problem.
+
+### Project 1: Template Deployment Automation
+
+The business needed new output document templates for a product line expansion. In CPQ, output documents are the customer-facing deliverables — quotes, sales agreements, pricing sheets, warranty terms, disclaimers. Each document type is a template file that the platform populates dynamically based on the configuration.
+
+The complexity wasn't in any single template. It was in the **structure**.
+
+<svg width="100%" viewBox="0 0 740 340" xmlns="http://www.w3.org/2000/svg" style={{maxWidth: '740px', margin: '2rem auto', display: 'block'}}>
+  {/* Root */}
+  <rect x="270" y="10" width="200" height="40" rx="8" fill="#1F4E79"/>
+  <text x="370" y="35" textAnchor="middle" fontSize="12" fontWeight="600" fill="#f9fafb" fontFamily="sans-serif">Product Line Templates</text>
+
+  {/* Document types */}
+  <line x1="310" y1="50" x2="100" y2="85" stroke="#2C3E50" strokeWidth="1"/>
+  <line x1="350" y1="50" x2="290" y2="85" stroke="#2C3E50" strokeWidth="1"/>
+  <line x1="390" y1="50" x2="470" y2="85" stroke="#2C3E50" strokeWidth="1"/>
+  <line x1="430" y1="50" x2="650" y2="85" stroke="#2C3E50" strokeWidth="1"/>
+
+  <rect x="20" y="85" width="160" height="36" rx="6" fill="#2C3E50"/>
+  <text x="100" y="107" textAnchor="middle" fontSize="10" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">Quote Header</text>
+
+  <rect x="210" y="85" width="160" height="36" rx="6" fill="#2C3E50"/>
+  <text x="290" y="107" textAnchor="middle" fontSize="10" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">Sales Agreement</text>
+
+  <rect x="390" y="85" width="160" height="36" rx="6" fill="#2C3E50"/>
+  <text x="470" y="107" textAnchor="middle" fontSize="10" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">Pricing &amp; Warranty</text>
+
+  <rect x="570" y="85" width="160" height="36" rx="6" fill="#2C3E50"/>
+  <text x="650" y="107" textAnchor="middle" fontSize="10" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">Disclaimers</text>
+
+  {/* Variant layer */}
+  <line x1="230" y1="121" x2="230" y2="150" stroke="#d4a017" strokeWidth="1"/>
+  <line x1="350" y1="121" x2="350" y2="150" stroke="#d4a017" strokeWidth="1"/>
+
+  <rect x="160" y="150" width="140" height="32" rx="6" fill="#d4a017" opacity="0.2" stroke="#d4a017" strokeWidth="0.8"/>
+  <text x="230" y="170" textAnchor="middle" fontSize="9.5" fontWeight="500" fill="#8a6d00" fontFamily="sans-serif">Partner variant</text>
+
+  <rect x="320" y="150" width="140" height="32" rx="6" fill="#d4a017" opacity="0.2" stroke="#d4a017" strokeWidth="0.8"/>
+  <text x="390" y="170" textAnchor="middle" fontSize="9.5" fontWeight="500" fill="#8a6d00" fontFamily="sans-serif">Dealer variant</text>
+
+  <text x="310" y="204" textAnchor="middle" fontSize="9" fill="#6b7280" fontFamily="sans-serif">(Checkbox-driven: "Select for Partner, unselect for Dealer")</text>
+
+  {/* Dynamic linking */}
+  <rect x="100" y="225" width="540" height="80" rx="8" fill="#f0f4f8" stroke="#1F4E79" strokeWidth="0.8"/>
+  <text x="370" y="248" textAnchor="middle" fontSize="10" fontWeight="600" fill="#1F4E79" fontFamily="sans-serif">Dynamic File Linking Pattern</text>
+  <text x="370" y="268" textAnchor="middle" fontSize="10" fill="#2C3E50" fontFamily="sans-serif" fontStyle="italic">../{'{'}DocumentType{'}'}/{'{'}BookletLanguage{'}'}/{'{'}TemplateName{'}'}/{'{'}SalesArea{'}'}.docx</text>
+  <text x="370" y="290" textAnchor="middle" fontSize="9" fill="#6b7280" fontFamily="sans-serif">Every file path is parameterised — one wrong filename breaks the entire document export</text>
+</svg>
+
+<span style={{display: 'block', textAlign: 'center', fontSize: '0.85rem', color: '#6b7280', marginTop: '-0.5rem', marginBottom: '2rem'}}>Template file structure — 12+ document types, each with dynamic linking across languages and sales organisations</span>
+
+Each template file uses **dynamic linking** — file paths contain variables like `{BookletLanguage}` and `{SalesArea/SalesOrganization}` that resolve at generation time. This means every file has to be named *exactly right* and placed in *exactly the right directory* for the links to resolve. One typo in a filename and the entire document export fails silently — you only discover it when a sales rep tries to generate a quote and gets a broken PDF.
+
+The template set included over twelve document types: quote headers, reference letters, quote tables, pricing and delivery terms, sales agreements (with separate partner and dealer variants), extended warranties, service terms, disclaimers, and more. Each document type needed to exist for every sales organisation, and eventually for every language. The estimation was roughly 2-3 hours per additional sales organisation (copying and renaming all files, verifying links) and approximately 20 hours per new language (full translation cycle).
+
+**The manual process** for deploying to a new sales organisation:
+1. Copy all ~12 template files
+2. Rename each one to match the target sales org naming convention
+3. Verify every dynamic link resolves correctly with the new names
+4. Connect to the extraction server
+5. Upload all files to the sync folders
+6. Trigger the sync via the build server
+7. Export a test document to verify everything works
+8. Repeat for each additional sales organisation
+
+I gathered the business requirements, scoped the work, defined story points for each document type based on complexity (some were straightforward copies, others like the quote table involved 8-9 hours of formatting work), and split the implementation into manageable tasks.
+
+Then I wrote **a script that automates the entire copy-rename-link-verify pipeline end to end**. What previously took roughly two weeks of careful manual work now runs in about an hour — with fewer errors, because the script doesn't make typos in filenames.
+
+<svg width="100%" viewBox="0 0 720 130" xmlns="http://www.w3.org/2000/svg" style={{maxWidth: '720px', margin: '2rem auto', display: 'block'}}>
+  <defs>
+    <marker id="ba" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M2 2L8 5L2 8" fill="none" stroke="#2A7F62" strokeWidth="1.5" strokeLinecap="round"/>
+    </marker>
+  </defs>
+
+  {/* Before */}
+  <rect x="10" y="20" width="300" height="80" rx="8" fill="#c0392b" opacity="0.12" stroke="#c0392b" strokeWidth="0.8"/>
+  <text x="160" y="45" textAnchor="middle" fontSize="11" fontWeight="600" fill="#c0392b" fontFamily="sans-serif">Before: Manual Process</text>
+  <text x="160" y="65" textAnchor="middle" fontSize="10" fill="#c0392b" fontFamily="sans-serif">~2 weeks per deployment cycle</text>
+  <text x="160" y="82" textAnchor="middle" fontSize="9" fill="#c0392b" fontFamily="sans-serif">Error-prone: one wrong filename = broken export</text>
+
+  <line x1="310" y1="60" x2="400" y2="60" stroke="#2A7F62" strokeWidth="1.5" markerEnd="url(#ba)"/>
+  <text x="355" y="52" textAnchor="middle" fontSize="9" fontWeight="600" fill="#2A7F62" fontFamily="sans-serif">Scripted</text>
+
+  {/* After */}
+  <rect x="400" y="20" width="300" height="80" rx="8" fill="#2A7F62" opacity="0.12" stroke="#2A7F62" strokeWidth="0.8"/>
+  <text x="550" y="45" textAnchor="middle" fontSize="11" fontWeight="600" fill="#2A7F62" fontFamily="sans-serif">After: Automated Pipeline</text>
+  <text x="550" y="65" textAnchor="middle" fontSize="10" fill="#2A7F62" fontFamily="sans-serif">~1 hour per deployment cycle</text>
+  <text x="550" y="82" textAnchor="middle" fontSize="9" fill="#2A7F62" fontFamily="sans-serif">Consistent: script doesn't make typos</text>
+</svg>
+
+<span style={{display: 'block', textAlign: 'center', fontSize: '0.85rem', color: '#6b7280', marginTop: '-0.5rem', marginBottom: '2rem'}}>The same deployment, two orders of magnitude faster</span>
+
+### Project 2: Approval Flow Automation
+
+A separate workstream required setting up a new approval flow for a regional market — including creating new user roles, decommissioning old ones, and carefully preserving shared roles that were used across multiple regions.
+
+The manual approach was to configure each approval rule individually through the platform's admin interface — a process that takes days when dozens of rules need to be created, tested, and validated. The risk wasn't just time — it was accidentally deleting or modifying a shared role that would break approval flows in other regions.
+
+I wrote a script to automate the rule creation, cutting days of manual configuration to a few hours. The script also generated documentation for the new setup — ensuring that the approval flow changes were auditable and that the next person who needed to modify them wouldn't have to reverse-engineer the configuration from the UI.
+
+### The Pattern
+
+These weren't isolated wins. They were two instances of the same problem pattern: enterprise platforms with configuration complexity that grows multiplicatively (more templates × more languages × more sales orgs; more regions × more roles × more rules), where the manual approach doesn't just scale linearly — it scales with compounding error risk.
+
+The instinct in both cases was the same: understand the structure, map the repetitive steps, and script the problem away. The automation isn't just faster — it's *more reliable*, because the script executes the exact same steps in the exact same order every time. That reliability matters more than the time savings, because a single broken template or misconfigured role can cascade into hours of debugging that nobody budgeted for.

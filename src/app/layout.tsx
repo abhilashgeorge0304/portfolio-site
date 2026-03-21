@@ -13,9 +13,9 @@ const inter = Inter({
 
 // Update metadata
 export const metadata: Metadata = {
-  title: "Rejo Z Mathew | AI & Data Strategy Leader",
+  title: "Abhilash George | Product Owner & Digital Functional Engineer",
   description:
-    "Executive portfolio showcasing expertise in AI/ML, Data Science, Analytics, and Engineering within Financial Services.",
+    "Portfolio showcasing product ownership, technical delivery, and operational leadership at Signify Digital.",
 };
 
 export default function RootLayout({

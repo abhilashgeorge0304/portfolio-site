@@ -1,8 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 
 const sectionVariants = {
@@ -10,54 +8,10 @@ const sectionVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
-const bannerVariants = {
-  hidden: { y: "-100%", opacity: 0 },
-  visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: "easeOut" } },
-  exit:   { y: "-100%", opacity: 0, transition: { duration: 0.3, ease: "easeIn" } },
-};
-
 const Hero: React.FC = () => {
-  const [showBanner, setShowBanner] = useState(true);
-
   return (
     <>
-    {/* Announcement Banner */} 
-    <AnimatePresence>
-      {showBanner && (
-        <motion.div
-          key="banner"
-          className="fixed top-15 left-0 w-full bg-blue-600 text-white px-4 py-3 flex justify-between items-center z-50"
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          variants={bannerVariants}
-        >
-          <span>
-            📖 I recently presented at {" "}
-            <strong>Neo4j Graph Summit Chicago 2025</strong> on how enterprise identity
-            graphs unlock next-gen analytics, marketing & CX.{" "}
-            <a
-              href="https://www.rejozmathew.com/blog/identity-graph"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline font-semibold"
-            >
-              Read article
-            </a>
-          </span>
-          <button
-            onClick={() => setShowBanner(false)}
-            aria-label="Close announcement"
-            className="text-2xl leading-none ml-4 hover:text-gray-200"
-          >
-            x
-          </button>
-        </motion.div>
-      )}
-    </AnimatePresence>
-
-
-    
+      {/* Hero Section */}
       {/* Hero Section */}
       <motion.div
         initial="hidden"
@@ -73,14 +27,13 @@ const Hero: React.FC = () => {
           <div className="container mx-auto flex flex-col items-center gap-8 px-4 md:flex-row">
             <div className="text-center md:w-1/2 md:text-left">
               <h1 className="mb-4 text-4xl font-bold text-gray-900 md:text-5xl">
-                Rejo Z Mathew
+                Abhilash George
               </h1>
               <h2 className="text-primary mb-6 text-2xl font-semibold md:text-3xl">
-                Senior Data & AI Strategy Leader in Financial Services
+                Product Owner & Digital Functional Engineer
               </h2>
               <p className="mb-8 text-lg text-gray-700">
-                Driving enterprise transformation by aligning data, analytics, and AI
-                with business strategy, regulatory priorities, and customer outcomes.
+                Driving platform adoption, vendor delivery, and operational visibility at enterprise scale — at Signify Digital, Bangalore.
               </p>
               <div className="flex justify-center gap-4 md:justify-start">
                 <Link
@@ -90,7 +43,7 @@ const Hero: React.FC = () => {
                   Contact Me
                 </Link>
                 <a
-                  href="/Resume - Rejo Z Mathew.pdf"
+                  href="/Resume - Abhilash George.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="rounded border border-primary px-4 py-2 font-bold text-primary shadow transition duration-300 hover:bg-primary/10"
@@ -102,14 +55,9 @@ const Hero: React.FC = () => {
             </div>
 
             <div className="flex justify-center md:w-1/2">
-              <Image
-                src="/profile_pic.jpg"
-                alt="Rejo Z Mathew - Profile Picture"
-                width={400}
-                height={400}
-                className="rounded-full shadow-lg"
-                priority
-              />
+              <div className="flex h-[400px] w-[400px] items-center justify-center rounded-full bg-gray-300 text-6xl font-bold text-gray-600 shadow-lg">
+                AG
+              </div>
             </div>
           </div>
         </section>

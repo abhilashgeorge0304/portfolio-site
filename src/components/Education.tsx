@@ -13,26 +13,26 @@ interface EducationItem {
 }
 
 const educationHistory: EducationItem[] = [
-  // ... (Keep existing educationHistory array) ...
   {
-    institution: "Kellogg School of Management, Northwestern University",
-    location: "Chicago, IL",
-    degree: "Chief Digital Officer Program",
-    details: "Executive Education",
-    year: "2024",
-  },
-  {
-    institution: "Kelley School of Business, Indiana University",
-    location: "Bloomington, IN",
-    degree: "MBA",
-    details: "Concentration in Finance, Marketing & Operations Management",
-    year: "2009",
-  },
-  {
-    institution: "College of Engineering, University of Kerala",
+    institution: "Mar Baselios College of Engineering and Technology (MBCET)",
     location: "Trivandrum, Kerala, India",
-    degree: "Bachelors in Electrical & Electronics Engineering",
-    year: "2003",
+    degree: "B.Tech in Computer Science and Engineering",
+    details: "CGPA: 7.89 | KTU University",
+    year: "2021–2025",
+  },
+  {
+    institution: "Christ Nagar Higher Secondary School",
+    location: "Trivandrum, Kerala, India",
+    degree: "Higher Secondary (Class XII) — Computer Science",
+    details: "Score: 95%",
+    year: "2019–2021",
+  },
+  {
+    institution: "Christ Nagar Central School",
+    location: "Trivandrum, Kerala, India",
+    degree: "CBSE (Class X)",
+    details: "Score: 87%",
+    year: "2019",
   },
 ];
 
@@ -54,11 +54,11 @@ const cardAnimationVariants = {
 
 const Education: React.FC = () => {
   return (
-    // Light theme: White background, light gray cards, dark text
-    <section id="education" className="bg-white py-20">
+    // Dark theme: Dark background, slightly lighter cards, light text
+    <section id="education" className="bg-[#2c3e50] py-20">
       <div className="container mx-auto max-w-4xl px-4">
         {/* Unified H2 style */}
-        <h2 className="border-primary mb-12 border-b-2 pb-2 text-center text-3xl font-bold text-gray-900">
+        <h2 className="border-gray-500 mb-12 border-b-2 pb-2 text-center text-3xl font-bold text-gray-100">
           Education
         </h2>
         <div className="space-y-8">
@@ -74,17 +74,17 @@ const Education: React.FC = () => {
               whileHover={{ scale: 1.02 }} // Added hover scale effect
               transition={{ type: "spring", stiffness: 300, damping: 20 }} // Smooth spring animation for hover
             >
-              <h3 className="text-xl font-semibold text-gray-900">
+              <h3 className="text-xl font-semibold text-gray-100">
                 {edu.institution}
               </h3>
               {edu.location && (
-                <p className="mb-1 text-sm text-gray-500">{edu.location}</p>
+                <p className="mb-1 text-sm text-gray-400">{edu.location}</p>
               )}
               <p className="text-primary text-lg font-medium">
                 {edu.degree} ({edu.year})
               </p>
               {edu.details && (
-                <p className="text-md mt-1 text-gray-800">{edu.details}</p>
+                <p className="text-md mt-1 text-gray-300">{edu.details}</p>
               )}
             </motion.div>
           ))}

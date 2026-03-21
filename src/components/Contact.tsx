@@ -2,36 +2,38 @@ import React from "react";
 
 const Contact: React.FC = () => {
   return (
-    // Light theme: White background, dark text
-    <section id="contact" className="bg-white py-20">
+    // Dark theme: Dark background, light text
+    <section id="contact" className="bg-[#2c3e50] py-20">
       <div className="container mx-auto max-w-2xl px-4 text-center">
         {/* Unified H2 style */}
-        <h2 className="border-primary mb-6 border-b-2 pb-2 text-center text-3xl font-bold text-gray-900">
+        <h2 className="border-gray-500 mb-6 border-b-2 pb-2 text-center text-3xl font-bold text-gray-100">
           Contact Me
         </h2>
-        <p className="mb-8 text-lg text-gray-700">
+        <p className="mb-8 text-lg text-gray-300">
           Let&apos;s connect and explore opportunities. Feel free
           to reach out via email or phone.
         </p>
 
         <div className="mb-8 space-y-4">
-          {/* Dark text, blue hover for links */}
-          <p className="text-gray-800">
+          <p className="text-gray-300">
             <a
-              href="mailto:rejozacharia@gmail.com"
+              href="mailto:abhilashgeorge0304@gmail.com"
               className="hover:text-primary transition duration-300"
             >
-              📧 rejozacharia@gmail.com
+              📧 abhilashgeorge0304@gmail.com
             </a>
           </p>
-          <p className="text-gray-800">
+          <p className="text-gray-300">
             <a
-              href="tel:+17074567356"
+              href="https://linkedin.com/in/abhilashgeorge34"
+              target="_blank"
+              rel="noopener noreferrer"
               className="hover:text-primary transition duration-300"
             >
-              📞 (707) 456-7356
+              🔗 linkedin.com/in/abhilashgeorge34
             </a>
           </p>
+          <p className="text-gray-300">📍 Bangalore, India</p>
         </div>
 
         {/* Optional: Placeholder for a simple contact form */}

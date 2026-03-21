@@ -9,106 +9,48 @@ interface ExperienceItem {
   location?: string;
   title: string;
   dates: string;
+  narrativeIntro?: string;
   description: string[];
 }
 
 const experiences: ExperienceItem[] = [
   {
-    company: "Discover Financial Services",
-    location: "Chicago",
-    title:
-      "Sr. Director, Data Science & Data Infrastructure Management (DNA)",
-    dates: "June 2022 – Present",
+    company: "Signify Digital",
+    location: "Bangalore",
+    title: "Product Owner & Digital Functional Engineer",
+    dates: "Present",
+    narrativeIntro: "I took ownership of a €50K platform that had sat dormant for two years and drove it to active, vendor-managed implementation — coordinating twelve people across five teams to get there. When our tech lead resigned, I stepped into the Datadog SME role and built the team's observability layer from the ground up: two dashboards, one for business stakeholders who need a ten-second health check, one for engineers who need to debug at 2 AM. Somewhere in between, I shipped automation that turned a two-week deployment process into a one-hour one.",
     description: [
-      "Led enterprise data & AI platform modernization across analytics, ML, and governance.",
-      "Built a cloud-native analytics platform on AWS and Snowflake.",
-      "Designed and delivered an enterprise Identity Graph and Customer 360 using Neo4j.",
-      "Integrated core banking, digital, and MarTech data to enable AI-driven decisioning.",
-      "Led data execution for large-scale portfolio migrations and divestitures.",
-      "Partnered with C-suite leaders to shape data & AI strategy and adoption.",
-      "Managed a global, multi-disciplinary data organization (~75 team members).",
-    ],
-  },
-  {
-    company: "Discover Financial Services",
-    location: "Chicago",
-    title: "Director, Data Science – Consumer Banking",
-    dates: "Oct 2018 – June 2022",
-    description: [
-      "Built and scaled an enterprise ML feature store for production analytics.",
-      "Enabled self-service BI across all Consumer Banking business lines.",
-      "Designed data frameworks supporting Consent Order remediation.",
-      "Implemented centralized controls and exception management (ServiceNow).",
-      "Served as Chief Data Steward, advancing governance and data quality standards.",
-    ],
-  },
-  {
-    company: "Discover Financial Services",
-    location: "Chicago",
-    title: "Sr. Manager, Analytics, BI & Pricing – Discover Home Loans",
-    dates: "Jul 2016 – Oct 2018",
-    description: [
-      "Built analytics and BI platforms following core system migrations.",
-      "Developed multi-touch attribution models for marketing optimization.",
-      "Led pricing analytics and redesigned risk-based pricing frameworks.",
-      "Delivered profitability improvements, including a 20% increase in ROE.",
-    ],
-  },
-  {
-    company: "Discover Financial Services",
-    location: "Chicago",
-    title: "Manager, Analytics & Data Management",
-    dates: "Jul 2014 – Jul 2016",
-    description: [
-      "Managed operational analytics and executive reporting for Home Loans.",
-    ],
-  },
-  {
-    company: "Discover Financial Services",
-    location: "Chicago",
-    title: "Project Manager, Analytics",
-    dates: "Apr 2012 – Jul 2014",
-    description: [
-      "Delivered analytics and management reporting for lending operations.",
-    ],
-  },
-  {
-    company: "American Express",
-    location: "Phoenix",
-    title: "Senior Business Analyst",
-    dates: "Apr 2010 – Apr 2012",
-    description: [
-      "Led analytics and reporting initiatives for Membership Rewards.",
-      "Managed multi-million-dollar analytics and technology programs.",
-    ],
-  },
-  {
-    company: "Deloitte Consulting LLP",
-    location: "Chicago",
-    title: "Senior Consultant (Summer Associate)",
-    dates: "Jun 2008 – Aug 2008",
-    description: [
-      "Developed a $40M business transformation plan for healthcare BI systems.",
-    ],
-  },
-  {
-    company: "Tata Consultancy Services",
-    location: "India",
-    title: "Assistant System Engineer",
-    dates: "Feb 2007 – Jul 2007",
-    description: [
-      "Led development teams delivering solutions for American Express.",
+      "Drove €50K/€90K platform rescue to active vendor implementation.",
+      "Coordinated 12-person cross-functional delivery across 5 teams.",
+      "Built observability dashboards serving business stakeholders and engineers.",
+      "Automated deployment pipelines to reduce deployment time from 2 weeks to 1 hour.",
     ],
   },
   {
     company: "UST Global",
-    location: "India",
-    title: "Senior Software Engineer",
-    dates: "Dec 2003 – Oct 2006",
+    title: "Robotics Intern",
+    dates: "Past",
     description: [
-      "Built enterprise software solutions for insurance and financial clients.",
+      "Completed a robotics internship while still in school.",
     ],
   },
+  {
+    company: "KELTRON",
+    title: "IoT Prototyping",
+    dates: "Past",
+    description: [
+      "Developed IoT prototypes exploring how technology meets the real world.",
+    ],
+  },
+  {
+    company: "All India Radio",
+    title: "Broadcast Engineering",
+    dates: "Past",
+    description: [
+      "Gained hands-on experience in broadcast engineering.",
+    ],
+  }
 ];
 
 // Animation variants for fade-in effect
@@ -159,6 +101,11 @@ const Experience: React.FC = () => {
                 {exp.location ? `, ${exp.location}` : ""}
               </p>
               <p className="mb-2 text-sm text-gray-500">{exp.dates}</p>
+              {exp.narrativeIntro && (
+                <p className="mb-4 text-sm text-gray-800 leading-relaxed italic border-l-4 border-gray-200 pl-3">
+                  {exp.narrativeIntro}
+                </p>
+              )}
               <ul className="list-inside list-disc space-y-1 text-sm text-gray-700">
                 {exp.description.map((item, idx) => (
                   <li key={idx}>{item}</li>

@@ -1,0 +1,346 @@
+---
+title: "From Blind Spots to Business Visibility: Building an Observability Layer for Automated Workflows"
+date: "2026-03-19"
+description: "How I identified an underutilised monitoring platform, built a comprehensive observability dashboard serving two distinct audiences, delivered it through structured project management, and extended it with predictive resource forecasting."
+tags: ["Datadog", "Observability", "Project Management", "DevOps", "Dashboard", "Monitoring"]
+contentType: "case-study"
+traits: ["project-management", "technical-leadership", "case-study", "how-to"]
+heroImage: ""
+---
+
+{/* Hero section */}
+
+### The Script Nobody Knew Had Failed
+
+Our team ran dozens of automated scripts on a virtual machine — processing alerts from connected lighting systems, ingesting data from enterprise resource platforms, syncing records across cloud warehouses. These scripts were the backbone of daily operations across multiple business-critical systems. And we had no idea when they failed.
+
+The only way anyone found out was when a user raised a ticket. By then, the damage was done — stale data, missed alerts, frustrated stakeholders asking why something hadn't updated. We were running a reactive operation and calling it good enough.
+
+Meanwhile, the organisation had a Datadog subscription being used almost exclusively for monitoring product-level alerts from IoT lighting infrastructure. A capable observability platform, barely utilised for anything operational. I saw the gap, and I decided to fix it.
+
+### Understanding What Runs on the VM
+
+Before building any dashboard, I needed to understand exactly what was running on this machine and how different each workload was. It turned out we had two fundamentally different types of automation sharing the same VM — each with its own architecture, failure modes, and business impact.
+
+**Workload 1: Alert Processing Pipeline.** A modular Python application that monitors multiple connected lighting system platforms. The architecture is clean: a main orchestrator initialises configuration, sets up the runtime environment, and triggers operations for each monitored platform in parallel. Each platform has its own processor class — a specialised adaptor that fetches alert emails from an inbox, parses the HTML content, extracts structured alert data, converts it to JSON, and pushes events to the monitoring platform. Some platforms add an uptime calculation layer on top: tracking connected device counts, computing failure thresholds, and only generating alerts when uptime drops below a target — say, below 95%.
+
+The codebase is well-structured. A `core/` layer handles shared utilities, database operations (SQLite with an ORM), and a custom logging module that sends execution summaries via email. A `services/` layer wraps external integrations — email APIs, the monitoring platform's API. `fetchers/` and `exporters/` handle the data flow in and out. And `processors/` contains the per-platform business logic. The whole thing runs from a single entry point that orchestrates all processors concurrently.
+
+**Workload 2: Data Ingestion Pipeline.** A completely different beast. An ERP system uploads CSV files to cloud storage every 30 minutes. A scheduled Python script on the VM downloads these files, transforms them from a Windows-specific encoding to a format compatible with the cloud data warehouse, and loads them into target tables. This pipeline has its own failure modes — encoding mismatches, missing files, malformed CSVs, cloud storage connectivity issues — none of which overlap with the alert processing pipeline.
+
+Two pipelines. Different architectures. Different schedules. Different owners on the team. Different failure modes. One VM. Zero visibility into any of it.
+
+<svg width="100%" viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg" style={{maxWidth: '760px', margin: '2rem auto', display: 'block'}}>
+  {/* VM container */}
+  <rect x="20" y="20" width="720" height="320" rx="12" fill="#2C3E50" opacity="0.06" stroke="#2C3E50" strokeWidth="1.2"/>
+  <text x="380" y="50" textAnchor="middle" fontSize="12" fontWeight="600" fill="#2C3E50" fontFamily="sans-serif" letterSpacing="1.5">VIRTUAL MACHINE</text>
+
+  {/* Workload 1 */}
+  <rect x="40" y="70" width="330" height="250" rx="8" fill="#1F4E79"/>
+  <text x="205" y="96" textAnchor="middle" fontSize="12" fontWeight="600" fill="#f9fafb" fontFamily="sans-serif">Alert Processing Pipeline</text>
+  <line x1="55" y1="106" x2="355" y2="106" stroke="#a8c4e0" strokeWidth="0.4"/>
+
+  <text x="205" y="126" textAnchor="middle" fontSize="10" fill="#a8c4e0" fontFamily="sans-serif">main.py → orchestrates all processors in parallel</text>
+
+  <rect x="56" y="140" width="145" height="42" rx="5" fill="#1F4E79" stroke="#a8c4e0" strokeWidth="0.5"/>
+  <text x="128" y="158" textAnchor="middle" fontSize="9" fontWeight="500" fill="#a8c4e0" fontFamily="sans-serif">Platform A Processor</text>
+  <text x="128" y="172" textAnchor="middle" fontSize="8" fill="#7ba3c4" fontFamily="sans-serif">fetch → parse → JSON → push</text>
+
+  <rect x="210" y="140" width="145" height="42" rx="5" fill="#1F4E79" stroke="#a8c4e0" strokeWidth="0.5"/>
+  <text x="282" y="158" textAnchor="middle" fontSize="9" fontWeight="500" fill="#a8c4e0" fontFamily="sans-serif">Platform B Processor</text>
+  <text x="282" y="172" textAnchor="middle" fontSize="8" fill="#7ba3c4" fontFamily="sans-serif">fetch → parse → uptime → push</text>
+
+  <rect x="56" y="190" width="145" height="42" rx="5" fill="#1F4E79" stroke="#a8c4e0" strokeWidth="0.5"/>
+  <text x="128" y="208" textAnchor="middle" fontSize="9" fontWeight="500" fill="#a8c4e0" fontFamily="sans-serif">Platform C Processor</text>
+  <text x="128" y="222" textAnchor="middle" fontSize="8" fill="#7ba3c4" fontFamily="sans-serif">fetch → parse → JSON → push</text>
+
+  <rect x="210" y="190" width="145" height="42" rx="5" fill="#1F4E79" stroke="#a8c4e0" strokeWidth="0.5"/>
+  <text x="282" y="208" textAnchor="middle" fontSize="9" fontWeight="500" fill="#a8c4e0" fontFamily="sans-serif">Platform D Processor</text>
+  <text x="282" y="222" textAnchor="middle" fontSize="8" fill="#7ba3c4" fontFamily="sans-serif">fetch → parse → uptime → push</text>
+
+  <text x="205" y="252" textAnchor="middle" fontSize="9" fill="#7ba3c4" fontFamily="sans-serif">+ 3 more platform processors</text>
+
+  <rect x="56" y="264" width="300" height="38" rx="5" fill="#183D5E" stroke="#a8c4e0" strokeWidth="0.3"/>
+  <text x="206" y="280" textAnchor="middle" fontSize="9" fill="#a8c4e0" fontFamily="sans-serif">core/ — utilities, SQLite DB, logging &amp; alerting</text>
+  <text x="206" y="294" textAnchor="middle" fontSize="9" fill="#a8c4e0" fontFamily="sans-serif">services/ — email API, monitoring API wrappers</text>
+
+  {/* Workload 2 */}
+  <rect x="400" y="70" width="320" height="250" rx="8" fill="#2A7F62"/>
+  <text x="560" y="96" textAnchor="middle" fontSize="12" fontWeight="600" fill="#f9fafb" fontFamily="sans-serif">Data Ingestion Pipeline</text>
+  <line x1="415" y1="106" x2="705" y2="106" stroke="#a8dfc9" strokeWidth="0.4"/>
+
+  <rect x="416" y="120" width="288" height="36" rx="5" fill="#2A7F62" stroke="#a8dfc9" strokeWidth="0.5"/>
+  <text x="560" y="138" textAnchor="middle" fontSize="9.5" fill="#a8dfc9" fontFamily="sans-serif">ERP → CSV files → cloud storage (every 30 min)</text>
+  <text x="560" y="150" textAnchor="middle" fontSize="8" fill="#7bc4a8" fontFamily="sans-serif">Windows encoding format</text>
+
+  <text x="560" y="175" textAnchor="middle" fontSize="10" fill="#a8dfc9" fontFamily="sans-serif">↓</text>
+
+  <rect x="416" y="182" width="288" height="36" rx="5" fill="#2A7F62" stroke="#a8dfc9" strokeWidth="0.5"/>
+  <text x="560" y="200" textAnchor="middle" fontSize="9.5" fill="#a8dfc9" fontFamily="sans-serif">Scheduled script downloads &amp; transforms</text>
+  <text x="560" y="212" textAnchor="middle" fontSize="8" fill="#7bc4a8" fontFamily="sans-serif">Windows encoding → UTF-8 / LF line endings</text>
+
+  <text x="560" y="237" textAnchor="middle" fontSize="10" fill="#a8dfc9" fontFamily="sans-serif">↓</text>
+
+  <rect x="416" y="244" width="288" height="36" rx="5" fill="#2A7F62" stroke="#a8dfc9" strokeWidth="0.5"/>
+  <text x="560" y="262" textAnchor="middle" fontSize="9.5" fill="#a8dfc9" fontFamily="sans-serif">Load into cloud data warehouse</text>
+  <text x="560" y="274" textAnchor="middle" fontSize="8" fill="#7bc4a8" fontFamily="sans-serif">Pipes, streams, and tasks for ingestion</text>
+
+  <rect x="416" y="290" width="288" height="20" rx="4" fill="#1E6B50"/>
+  <text x="560" y="304" textAnchor="middle" fontSize="8" fill="#a8dfc9" fontFamily="sans-serif">Failure modes: encoding, missing files, malformed CSV, connectivity</text>
+</svg>
+
+<span style={{display: 'block', textAlign: 'center', fontSize: '0.85rem', color: '#6b7280', marginTop: '-0.5rem', marginBottom: '2rem'}}>Two fundamentally different workloads on one VM — each with different architectures, schedules, and failure modes</span>
+
+### Building the Foundation
+
+I started with what I could build and validate without depending on anyone else.
+
+**Step 1: Agent installation.** I installed the Datadog agent directly on the VM, configured the API keys, established connectivity, and validated that system-level metrics — CPU, memory, disk usage, uptime — were flowing into the platform correctly. This was the foundation everything else would build on.
+
+**Step 2: Proof of concept dashboard.** With the agent streaming data, I built a simple sanity-check dashboard: VM health metrics displayed in real time, confirming the monitoring approach was viable. This POC served a critical purpose — it was what I used to get stakeholder buy-in for the full project. Showing a working dashboard with live metrics is more convincing than any slide deck.
+
+**Step 3: Code-level instrumentation.** VM metrics tell you the machine is alive. They don't tell you whether the scripts running on it are succeeding or failing. The next layer required instrumenting the code itself — emitting metrics on execution status, duration, and errors using the DogStatsD API so that application-level behaviour was visible alongside infrastructure health.
+
+I defined the metric schema and the monitoring specification — what metrics to emit, at what granularity, with which tags — and delegated the code instrumentation work to team members who had deeper familiarity with each pipeline's codebase. One team member handled the alert processing pipeline instrumentation, another handled scaling it across all monitored systems. I validated the integration end-to-end: making sure what the code emitted matched what the dashboard expected.
+
+### Designing Two Dashboards for Two Audiences
+
+This is where the project stopped being a technical exercise and became a product decision. We had two groups who needed visibility into the same VM — but they needed to see fundamentally different things.
+
+**The business stakeholders** didn't care about CPU percentages or Python stack traces. They cared about: Are the lighting systems being monitored? Is the data pipeline running on time? Are there any failures I need to know about before someone complains? Their dashboard needed to be glanceable — a quick check that says "everything is fine" or "something needs attention."
+
+**The digital/engineering team** needed the opposite: granular detail. Which specific processor failed? At which step — fetching, parsing, transformation, or export? Was it a code error or an infrastructure problem? They needed a debugging surface, not a status page. And they needed it fast — because every minute spent figuring out *where* something failed is a minute of escalation risk.
+
+I designed both dashboards to pull from the same underlying metric stream — no data duplication, just different views of the same truth.
+
+<svg width="100%" viewBox="0 0 760 420" xmlns="http://www.w3.org/2000/svg" style={{maxWidth: '760px', margin: '2rem auto', display: 'block'}}>
+  {/* Business Dashboard */}
+  <rect x="10" y="10" width="360" height="395" rx="8" fill="#272B33"/>
+  <rect x="10" y="10" width="360" height="32" rx="8" fill="#3a3f4b"/>
+  <text x="24" y="31" fontSize="11" fontWeight="600" fill="#e8e8e8" fontFamily="sans-serif">Business Operations Dashboard</text>
+  <rect x="310" y="17" width="50" height="18" rx="4" fill="#2A7F62" opacity="0.3"/>
+  <text x="335" y="30" textAnchor="middle" fontSize="8" fontWeight="500" fill="#2A7F62" fontFamily="sans-serif">LIVE</text>
+
+  {/* Status row */}
+  <rect x="22" y="52" width="164" height="60" rx="6" fill="#1a1d23"/>
+  <text x="32" y="68" fontSize="8" fill="#8a8fa3" fontFamily="sans-serif">Alert Pipeline</text>
+  <text x="104" y="96" textAnchor="middle" fontSize="20" fontWeight="700" fill="#2A7F62" fontFamily="sans-serif">HEALTHY</text>
+
+  <rect x="196" y="52" width="164" height="60" rx="6" fill="#1a1d23"/>
+  <text x="206" y="68" fontSize="8" fill="#8a8fa3" fontFamily="sans-serif">Data Ingestion</text>
+  <text x="278" y="96" textAnchor="middle" fontSize="20" fontWeight="700" fill="#2A7F62" fontFamily="sans-serif">HEALTHY</text>
+
+  {/* Job success rate */}
+  <rect x="22" y="122" width="338" height="80" rx="6" fill="#1a1d23"/>
+  <text x="32" y="138" fontSize="8" fill="#8a8fa3" fontFamily="sans-serif">Job Success Rate — Last 24h</text>
+  {/* Fake timeseries */}
+  <line x1="32" y1="188" x2="350" y2="188" stroke="#333842" strokeWidth="0.5"/>
+  <polyline points="32,168 65,165 98,164 131,166 164,155 197,158 230,156 263,154 296,156 329,153 350,152" fill="none" stroke="#2A7F62" strokeWidth="1.8"/>
+  <text x="350" y="150" textAnchor="end" fontSize="9" fontWeight="600" fill="#2A7F62" fontFamily="sans-serif">98.2%</text>
+
+  {/* Last run status grid */}
+  <rect x="22" y="212" width="338" height="90" rx="6" fill="#1a1d23"/>
+  <text x="32" y="228" fontSize="8" fill="#8a8fa3" fontFamily="sans-serif">System Status — Last Run</text>
+  
+  <rect x="32" y="238" width="98" height="24" rx="4" fill="#2A7F62" opacity="0.2"/>
+  <text x="81" y="254" textAnchor="middle" fontSize="8.5" fill="#2A7F62" fontFamily="sans-serif">System A ✓</text>
+  <rect x="138" y="238" width="98" height="24" rx="4" fill="#2A7F62" opacity="0.2"/>
+  <text x="187" y="254" textAnchor="middle" fontSize="8.5" fill="#2A7F62" fontFamily="sans-serif">System B ✓</text>
+  <rect x="244" y="238" width="98" height="24" rx="4" fill="#2A7F62" opacity="0.2"/>
+  <text x="293" y="254" textAnchor="middle" fontSize="8.5" fill="#2A7F62" fontFamily="sans-serif">System C ✓</text>
+  <rect x="32" y="268" width="98" height="24" rx="4" fill="#2A7F62" opacity="0.2"/>
+  <text x="81" y="284" textAnchor="middle" fontSize="8.5" fill="#2A7F62" fontFamily="sans-serif">System D ✓</text>
+  <rect x="138" y="268" width="98" height="24" rx="4" fill="#d4a017" opacity="0.2"/>
+  <text x="187" y="284" textAnchor="middle" fontSize="8.5" fill="#d4a017" fontFamily="sans-serif">System E ⚠</text>
+  <rect x="244" y="268" width="98" height="24" rx="4" fill="#2A7F62" opacity="0.2"/>
+  <text x="293" y="284" textAnchor="middle" fontSize="8.5" fill="#2A7F62" fontFamily="sans-serif">Ingestion ✓</text>
+
+  {/* Uptime */}
+  <rect x="22" y="312" width="164" height="80" rx="6" fill="#1a1d23"/>
+  <text x="32" y="328" fontSize="8" fill="#8a8fa3" fontFamily="sans-serif">VM Uptime</text>
+  <text x="104" y="368" textAnchor="middle" fontSize="26" fontWeight="700" fill="#e8e8e8" fontFamily="sans-serif">14d 6h</text>
+
+  <rect x="196" y="312" width="164" height="80" rx="6" fill="#1a1d23"/>
+  <text x="206" y="328" fontSize="8" fill="#8a8fa3" fontFamily="sans-serif">Active Alerts</text>
+  <text x="278" y="368" textAnchor="middle" fontSize="26" fontWeight="700" fill="#d4a017" fontFamily="sans-serif">1</text>
+  <text x="278" y="385" textAnchor="middle" fontSize="8" fill="#8a8fa3" fontFamily="sans-serif">System E — delayed run</text>
+
+  {/* Engineering Dashboard */}
+  <rect x="390" y="10" width="360" height="395" rx="8" fill="#272B33"/>
+  <rect x="390" y="10" width="360" height="32" rx="8" fill="#3a3f4b"/>
+  <text x="404" y="31" fontSize="11" fontWeight="600" fill="#e8e8e8" fontFamily="sans-serif">Engineering Debug Dashboard</text>
+  <rect x="690" y="17" width="50" height="18" rx="4" fill="#c0392b" opacity="0.3"/>
+  <text x="715" y="30" textAnchor="middle" fontSize="8" fontWeight="500" fill="#c0392b" fontFamily="sans-serif">DEBUG</text>
+
+  {/* CPU + Memory */}
+  <rect x="402" y="52" width="164" height="60" rx="6" fill="#1a1d23"/>
+  <text x="412" y="68" fontSize="8" fill="#8a8fa3" fontFamily="sans-serif">VM CPU</text>
+  <polyline points="412,96 425,88 438,90 451,85 464,82 477,86 490,78 503,80 516,74 529,76 542,72 555,70" fill="none" stroke="#1F4E79" strokeWidth="1.5"/>
+  <text x="555" y="68" textAnchor="end" fontSize="10" fontWeight="600" fill="#1F4E79" fontFamily="sans-serif">34%</text>
+
+  <rect x="576" y="52" width="164" height="60" rx="6" fill="#1a1d23"/>
+  <text x="586" y="68" fontSize="8" fill="#8a8fa3" fontFamily="sans-serif">VM Memory</text>
+  <polyline points="586,92 599,90 612,91 625,88 638,87 651,89 664,86 677,85 690,84 703,83 716,82 729,82" fill="none" stroke="#d4a017" strokeWidth="1.5"/>
+  <text x="729" y="68" textAnchor="end" fontSize="10" fontWeight="600" fill="#d4a017" fontFamily="sans-serif">67%</text>
+
+  {/* Job execution detail */}
+  <rect x="402" y="122" width="338" height="110" rx="6" fill="#1a1d23"/>
+  <text x="412" y="138" fontSize="8" fill="#8a8fa3" fontFamily="sans-serif">Job Execution — Last 6 Hours (per processor)</text>
+
+  <text x="412" y="158" fontSize="8" fill="#e8e8e8" fontFamily="monospace">system_a_processor</text>
+  <rect x="540" y="150" width="100" height="10" rx="2" fill="#2A7F62" opacity="0.6"/>
+  <rect x="640" y="150" width="6" height="10" rx="2" fill="#2A7F62"/>
+  <text x="660" y="159" fontSize="8" fill="#2A7F62" fontFamily="sans-serif">OK</text>
+
+  <text x="412" y="174" fontSize="8" fill="#e8e8e8" fontFamily="monospace">system_b_processor</text>
+  <rect x="540" y="166" width="80" height="10" rx="2" fill="#2A7F62" opacity="0.6"/>
+  <rect x="620" y="166" width="26" height="10" rx="2" fill="#c0392b" opacity="0.8"/>
+  <text x="660" y="175" fontSize="8" fill="#c0392b" fontFamily="sans-serif">ERR</text>
+
+  <text x="412" y="190" fontSize="8" fill="#e8e8e8" fontFamily="monospace">system_c_processor</text>
+  <rect x="540" y="182" width="100" height="10" rx="2" fill="#2A7F62" opacity="0.6"/>
+  <rect x="640" y="182" width="6" height="10" rx="2" fill="#2A7F62"/>
+  <text x="660" y="191" fontSize="8" fill="#2A7F62" fontFamily="sans-serif">OK</text>
+
+  <text x="412" y="206" fontSize="8" fill="#e8e8e8" fontFamily="monospace">ingestion_pipeline</text>
+  <rect x="540" y="198" width="100" height="10" rx="2" fill="#2A7F62" opacity="0.6"/>
+  <rect x="640" y="198" width="6" height="10" rx="2" fill="#2A7F62"/>
+  <text x="660" y="207" fontSize="8" fill="#2A7F62" fontFamily="sans-serif">OK</text>
+
+  <text x="412" y="226" fontSize="8" fill="#c0392b" fontFamily="sans-serif">▸ system_b: parse_html failed at 14:32 — timeout on email fetch</text>
+
+  {/* Error log stream */}
+  <rect x="402" y="242" width="338" height="80" rx="6" fill="#1a1d23"/>
+  <text x="412" y="258" fontSize="8" fill="#8a8fa3" fontFamily="sans-serif">Error Log Stream</text>
+  <text x="412" y="276" fontSize="7.5" fill="#c0392b" fontFamily="monospace">14:32:18 [ERR] system_b: OutlookFetcher timeout</text>
+  <text x="412" y="290" fontSize="7.5" fill="#c0392b" fontFamily="monospace">14:32:18 [ERR] system_b: retry 1/3 — waiting 30s</text>
+  <text x="412" y="304" fontSize="7.5" fill="#d4a017" fontFamily="monospace">14:33:02 [WARN] system_e: exec duration 2.1x avg</text>
+  <text x="412" y="318" fontSize="7.5" fill="#2A7F62" fontFamily="monospace">14:35:41 [OK] system_b: retry succeeded</text>
+
+  {/* Disk usage */}
+  <rect x="402" y="332" width="164" height="60" rx="6" fill="#1a1d23"/>
+  <text x="412" y="348" fontSize="8" fill="#8a8fa3" fontFamily="sans-serif">Disk Usage</text>
+  <rect x="412" y="358" width="140" height="10" rx="3" fill="#333842"/>
+  <rect x="412" y="358" width="84" height="10" rx="3" fill="#d4a017"/>
+  <text x="412" y="382" fontSize="9" fill="#d4a017" fontFamily="sans-serif">60% — 24GB / 40GB</text>
+
+  {/* Execution duration */}
+  <rect x="576" y="332" width="164" height="60" rx="6" fill="#1a1d23"/>
+  <text x="586" y="348" fontSize="8" fill="#8a8fa3" fontFamily="sans-serif">Avg Execution Duration</text>
+  <text x="658" y="376" textAnchor="middle" fontSize="18" fontWeight="600" fill="#e8e8e8" fontFamily="sans-serif">4m 12s</text>
+  <text x="658" y="390" textAnchor="middle" fontSize="8" fill="#8a8fa3" fontFamily="sans-serif">alert pipeline — last 24h</text>
+</svg>
+
+<span style={{display: 'block', textAlign: 'center', fontSize: '0.85rem', color: '#6b7280', marginTop: '-0.5rem', marginBottom: '2rem'}}>Two dashboards, one data stream — business sees status, engineering sees detail</span>
+
+### The Business Dashboard
+
+The business dashboard is designed to be read in under ten seconds. At the top: two large status indicators — one for the alert processing pipeline, one for the data ingestion pipeline. Green means everything ran successfully on the last execution. Anything else means someone should ask a question.
+
+Below that, a **job success rate timeseries** showing the percentage of successful runs over the last 24 hours. Business stakeholders don't need to know which specific processor failed — they need to know whether the overall success rate is trending down. A sustained dip from 99% to 92% tells them something systemic is happening, even if each individual failure seems minor.
+
+A **system status grid** shows the last-run result for each monitored platform and the ingestion pipeline. Green checkmarks for healthy, amber warnings for delayed runs, red crosses for failures. This is the widget that gets checked first thing in the morning and last thing before end of day.
+
+At the bottom: **VM uptime** (how long since the last restart — a proxy for stability) and an **active alerts count** with a one-line description of what's currently flagged. If this number is zero, the dashboard is doing its job. If it's not, the description tells the stakeholder exactly what's wrong without needing to open a ticket.
+
+### The Engineering Dashboard
+
+The engineering dashboard assumes the reader already knows something is wrong and needs to find out *where* and *why*.
+
+**VM resource metrics** — CPU and memory timeseries — sit at the top. These aren't just decoration. When a script fails, the first question is always: "Is it a code problem or an infrastructure problem?" If CPU was at 98% when the script failed, it's a resource issue. If CPU was at 30%, it's in the code. Having these metrics right next to the execution log eliminates the first five minutes of every debugging session.
+
+The **job execution panel** is the centrepiece. It shows each processor's execution history as a horizontal bar — green segments for successful runs, red segments for failures. You can see at a glance not just that something failed, but *when* it failed and whether it recovered. Below the bars, a one-line error summary points to the specific failure: which processor, which step (fetch, parse, transform, export), and what the error was.
+
+An **error log stream** shows the most recent log entries filtered to warnings and errors only. This is where the sub-job granularity pays off. Instead of "alert_pipeline failed," the log shows "system_b: OutlookFetcher timeout at 14:32" — immediately isolating the root cause to a specific platform's email fetch operation, not the entire pipeline.
+
+**Disk usage** and **average execution duration** round out the panel. Disk matters because the VM accumulates processed files, archived emails, and database records over time — if nobody's watching, the disk fills up and everything fails at once. Execution duration matters because gradual slowdowns are the early warning of bigger problems — a processor that used to take 2 minutes and now takes 8 is probably hitting an API rate limit or a growing dataset.
+
+### Sub-Job Granularity: The Design Decision That Made It Useful
+
+The most important design decision wasn't what to monitor — it was **at what level of depth**. The easy approach would have been to track whether each main script ran or didn't. But that tells you almost nothing useful when something breaks.
+
+Take the alert processing pipeline. The orchestrator runs all processors in parallel. If one processor fails, the orchestrator still completes — the other processors finish successfully. Without sub-job monitoring, the dashboard would show "pipeline: success" even though one platform's alerts went completely unprocessed.
+
+I designed the monitoring to capture the processor hierarchy. Each processor reports its own execution status, duration, and error count independently, tagged by platform and by processing step. The dashboard then visualises this as a per-processor timeline — so when something breaks, you can see that the main orchestrator is fine, platform A is fine, but platform B's HTML parser threw an exception at 14:32 because the email format changed.
+
+<svg width="100%" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" style={{maxWidth: '720px', margin: '2rem auto', display: 'block'}}>
+  {/* Background */}
+  <rect x="0" y="0" width="720" height="240" rx="8" fill="#272B33"/>
+  <text x="15" y="22" fontSize="9" fill="#8a8fa3" fontFamily="sans-serif">Alert Processing Pipeline — Sub-Job Status (last run)</text>
+
+  {/* Orchestrator */}
+  <rect x="15" y="35" width="690" height="28" rx="4" fill="#1a1d23"/>
+  <text x="25" y="53" fontSize="9" fontWeight="500" fill="#e8e8e8" fontFamily="monospace">main.py (orchestrator)</text>
+  <rect x="590" y="41" width="60" height="16" rx="3" fill="#2A7F62" opacity="0.3"/>
+  <text x="620" y="53" textAnchor="middle" fontSize="8" fill="#2A7F62" fontFamily="sans-serif">RUNNING</text>
+  <text x="665" y="53" fontSize="8" fill="#8a8fa3" fontFamily="sans-serif">12m 4s</text>
+
+  {/* Platform rows */}
+  <rect x="35" y="70" width="670" height="24" rx="3" fill="#1a1d23"/>
+  <text x="45" y="86" fontSize="8.5" fill="#e8e8e8" fontFamily="monospace">├─ platform_a</text>
+  <text x="200" y="86" fontSize="8" fill="#8a8fa3" fontFamily="sans-serif">fetch ✓  parse ✓  transform ✓  export ✓</text>
+  <rect x="590" y="76" width="50" height="14" rx="3" fill="#2A7F62" opacity="0.3"/>
+  <text x="615" y="86" textAnchor="middle" fontSize="7.5" fill="#2A7F62" fontFamily="sans-serif">OK</text>
+  <text x="665" y="86" fontSize="8" fill="#8a8fa3" fontFamily="sans-serif">3m 12s</text>
+
+  <rect x="35" y="98" width="670" height="24" rx="3" fill="#1a1d23"/>
+  <text x="45" y="114" fontSize="8.5" fill="#c0392b" fontFamily="monospace">├─ platform_b</text>
+  <text x="200" y="114" fontSize="8" fill="#8a8fa3" fontFamily="sans-serif">fetch ✓  parse <tspan fill="#c0392b" fontWeight="600">✗</tspan>  transform ⏸  export ⏸</text>
+  <rect x="590" y="104" width="50" height="14" rx="3" fill="#c0392b" opacity="0.3"/>
+  <text x="615" y="114" textAnchor="middle" fontSize="7.5" fill="#c0392b" fontFamily="sans-serif">FAIL</text>
+  <text x="665" y="114" fontSize="8" fill="#c0392b" fontFamily="sans-serif">8m 12s</text>
+
+  <rect x="35" y="126" width="670" height="24" rx="3" fill="#1a1d23"/>
+  <text x="45" y="142" fontSize="8.5" fill="#e8e8e8" fontFamily="monospace">├─ platform_c</text>
+  <text x="200" y="142" fontSize="8" fill="#8a8fa3" fontFamily="sans-serif">fetch ✓  parse ✓  uptime_calc ✓  export ✓</text>
+  <rect x="590" y="132" width="50" height="14" rx="3" fill="#2A7F62" opacity="0.3"/>
+  <text x="615" y="142" textAnchor="middle" fontSize="7.5" fill="#2A7F62" fontFamily="sans-serif">OK</text>
+  <text x="665" y="142" fontSize="8" fill="#8a8fa3" fontFamily="sans-serif">4m 48s</text>
+
+  <rect x="35" y="154" width="670" height="24" rx="3" fill="#1a1d23"/>
+  <text x="45" y="170" fontSize="8.5" fill="#e8e8e8" fontFamily="monospace">└─ platform_d ... g</text>
+  <text x="200" y="170" fontSize="8" fill="#8a8fa3" fontFamily="sans-serif">all steps ✓</text>
+  <rect x="590" y="160" width="50" height="14" rx="3" fill="#2A7F62" opacity="0.3"/>
+  <text x="615" y="170" textAnchor="middle" fontSize="7.5" fill="#2A7F62" fontFamily="sans-serif">OK</text>
+
+  {/* Root cause callout */}
+  <rect x="35" y="190" width="670" height="36" rx="4" fill="#c0392b" opacity="0.1" stroke="#c0392b" strokeWidth="0.6"/>
+  <text x="50" y="208" fontSize="9" fontWeight="500" fill="#c0392b" fontFamily="sans-serif">Root cause: platform_b → parse step failed (HTML table structure changed in source email)</text>
+  <text x="50" y="220" fontSize="8" fill="#8a8fa3" fontFamily="sans-serif">Orchestrator status is OK — the failure is isolated to one platform. Other systems are unaffected.</text>
+</svg>
+
+<span style={{display: 'block', textAlign: 'center', fontSize: '0.85rem', color: '#6b7280', marginTop: '-0.5rem', marginBottom: '2rem'}}>Sub-job monitoring — the orchestrator shows success, but one platform's parser failed. Without this granularity, you'd see "pipeline OK" and miss it entirely.</span>
+
+This granularity was applied across both workloads. The data ingestion pipeline has its own sub-steps — download, transform, load — each reporting independently. When the pipeline fails, the dashboard shows whether it was a connectivity issue to cloud storage, an encoding problem in the CSV, or a schema mismatch at the warehouse. Different failures, different fixes, immediately visible.
+
+### Delivering Through Structured Project Management
+
+Building the dashboard was a technical exercise. Scaling it across all systems and making it production-grade was a project management exercise. I structured the work using phased delivery — clear milestones, defined ownership, and dependencies mapped upfront.
+
+**Phase 1 — Infrastructure (owner: me).** Agent installation, connectivity validation, POC dashboard. This had to be complete before anything else could start. No dependencies on anyone else.
+
+**Phase 2 — Single application instrumentation (delegated + validated).** Implemented code-level monitoring in one representative application. I defined the metric schema and specifications. A team member with deeper code familiarity handled the DogStatsD integration — emitting metrics for execution status, duration, and errors. I validated the end-to-end flow: metrics appearing in Datadog, dashboard widgets responding correctly.
+
+**Phase 3 — Log monitoring integration (coordinated handoff).** Configured Datadog log pipelines and filters. Created log-based dashboard widgets. The log schema had to match what the dashboard expected — which meant the person building the log integration and the person designing the dashboard needed a shared specification. I wrote that spec and managed the handoff.
+
+**Phase 4 — Scale to all systems (template + review).** Rolled the monitoring code out to all processors and the ingestion pipeline. Each system's scripts were managed by a different team member, so I created a monitoring instrumentation template that standardised how every application reports. Team members adapted the template to their pipelines; I reviewed each implementation and validated the dashboard reflected all systems correctly.
+
+**Phase 5 — Alerting (simulated failures).** Configured Datadog monitors to trigger email alerts on job failures, abnormally long execution times, error spikes, and resource exhaustion. Validated through simulated failure scenarios — intentionally breaking scripts to confirm alerts fired correctly and reached the right people.
+
+Each phase had a dependency on the previous one — you can't build log-based widgets without log pipelines, and you can't configure meaningful alerts without the full metric stream flowing. This dependency chain is why structured phasing mattered. Without it, people would have been building dashboards for metrics that weren't being emitted yet.
+
+### Going Further: Predictive Resource Forecasting
+
+The dashboard solved the visibility problem. But even with monitoring in place, we were still reacting to resource exhaustion after the fact — scripts failing because the VM ran out of disk space during a heavy processing cycle, or CPU spiking during concurrent runs.
+
+I'm now extending the dashboard with a **predictive forecasting layer** — using Datadog's built-in forecast functions alongside a unit economics model I'm building on top. The idea: if you know how much resource one monitored system consumes on average, you can project when the VM will need an upgrade based on growth. Instead of discovering disk is full at 2 AM when a script fails, the dashboard would alert days or weeks in advance — before resources become a problem.
+
+The goal is to make the system robust enough to work even after team members rotate. The dashboards, the alerts, and eventually the forecasts should be self-sustaining — not dependent on any single person knowing the current state of the VM. The system knows.
+
+### What This Changed
+
+Before this project, we had no visibility into operational workflow health. Failures were discovered by users raising tickets. Debugging meant logging into the VM and reading local log files. Nobody could tell business stakeholders whether systems were healthy without checking manually.
+
+After: every script, every sub-job, every failure across two fundamentally different workloads is visible in real time — across two purpose-built dashboards designed for two distinct audiences. Business stakeholders check the status grid and success rate. The engineering team debugs from error logs and resource metrics. Alerts fire before users notice anything.
+
+The project was as much a project management exercise as a technical one. From the solo POC through delegated instrumentation, standardised templates, coordinated handoffs, and phased rollout — the PM discipline is what made this scale beyond a single person's monitoring script into a team-wide operational capability.

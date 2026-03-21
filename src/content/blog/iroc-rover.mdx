@@ -1,0 +1,27 @@
+---
+title: "ISRO IRoC-U Rover: Quadrupedal Hybrid for Space Exploration"
+date: "2026-03-19"
+description: "A wheel-leg hybrid rover with autonomous navigation, object detection, and pick-and-place capabilities — designed for ISRO's Robotics Challenge."
+tags: ["Robotics", "ROS", "TensorFlow Lite", "ISRO", "Computer Vision"]
+contentType: "technical"
+traits: ["robotics", "autonomous-systems"]
+heroImage: ""
+---
+
+### The Challenge
+
+ISRO's IRoC-U 2024 challenged teams to build a rover capable of navigating rough terrain, detecting and classifying objects, and performing autonomous pick-and-place operations — all within strict size and weight constraints (under 0.8m³, under 50kg).
+
+### Our Design
+
+Team Athena's rover uses a quadrupedal wheel-leg hybrid design — four limbs with bendable "knee joints" and wheels at the end, allowing it to switch between wheeled locomotion (fast, efficient on flat terrain) and legged locomotion (obstacle traversal). This dynamic hybrid approach, inspired by ETH Zurich's research, adds deep learning-based obstacle detection and machine learning for automatic gait sequencing.
+
+The software stack runs on Raspberry Pi 4 with Ubuntu and ROS Noetic. OpenCV handles real-time video processing, TensorFlow Lite runs on-device object detection models, and stereo cameras provide depth calculation through disparity mapping. Navigation uses dead-reckoning with wheel encoders and IMU fusion, with a greedy path-planning algorithm for autonomous obstacle avoidance.
+
+A pick-and-place robotic arm, controlled via ROS MoveIt, handles sample collection with defined poses for grabbing, carrying, and releasing.
+
+### Where It Stands
+
+Full proposal submitted to ISRO for IRoC-U 2024. Hardware identified and costed (₹9,242 core components + Raspberry Pi + sensors). Software realization plan complete including path-finding, object detection, and arm control modules.
+
+*Full technical write-up coming soon.*
