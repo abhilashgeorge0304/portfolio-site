@@ -53,11 +53,10 @@ export default function BlogContent({ posts }: { posts: PostMetadata[] }) {
           <button
             key={f.value}
             onClick={() => setActiveFilter(f.value)}
-            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
-              activeFilter === f.value
+            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${activeFilter === f.value
                 ? 'bg-gray-900 text-white'
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-            }`}
+              }`}
           >
             {f.label}
           </button>

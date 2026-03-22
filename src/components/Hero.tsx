@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -55,8 +56,14 @@ const Hero: React.FC = () => {
             </div>
 
             <div className="flex justify-center md:w-1/2">
-              <div className="flex h-[400px] w-[400px] items-center justify-center rounded-full bg-gray-300 text-6xl font-bold text-gray-600 shadow-lg">
-                AG
+              <div className="relative h-[400px] w-[400px] overflow-hidden rounded-full border-4 border-white shadow-xl">
+                <Image
+                  src="/images/profile.jpg"
+                  alt="Abhilash George profile picture"
+                  fill
+                  className="object-cover"
+                  priority
+                />
               </div>
             </div>
           </div>

@@ -39,6 +39,7 @@ function getPostBySlug(slug: string) {
         contentType?: string;
         traits?: string[];
         hidden?: boolean;
+        heroImage?: string;
       },
       content,
       readingTime: stats.text,
@@ -174,7 +175,17 @@ export default async function BlogPostPage({
           )}
         </header>
 
-        <div className="prose prose-lg max-w-none">
+        {post.frontmatter.heroImage && (
+          <div className="mb-8 overflow-hidden rounded-xl shadow-lg relative w-full h-[400px]">
+            <img 
+              src={post.frontmatter.heroImage} 
+              alt={post.frontmatter.title}
+              className="object-cover w-full h-full"
+            />
+          </div>
+        )}
+
+        <div className="prose prose-lg max-w-none dark:prose-invert">
           <MDXRemote source={post.content} components={mdxComponents} />
         </div>
       </article>
