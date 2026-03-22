@@ -15,24 +15,24 @@ const cardAnimationVariants = {
 
 const sideProjects = [
   {
-    title: "Project Athena",
+    title: "Athena",
     description:
-      "An LLM-powered personal assistant exploring retrieval-augmented generation for domain-specific Q&A.",
-    tags: ["LLM", "RAG", "Python"],
+      "A supplementary education platform that surfaces quality tutors over marketing budgets. Moodle-based with an LLM-powered recommendation chatbot. Won YIP state-level (₹75K grant). Received ~₹20L acquisition offer — declined to preserve non-profit model.",
+    tags: ["Ed-Tech", "Startup", "LLM", "Moodle"],
     blogSlug: "athena",
   },
   {
     title: "EcoSift",
     description:
-      "AI-based waste classification system — built for a startup competition, won state-level recognition.",
-    tags: ["Computer Vision", "Sustainability", "IoT"],
+      "Portable AI-powered waste segregation system — truck-mounted units using deep learning-controlled robotic arms and an innovative plastic sorting system based on melting point differentiation. Full CAD models complete.",
+    tags: ["Robotics", "Deep Learning", "Social Impact", "Startup"],
     blogSlug: "ecosift",
   },
   {
-    title: "ISRO Rover Challenge",
+    title: "ISRO IRoC-U Rover",
     description:
-      "Designed and built a Mars rover prototype for the IROC national competition.",
-    tags: ["Robotics", "Mechanical Design", "Teamwork"],
+      "Quadrupedal wheel-leg hybrid rover proposal for ISRO's Robotics Challenge. Raspberry Pi 4, ROS Noetic, TensorFlow Lite for object detection, stereo camera depth calculation, autonomous navigation with pick-and-place arm.",
+    tags: ["Robotics", "ROS", "TensorFlow Lite", "ISRO"],
     blogSlug: "iroc-rover",
   },
 ];
@@ -42,7 +42,7 @@ const SideProjects: React.FC = () => {
     <section id="side-projects" className="bg-white py-20">
       <div className="container mx-auto px-4">
         <h2 className="border-primary mb-12 border-b-2 pb-2 text-center text-3xl font-bold text-gray-900">
-          Side Projects
+          Side Projects &amp; Startups
         </h2>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {sideProjects.map((project, index) => (

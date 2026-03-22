@@ -1,19 +1,53 @@
 ---
-title: "Swarm Robotics: Where It All Started"
+title: "A Ninth Grader, a University Stage, and the Idea That Started Everything"
 date: "2026-03-19"
-description: "A swarm robotics concept built using Lego Mindstorms during a school internship — the project that led to a university talk and set the direction for everything that followed."
-tags: ["Robotics", "Lego Mindstorms", "UST Global", "School"]
+description: "How a school internship project on swarm robotics led to an invitation to speak at a university tech fest — and how a conversation at that fest changed the trajectory of every project that followed."
+tags: ["Robotics", "Lego Mindstorms", "UST Global", "School", "Origin Story"]
 contentType: "case-study"
-traits: ["robotics", "origin-story"]
+traits: ["robotics", "origin-story", "case-study"]
 heroImage: ""
 ---
 
-### The Origin
+### The Internship That Wasn't Supposed to Be Special
 
-In 2018, during an internship at UST Global — one of my first exposures to a professional tech environment — I built a swarm robotics proof of concept using Lego Mindstorms. The idea was simple: multiple small robots coordinating to accomplish tasks that no single robot could handle alone.
+In 2018, I was in ninth grade when I got an internship at UST Global — one of my first exposures to a professional tech environment. Most of the other interns were college students. I was the kid.
 
-The concept caught the attention of college students doing internships at the same company. They were impressed enough to invite me — still a school student — to present the project at CUSAT's tech fest. Standing in front of university students and faculty, explaining swarm behaviour and coordination algorithms, was a defining experience.
+The brief was open-ended: work on robotics projects, learn how things work in a real company. I gravitated toward something I'd seen online and found fascinating — swarm robotics. The idea that multiple simple robots, each following basic rules, could coordinate to achieve behaviour that none of them could accomplish alone. No central controller. No master plan. Just local rules producing emergent intelligence.
 
-### Why It Matters
+### Two Lego Robots, One Simple Idea
 
-This project set the trajectory for everything that followed: the rover in 11th grade, the ISRO challenge in college, the startup work on EcoSift's robotic arms. More importantly, it taught me that age doesn't determine what you can build — initiative does.
+I built the concept using Lego Mindstorms — two robots, one leader and one follower. The leader navigated a path. The follower tracked the leader using sensors, maintaining distance and mirroring its movements. If the leader turned left, the follower adjusted. If the leader stopped, the follower stopped.
+
+Two robots isn't a "swarm" in any academic sense. But the principle was there — decentralised coordination, local sensing, emergent behaviour. And for a ninth grader working with Lego, it was enough to demonstrate the concept convincingly.
+
+The college students doing internships at UST watched me build and test it over a few weeks. They asked questions. They were curious. And then they asked something I didn't expect: would I come present this at their university's tech fest?
+
+### Standing on a University Stage at Fifteen
+
+The invitation was to CUSAT — Cochin University of Science and Technology — for their annual tech fest. Not as an attendee. As a **guest speaker.** They paid me a speaking fee.
+
+I set up my Lego robots on the presentation table, looked up, and saw rows of engineering students — undergraduate and postgraduate, people five to ten years older than me — waiting for me to say something worth their time.
+
+I walked them through swarm intelligence — how it appears in nature (ant colonies, bird flocking, fish schooling), how simple local rules produce complex global behaviour — and then ran the live demo. Leader moves, follower tracks. Leader navigates an obstacle, follower adapts.
+
+The room was engaged. Not because the robots were technically groundbreaking — they were Lego. But because a ninth grader was up there explaining coordination algorithms and demonstrating them live. After the talk, people came up. Not politely. Genuinely curious — how I'd programmed the follower logic, what the sensor limitations were, whether I'd tried three or four robots.
+
+Engineering students treating me like a peer. That was the first time in my life that had happened. And it rewired how I thought about what I was allowed to attempt.
+
+After the presentation, I looked out and caught my parents in the audience. The expression on their face — I still haven't forgotten it. Other parents came up to them afterwards, telling them they understood that look. That quiet pride of watching your child do something you didn't know they could do, in a room full of people who didn't expect it either.
+
+### The Conversation That Changed My Direction
+
+But the most important thing that happened at CUSAT wasn't my talk. It was someone else's project.
+
+A group of students had built an **automated gas cylinder order placer** — a system that detected when a gas cylinder was running low and automatically placed a reorder. It ran on a Raspberry Pi with weight sensors and an internet connection. Simple in concept, but it opened a door I hadn't seen before.
+
+I stood next to that gas cylinder project asking the kind of questions a ninth grader asks — how does it know the cylinder is getting empty? What tells it to order a new one? Can it do other things too? The students showed me the Raspberry Pi running it, explained how it connected to sensors, how a few lines of Python could read a weight measurement and trigger an action over the internet. I didn't understand all of it. But I understood enough to realise that this tiny board could do things Lego Mindstorms never would.
+
+Up to that point, I'd been building with Lego Mindstorms and Arduino. They were educational, but they had hard limits. The Raspberry Pi was different — it could run Python, process camera feeds, connect to the internet, interface with any sensor, and control motors. It wasn't a microcontroller with a few fixed behaviours. It was a platform.
+
+### What Followed
+
+Every significant project after CUSAT traces back to that shift. The **smart home system** I built at KELTRON, the **assistive technology adaptation** for differently-abled users, the **school rover's ADAS prototype** with ultrasonic sensors and a camera module, and eventually the **[ISRO IRoC-U rover proposal](/blog/iroc-rover)** running ROS and TensorFlow Lite on a Pi 4 — all of it grew from a ninth grader standing next to a gas cylinder project at a tech fest, realising that the tools to build real things were within reach.
+
+The swarm robots were Lego. The ISRO rover runs neural networks. But the instinct is the same: build something, put it in front of people who know more than you, and pay attention to what they show you back.

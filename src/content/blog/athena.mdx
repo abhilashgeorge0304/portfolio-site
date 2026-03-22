@@ -1,25 +1,264 @@
 ---
-title: "Athena: Democratising Supplementary Education"
+title: "Athena: Building an Educational Center Aggregator from Scratch"
 date: "2026-03-19"
-description: "A platform that surfaces quality educators based on ratings and outcomes — not marketing spend. Think Zomato for tuition centers, with an LLM-powered recommendation engine built on Moodle."
-tags: ["Ed-Tech", "Startup", "LLM", "Moodle", "Social Impact"]
+description: "The full story of how we designed, built, and deployed a supplementary education platform — from survey validation through self-hosted prototype to AWS-scaled production, with a custom LLM chatbot, video conferencing, and a social impact model that rewards quality over marketing."
+tags: ["Ed-Tech", "Startup", "Moodle", "LLM", "AWS", "Product Design", "Social Impact"]
 contentType: "case-study"
-traits: ["startup", "llm", "social-impact"]
-heroImage: ""
+traits: ["startup", "social-impact", "product-design", "case-study", "architecture"]
+heroImage: "/images/athena-logo.jpg"
 ---
 
-### The Problem Nobody Talks About
+{/* Athena logo — use actual logo image as card preview */}
 
-India's supplementary education market is dominated by large coaching centers with massive marketing budgets. Smaller, often better educators — the ones who offer genuine individual attention — are invisible because they can't compete on advertising. Meanwhile, parents have no reliable way to compare quality. The system rewards marketing, not teaching.
+<div style={{textAlign: 'center', margin: '2rem auto', maxWidth: '280px'}}>
+  <img src="/images/athena-logo.jpg" alt="Athena — Supplementary Educational Center Aggregator" style={{width: '100%', borderRadius: '12px'}} />
+</div>
 
-### What We're Building
+### Two Systems, Both Broken
 
-Athena is an educational center aggregator — a platform that rates and surfaces tuition centers based on actual outcomes and student feedback, not paid promotions. The platform runs on Moodle, customised with a locally-hosted LLM plugin that serves as an intelligent recommendation chatbot. Instead of basic search, students describe what they need and the chatbot matches them to relevant educators and courses using knowledge embeddings trained on the platform's data.
+Supplementary education in India splits into two worlds — and neither works the way it should.
 
-The system also incentivises educators who teach underprivileged students for free — building a model where quality and social impact are rewarded, not just revenue.
+On one side: **online platforms.** The big names — Byju's, Coursera, Udemy. They offer accessibility and convenience. But they're impersonal. Courses target a general audience, not a specific student. Individual attention is an afterthought.
 
-### Where It Stands
+On the other side: **offline tuition centers.** Here, size determines everything. Large coaching centers have the marketing budgets, the word of mouth, the brand recognition — so they attract the students. Smaller centers, the ones that actually offer individual attention and better teacher-student ratios, are systematically invisible. They can't compete on advertising. They lose students not because they're worse, but because nobody knows they exist.
 
-Athena won the Young Innovators Programme at the state level (₹75,000 grant) and is being developed as a non-profit. The Moodle instance is currently self-hosted and being migrated to AWS. The LLM recommendation plugin — integrating via Moodle's REST API and web service capabilities — is in active development as a final year project.
+And then there's a third dimension that cuts across both: **geography and economics.** Urban students have access to both systems. Rural students don't. Financially disadvantaged students are locked out entirely — by cost, by location, by the simple fact that neither system was built with them in mind.
 
-*Full case study coming soon — covering the LLM architecture, Moodle plugin development, recommendation training, and cloud migration.*
+We ran a survey to test whether this was perception or reality. Over 55 higher-secondary and college students responded — people with fresh, first-hand experience of tuition centers. The findings confirmed what we suspected: the majority found smaller centers more effective, yet most of them attended larger ones. The market was systematically sending students to the wrong place.
+
+The question that started Athena was straightforward: **could we build a platform that consolidates the strengths of both online and offline systems into something equitable — a single place where educators are discovered by quality, not marketing spend?**
+
+### The Answer: An Educational Center Aggregator
+
+Athena is, at its simplest, a "Zomato for tuition centers." Educators register. Students rate them based on actual learning outcomes. Parents searching for a tutor find results ranked by quality and relevance — not by who paid more for placement.
+
+But reducing Athena to a directory undersells what it actually is. It's a full learning management system built on Moodle, with integrated video conferencing via BigBlueButton, a custom LLM-powered chatbot for academic assistance, payment integration, and a social impact model that incentivises free teaching for underprivileged students.
+
+**For learners:** Search and discover tutors by ratings, subject, distance, and teaching style. View anonymous peer ratings. Join courses (online or offline). Access 1:1 sessions. Get instant help from the AI chatbot.
+
+**For educators:** Create a profile, publish coursework, grow a learner base organically through ratings rather than advertising. Take paid 1:1 sessions. Donate teaching hours to underprivileged students and earn visibility tokens — featured placement on the platform that helps attract paying learners. Digital word-of-mouth, earned by quality.
+
+**For underprivileged students:** Request specific topics (e.g., "algebra help"). Notifications go to all available educators and senior students. A machine learning algorithm prioritises requests based on the student's academic need, effort, and location — ensuring the most underserved learners get help first.
+
+**Child safety** is non-negotiable. During 1:1 sessions, only educators can share video — learners can only use audio. All sessions are recorded. A machine learning algorithm continuously scans sessions for suspicious keywords or behaviour, with automatic termination and manual review built in.
+
+### The Platform Architecture
+
+We built Athena on Moodle — an open-source PHP-based LMS backed by MariaDB. Moodle's plugin ecosystem gave us the ability to add custom features (ratings, progress dashboards, the LLM chatbot) without modifying core code. The modular architecture meant we could build incrementally — ship a feature, test it, iterate.
+
+<svg width="100%" viewBox="0 0 760 440" xmlns="http://www.w3.org/2000/svg" style={{maxWidth: '760px', margin: '2rem auto', display: 'block'}}>
+  <defs>
+    <marker id="at" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M2 2L8 5L2 8" fill="none" stroke="#c8a951" strokeWidth="1.5" strokeLinecap="round"/>
+    </marker>
+  </defs>
+
+  {/* VPC boundary */}
+  <rect x="140" y="20" width="600" height="400" rx="12" fill="none" stroke="#2A7F62" strokeWidth="1.5" strokeDasharray="8,4"/>
+  <text x="160" y="42" fontSize="10" fontWeight="600" fill="#2A7F62" fontFamily="sans-serif">AWS VPC</text>
+
+  {/* Moodle at center */}
+  <rect x="300" y="160" width="180" height="80" rx="10" fill="#1F4E79"/>
+  <text x="390" y="195" textAnchor="middle" fontSize="16" fontWeight="700" fill="#f9fafb" fontFamily="sans-serif">Moodle LMS</text>
+  <text x="390" y="215" textAnchor="middle" fontSize="10" fill="#a8c4e0" fontFamily="sans-serif">PHP + MariaDB</text>
+  <text x="390" y="230" textAnchor="middle" fontSize="9" fill="#7ba3c4" fontFamily="sans-serif">athena.college</text>
+
+  {/* Plugins */}
+  <rect x="540" y="60" width="160" height="80" rx="8" fill="#2C3E50"/>
+  <text x="620" y="88" textAnchor="middle" fontSize="11" fontWeight="600" fill="#f9fafb" fontFamily="sans-serif">Custom Plugins</text>
+  <line x1="555" y1="96" x2="685" y2="96" stroke="#b0bec5" strokeWidth="0.3"/>
+  <text x="620" y="112" textAnchor="middle" fontSize="9" fill="#b0bec5" fontFamily="sans-serif">Course ratings</text>
+  <text x="620" y="126" textAnchor="middle" fontSize="9" fill="#b0bec5" fontFamily="sans-serif">Progress dashboards</text>
+  <line x1="540" y1="100" x2="482" y2="175" stroke="#c8a951" strokeWidth="1.2" markerEnd="url(#at)"/>
+
+  {/* LLM */}
+  <rect x="540" y="280" width="160" height="80" rx="8" fill="#2A7F62"/>
+  <text x="620" y="308" textAnchor="middle" fontSize="11" fontWeight="600" fill="#f9fafb" fontFamily="sans-serif">LLM Chatbot</text>
+  <line x1="555" y1="316" x2="685" y2="316" stroke="#a8dfc9" strokeWidth="0.3"/>
+  <text x="620" y="332" textAnchor="middle" fontSize="9" fill="#a8dfc9" fontFamily="sans-serif">Llama (4-bit quantised)</text>
+  <text x="620" y="346" textAnchor="middle" fontSize="9" fill="#a8dfc9" fontFamily="sans-serif">SageMaker inference</text>
+  <line x1="540" y1="320" x2="482" y2="225" stroke="#c8a951" strokeWidth="1.2" markerEnd="url(#at)"/>
+
+  {/* BBB */}
+  <rect x="160" y="280" width="160" height="80" rx="8" fill="#2C3E50"/>
+  <text x="240" y="308" textAnchor="middle" fontSize="11" fontWeight="600" fill="#f9fafb" fontFamily="sans-serif">BigBlueButton</text>
+  <line x1="175" y1="316" x2="305" y2="316" stroke="#b0bec5" strokeWidth="0.3"/>
+  <text x="240" y="332" textAnchor="middle" fontSize="9" fill="#b0bec5" fontFamily="sans-serif">Video conferencing</text>
+  <text x="240" y="346" textAnchor="middle" fontSize="9" fill="#b0bec5" fontFamily="sans-serif">Child safety protocols</text>
+  <line x1="280" y1="280" x2="350" y2="242" stroke="#c8a951" strokeWidth="1.2" markerEnd="url(#at)"/>
+
+  {/* Payments */}
+  <rect x="160" y="60" width="160" height="70" rx="8" fill="#2C3E50"/>
+  <text x="240" y="88" textAnchor="middle" fontSize="11" fontWeight="600" fill="#f9fafb" fontFamily="sans-serif">Payment Gateway</text>
+  <line x1="175" y1="96" x2="305" y2="96" stroke="#b0bec5" strokeWidth="0.3"/>
+  <text x="240" y="114" textAnchor="middle" fontSize="9" fill="#b0bec5" fontFamily="sans-serif">PayPal / Razorpay / UPI</text>
+  <line x1="280" y1="130" x2="350" y2="165" stroke="#c8a951" strokeWidth="1.2" markerEnd="url(#at)"/>
+
+  {/* Zoho Mail */}
+  <rect x="370" y="60" width="120" height="50" rx="6" fill="#6b7280" opacity="0.8"/>
+  <text x="430" y="82" textAnchor="middle" fontSize="10" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">Zoho Mail</text>
+  <text x="430" y="98" textAnchor="middle" fontSize="8" fill="#d1d9e0" fontFamily="sans-serif">admin@athena.edu</text>
+  <line x1="430" y1="110" x2="400" y2="158" stroke="#6b7280" strokeWidth="0.8" strokeDasharray="4,3"/>
+
+  {/* Users */}
+  <text x="48" y="150" textAnchor="middle" fontSize="10" fontWeight="600" fill="#1F4E79" fontFamily="sans-serif">Students</text>
+  <text x="48" y="200" textAnchor="middle" fontSize="10" fontWeight="600" fill="#2A7F62" fontFamily="sans-serif">Educators</text>
+  <text x="48" y="250" textAnchor="middle" fontSize="10" fontWeight="600" fill="#6b7280" fontFamily="sans-serif">Parents</text>
+
+  <rect x="20" y="130" width="80" height="130" rx="6" fill="none" stroke="#d1d9e0" strokeWidth="0.8"/>
+
+  {/* Cloudflare */}
+  <line x1="100" y1="195" x2="140" y2="195" stroke="#c8a951" strokeWidth="1.5"/>
+  <text x="120" y="188" textAnchor="middle" fontSize="8" fill="#c8a951" fontFamily="sans-serif">SSL</text>
+
+  {/* Database */}
+  <rect x="350" y="370" width="120" height="40" rx="6" fill="#1F4E79" opacity="0.6"/>
+  <text x="410" y="392" textAnchor="middle" fontSize="10" fill="#a8c4e0" fontFamily="sans-serif">Amazon RDS</text>
+  <text x="410" y="406" textAnchor="middle" fontSize="8" fill="#7ba3c4" fontFamily="sans-serif">MariaDB</text>
+  <line x1="400" y1="370" x2="395" y2="242" stroke="#1F4E79" strokeWidth="0.8" strokeDasharray="4,3"/>
+</svg>
+
+<span style={{display: 'block', textAlign: 'center', fontSize: '0.85rem', color: '#6b7280', marginTop: '-0.5rem', marginBottom: '2rem'}}>Application architecture — Moodle at the centre, with video conferencing, LLM, payments, and email integrations</span>
+
+For video conferencing, we self-hosted BigBlueButton rather than using a third-party service. Self-hosting gave us control over security, data privacy, and most critically — the child safety features. Sessions can be recorded, moderator controls are enforced, and the safety monitoring runs on our infrastructure, not someone else's.
+
+Email runs through Zoho Mail (admin@athena.edu), integrated with Moodle for automated notifications, course updates, and assignment reminders.
+
+### From a Home Server to AWS
+
+The prototype was built on hardware we already had. The initial architecture ran on an Unraid server at home — Moodle on an Ubuntu VM, MariaDB in a Docker container, Nginx Proxy Manager handling reverse proxy, Cloudflare routing the domain (athena.college) to our dynamic home IP. BigBlueButton ran alongside on a trial basis.
+
+This wasn't a temporary hack — it was a deliberate choice. As a non-profit funded by a ₹75,000 grant, we couldn't afford cloud hosting during development. Self-hosting let us build, break, and iterate without burning through the grant on infrastructure.
+
+<svg width="100%" viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" style={{maxWidth: '760px', margin: '2rem auto', display: 'block'}}>
+  {/* Phase 1: Self-hosted */}
+  <rect x="10" y="20" width="355" height="240" rx="8" fill="#2C3E50" opacity="0.08" stroke="#2C3E50" strokeWidth="0.8"/>
+  <text x="187" y="46" textAnchor="middle" fontSize="12" fontWeight="600" fill="#2C3E50" fontFamily="sans-serif">Phase 1: Self-Hosted (Prototype)</text>
+
+  <rect x="30" y="60" width="130" height="36" rx="5" fill="#2C3E50"/>
+  <text x="95" y="82" textAnchor="middle" fontSize="9" fill="#f9fafb" fontFamily="sans-serif">Unraid Server</text>
+
+  <rect x="30" y="106" width="130" height="36" rx="5" fill="#1F4E79"/>
+  <text x="95" y="124" textAnchor="middle" fontSize="9" fill="#f9fafb" fontFamily="sans-serif">Ubuntu VM + Moodle</text>
+  <text x="95" y="136" textAnchor="middle" fontSize="8" fill="#a8c4e0" fontFamily="sans-serif">PHP application</text>
+
+  <rect x="30" y="152" width="130" height="30" rx="5" fill="#1F4E79" opacity="0.7"/>
+  <text x="95" y="171" textAnchor="middle" fontSize="9" fill="#f9fafb" fontFamily="sans-serif">MariaDB (Docker)</text>
+
+  <rect x="30" y="192" width="130" height="30" rx="5" fill="#6b7280"/>
+  <text x="95" y="211" textAnchor="middle" fontSize="9" fill="#f9fafb" fontFamily="sans-serif">Nginx Proxy Manager</text>
+
+  <rect x="190" y="106" width="155" height="36" rx="5" fill="#d4a017" opacity="0.2" stroke="#d4a017" strokeWidth="0.5"/>
+  <text x="267" y="124" textAnchor="middle" fontSize="9" fill="#8a6d00" fontFamily="sans-serif">Cloudflare → dynamic IP</text>
+  <text x="267" y="136" textAnchor="middle" fontSize="8" fill="#8a6d00" fontFamily="sans-serif">athena.college</text>
+
+  <rect x="190" y="160" width="155" height="30" rx="5" fill="#6b7280" opacity="0.3"/>
+  <text x="267" y="179" textAnchor="middle" fontSize="9" fill="#6b7280" fontFamily="sans-serif">Zoho Mail</text>
+
+  <rect x="190" y="200" width="155" height="40" rx="5" fill="#2C3E50" opacity="0.6"/>
+  <text x="267" y="218" textAnchor="middle" fontSize="9" fill="#b0bec5" fontFamily="sans-serif">BBB (trial)</text>
+  <text x="267" y="232" textAnchor="middle" fontSize="8" fill="#6b7280" fontFamily="sans-serif">Video conferencing</text>
+
+  {/* Arrow */}
+  <text x="385" y="145" textAnchor="middle" fontSize="18" fill="#2A7F62" fontFamily="sans-serif">→</text>
+
+  {/* Phase 2: AWS */}
+  <rect x="400" y="20" width="350" height="240" rx="8" fill="#2A7F62" opacity="0.06" stroke="#2A7F62" strokeWidth="0.8"/>
+  <text x="575" y="46" textAnchor="middle" fontSize="12" fontWeight="600" fill="#2A7F62" fontFamily="sans-serif">Phase 2: AWS (Scaled)</text>
+
+  <rect x="420" y="60" width="140" height="36" rx="5" fill="#2A7F62"/>
+  <text x="490" y="78" textAnchor="middle" fontSize="9" fill="#f9fafb" fontFamily="sans-serif">EC2 Clusters</text>
+  <text x="490" y="90" textAnchor="middle" fontSize="8" fill="#a8dfc9" fontFamily="sans-serif">Auto-scaling</text>
+
+  <rect x="420" y="106" width="140" height="36" rx="5" fill="#1F4E79"/>
+  <text x="490" y="124" textAnchor="middle" fontSize="9" fill="#f9fafb" fontFamily="sans-serif">Moodle on Ubuntu</text>
+  <text x="490" y="136" textAnchor="middle" fontSize="8" fill="#a8c4e0" fontFamily="sans-serif">Load balanced</text>
+
+  <rect x="420" y="152" width="140" height="30" rx="5" fill="#1F4E79" opacity="0.7"/>
+  <text x="490" y="171" textAnchor="middle" fontSize="9" fill="#f9fafb" fontFamily="sans-serif">Amazon RDS (MariaDB)</text>
+
+  <rect x="420" y="192" width="140" height="30" rx="5" fill="#2A7F62" opacity="0.7"/>
+  <text x="490" y="211" textAnchor="middle" fontSize="9" fill="#f9fafb" fontFamily="sans-serif">SageMaker (LLM)</text>
+
+  <rect x="580" y="60" width="150" height="56" rx="5" fill="#d4a017" opacity="0.15" stroke="#d4a017" strokeWidth="0.5"/>
+  <text x="655" y="82" textAnchor="middle" fontSize="9" fill="#8a6d00" fontFamily="sans-serif">Cloudflare + Route 53</text>
+  <text x="655" y="96" textAnchor="middle" fontSize="8" fill="#8a6d00" fontFamily="sans-serif">DDoS protection + DNS</text>
+  <text x="655" y="108" textAnchor="middle" fontSize="8" fill="#8a6d00" fontFamily="sans-serif">athena.college</text>
+
+  <rect x="580" y="130" width="150" height="36" rx="5" fill="#2C3E50" opacity="0.6"/>
+  <text x="655" y="148" textAnchor="middle" fontSize="9" fill="#b0bec5" fontFamily="sans-serif">BBB (self-hosted in VPC)</text>
+  <text x="655" y="160" textAnchor="middle" fontSize="8" fill="#6b7280" fontFamily="sans-serif">Child safety enforced</text>
+
+  <rect x="580" y="180" width="150" height="30" rx="5" fill="#6b7280" opacity="0.3"/>
+  <text x="655" y="199" textAnchor="middle" fontSize="9" fill="#6b7280" fontFamily="sans-serif">CloudWatch monitoring</text>
+
+  <rect x="580" y="220" width="150" height="30" rx="5" fill="#6b7280" opacity="0.3"/>
+  <text x="655" y="239" textAnchor="middle" fontSize="9" fill="#6b7280" fontFamily="sans-serif">AWS Backup</text>
+</svg>
+
+<span style={{display: 'block', textAlign: 'center', fontSize: '0.85rem', color: '#6b7280', marginTop: '-0.5rem', marginBottom: '2rem'}}>Infrastructure evolution — from a home server to production-grade AWS with auto-scaling, managed database, and ML inference</span>
+
+When we were ready to scale, the migration path was mapped: AWS Virtual Private Cloud with EC2 instances (auto-scaling for fluctuating loads), Amazon RDS for managed MariaDB (automated backups, failover), Amazon SageMaker for LLM inference, Cloudflare + Route 53 for DNS and DDoS protection, and CloudWatch for monitoring. BigBlueButton remains self-hosted within the VPC — we don't hand video conferencing to a third party when child safety is at stake.
+
+The cost structure scales with users:
+
+At 10–100 users (~5-8 educators), a t2.micro EC2 instance runs within the AWS free tier. At 500–600 users (~50-60 educators), a t2.large on-demand instance costs roughly ₹5,000/month. Beyond 2,000 users, we'd move to t2.large + t2x.large instances at approximately ₹18,000/month. The ₹75,000 YIP grant covers the initial cloud migration and several months of operation at the first tier.
+
+### The LLM Chatbot
+
+One of Athena's distinguishing features is the AI-powered chatbot — an LLM integrated directly into the Moodle interface via a custom plugin.
+
+We chose a quantised version of Meta's Llama 8B Instruct model. Early experiments with traditional training approaches led to hallucinated outputs, so we pivoted to **embedding techniques** — dynamically feeding contextual data to the model so responses stay grounded in real academic content.
+
+The dataset was curated by sourcing semester-end examination papers from the college library, spanning Civil, Mechanical, CSE, ECE, and EEE. Each question was annotated with marks allocation, difficulty level, module number, and course title. This structured dataset allows the model's embeddings to match student queries to relevant academic material with contextual awareness.
+
+The chatbot plugin is built as a Moodle local plugin: `version.php` for metadata, `lib.php` for request handling, `settings.php` for API configuration, and `index.php` for the frontend. Administrators enter an API key in the admin panel, and the plugin communicates with the LLM backend through a secure HTML-based API endpoint. The chatbot interface appears as a ✨ button in Moodle's course dashboard — one click opens the chat, and students start typing.
+
+The workflow: student submits query → plugin converts to JSON → secure API call to LLM server → embedding-based context matching → language model generates response → JSON transformers reformat for Moodle → response rendered in chatbot UI. Every interaction is logged for feedback collection and model improvement.
+
+*For the full technical deep dive into the LLM implementation — including the RAG approach we tried that didn't work, the 4-bit quantization on free Colab GPUs, and the FastAPI serving architecture — see: [Building an LLM-Powered Recommendation Engine on Moodle](/side-projects/athena-llm).*
+
+### The Social Impact Model
+
+The feature that matters most to us — and that judges at every competition specifically called out as differentiating — is the incentive system for pro-bono teaching.
+
+Students can request specific topics. Notifications go to all available educators and senior students. When an educator donates a session, they earn **visibility tokens** — featured placement on the platform that helps their paid courses get discovered. Quality educators get organic growth. Underprivileged students get access. The platform generates social proof. Everyone benefits.
+
+A machine learning algorithm (in development) will prioritise requests based on the student's intellectual ability, effort, and location — ensuring that a student who is struggling academically, trying hard, and in a rural area gets help before a student who is simply looking for extra practice. Educators will also rate students on specific parameters, creating a two-sided feedback loop that the algorithm trains on.
+
+This isn't a bolt-on CSR feature. It's baked into the platform's core design. When a parent searches for a tutor, the system surfaces educators with strong ratings *and* a track record of community contribution. The non-profit structure means we can optimise for this outcome without needing to monetise either side of the marketplace.
+
+### Validation: Surveys, Competitions, and Private Beta
+
+**Survey validation.** 55+ responses from higher-secondary and college students confirmed the core hypothesis: students found smaller centers more effective, but attended larger ones due to visibility. The need for a quality-based discovery platform was validated before we wrote a line of code.
+
+**Competition journey.** Athena was tested across multiple stages:
+- **Young Innovators Programme** — state level winner (₹75,000 grant + mentoring)
+- **Present Around the World (IET)** — runner-up at local network finals (₹10,000)
+- **Space Ventura** — Best Startup award
+- **PRAYAAG 3.0** — Ideathon winner
+- **Keraleeyam 2023** — exhibited at Kerala's state development festival, direct conversations with investors
+
+One notable moment: Inspire Education approached us with a partnership offer after a competition. We declined — their vision diverged from our non-profit model in ways that would have undermined the core value proposition. Saying no to money when you're a grant-funded college startup is hard. It was also the right call.
+
+**Private beta.** We leased the prototype to three private tutors for beta testing. All three gave positive feedback. They requested additional features — a parent portal and parent-level ratings — which are under consideration. The beta confirmed that the platform works in practice, not just in demos.
+
+### Development Stages
+
+The project followed a structured development path:
+
+**Stage 1 — Ideation.** Assessed feasibility, designed the architecture, conducted surveys, validated the problem. Defined the platform's unique position: not just another LMS, but an aggregator with a social impact layer.
+
+**Stage 2 — Prototype.** Built the self-hosted version on Unraid. Integrated Moodle, MariaDB, BigBlueButton, Zoho Mail. Developed the LLM chatbot. Tested on real hardware with real users. Entered competitions to stress-test the pitch and the product.
+
+**Stage 3 — Scaling (current).** Migrating to AWS. Streamlining the architecture for cost-efficiency. Developing the dataset for LLM training. Running the private beta.
+
+**Stage 4 — Future.** Implement the educator recommendation system using the LLM. Integrate RAG with a vector database for real-time knowledge updates. Customise branding. Expand the beta. Explore deployment on university campuses as a cost-effective alternative to Google-based solutions.
+
+### Where Things Stand
+
+The platform is live at athena.college. Three tutors are actively using it in private beta. The AWS migration is funded and in progress. The LLM chatbot responds to student queries. The survey, competitions, and beta have validated the concept from three different angles.
+
+The vision hasn't changed: every parent should be able to find the best tutor for their child based on actual quality, not advertising spend. Every good educator should be discoverable regardless of their marketing budget. And every underprivileged student should have access to quality supplementary education, earned through a system that rewards educators for contributing.
+
+We're not there yet. But the foundation is built, the concept is validated, the platform is live, and users are on it. The rest is execution.

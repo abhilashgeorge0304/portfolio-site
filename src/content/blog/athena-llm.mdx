@@ -1,0 +1,242 @@
+---
+title: "Building an LLM-Powered Recommendation Engine on Moodle"
+date: "2026-03-19"
+description: "How we built an intelligent course recommendation chatbot using Llama, sentence-transformers, and FastAPI — including the RAG approach that didn't work and what we learned from it."
+tags: ["LLM", "Llama", "Embeddings", "FastAPI", "Moodle", "RAG", "NLP"]
+contentType: "technical"
+traits: ["llm", "technical-deep-dive", "case-study"]
+heroImage: ""
+---
+
+{/* Hero section */}
+
+### Before Embeddings Were Obvious
+
+When we started building Athena's recommendation engine, large language models were not the mainstream tool they are today. There were no widely available tutorials on building RAG pipelines. Sentence embeddings were a research concept, not a product feature. Every architecture decision we made came from reading papers, testing approaches, and figuring out what worked on the hardware we could access — which was free-tier Google Colab with a single GPU.
+
+This is the technical story of what we built, what we tried that didn't work, and what we learned. It's not a clean success narrative. It's the real process of building an LLM-powered system as college students, before the tooling caught up to the ambition.
+
+### The Goal
+
+Moodle — the learning management system powering Athena — has a built-in search feature. It's basic: keyword matching over course titles and descriptions. If a student types "physics tutor near me who explains concepts visually," Moodle's search returns nothing useful. It doesn't understand intent. It doesn't match on teaching style. It doesn't know that "explains concepts visually" maps to educators who use diagrams, video content, and interactive demonstrations.
+
+We wanted a chatbot that could take a natural language query from a student and return meaningful recommendations — matching not just on subject, but on learning style, availability, location, and educator track record. The chatbot needed to understand the query semantically and match it against a structured knowledge base of educators and courses.
+
+### The Stack
+
+We made deliberate choices about every layer of the stack, constrained by budget (zero), compute (free Colab GPUs), and timeline (final year project alongside coursework).
+
+<svg width="100%" viewBox="0 0 740 340" xmlns="http://www.w3.org/2000/svg" style={{maxWidth: '740px', margin: '2rem auto', display: 'block'}}>
+  <defs>
+    <marker id="llm" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M2 2L8 5L2 8" fill="none" stroke="#2A7F62" strokeWidth="1.5" strokeLinecap="round"/>
+    </marker>
+  </defs>
+
+  {/* User query */}
+  <rect x="20" y="130" width="130" height="60" rx="8" fill="#1F4E79"/>
+  <text x="85" y="155" textAnchor="middle" fontSize="10" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">Student Query</text>
+  <text x="85" y="172" textAnchor="middle" fontSize="9" fill="#a8c4e0" fontFamily="sans-serif">"help with physics"</text>
+
+  <line x1="150" y1="160" x2="190" y2="160" stroke="#2A7F62" strokeWidth="1.2" markerEnd="url(#llm)"/>
+
+  {/* FastAPI */}
+  <rect x="192" y="110" width="130" height="100" rx="8" fill="#2C3E50"/>
+  <text x="257" y="138" textAnchor="middle" fontSize="11" fontWeight="600" fill="#f9fafb" fontFamily="sans-serif">FastAPI Server</text>
+  <line x1="207" y1="146" x2="307" y2="146" stroke="#b0bec5" strokeWidth="0.3"/>
+  <text x="257" y="164" textAnchor="middle" fontSize="9" fill="#b0bec5" fontFamily="sans-serif">Query processing</text>
+  <text x="257" y="178" textAnchor="middle" fontSize="9" fill="#b0bec5" fontFamily="sans-serif">Context assembly</text>
+  <text x="257" y="192" textAnchor="middle" fontSize="9" fill="#b0bec5" fontFamily="sans-serif">Response formatting</text>
+
+  {/* Arrows to embedding + LLM */}
+  <line x1="322" y1="140" x2="380" y2="80" stroke="#1F4E79" strokeWidth="1.2" markerEnd="url(#llm)"/>
+  <line x1="322" y1="180" x2="380" y2="240" stroke="#2A7F62" strokeWidth="1.2" markerEnd="url(#llm)"/>
+
+  {/* Sentence Transformers */}
+  <rect x="382" y="40" width="180" height="80" rx="8" fill="#1F4E79"/>
+  <text x="472" y="65" textAnchor="middle" fontSize="11" fontWeight="600" fill="#f9fafb" fontFamily="sans-serif">Sentence Transformers</text>
+  <line x1="397" y1="75" x2="547" y2="75" stroke="#a8c4e0" strokeWidth="0.3"/>
+  <text x="472" y="92" textAnchor="middle" fontSize="9" fill="#a8c4e0" fontFamily="sans-serif">Query → vector embedding</text>
+  <text x="472" y="106" textAnchor="middle" fontSize="9" fill="#a8c4e0" fontFamily="sans-serif">Cosine similarity matching</text>
+
+  {/* Llama */}
+  <rect x="382" y="200" width="180" height="100" rx="8" fill="#2A7F62"/>
+  <text x="472" y="225" textAnchor="middle" fontSize="11" fontWeight="600" fill="#f9fafb" fontFamily="sans-serif">Llama (4-bit quantized)</text>
+  <line x1="397" y1="235" x2="547" y2="235" stroke="#a8dfc9" strokeWidth="0.3"/>
+  <text x="472" y="252" textAnchor="middle" fontSize="9" fill="#a8dfc9" fontFamily="sans-serif">BitsAndBytes quantization</text>
+  <text x="472" y="266" textAnchor="middle" fontSize="9" fill="#a8dfc9" fontFamily="sans-serif">Prompt-engineered context</text>
+  <text x="472" y="280" textAnchor="middle" fontSize="9" fill="#a8dfc9" fontFamily="sans-serif">Natural language response</text>
+
+  {/* Course data */}
+  <rect x="600" y="40" width="120" height="80" rx="6" fill="#f0f4f8" stroke="#1F4E79" strokeWidth="0.8"/>
+  <text x="660" y="65" textAnchor="middle" fontSize="10" fontWeight="500" fill="#1F4E79" fontFamily="sans-serif">Course Data</text>
+  <text x="660" y="82" textAnchor="middle" fontSize="9" fill="#6b7280" fontFamily="sans-serif">Pre-embedded</text>
+  <text x="660" y="96" textAnchor="middle" fontSize="9" fill="#6b7280" fontFamily="sans-serif">course descriptions</text>
+  <line x1="600" y1="80" x2="564" y2="80" stroke="#1F4E79" strokeWidth="1" strokeDasharray="4,3" markerEnd="url(#llm)"/>
+
+  {/* Moodle */}
+  <rect x="600" y="200" width="120" height="70" rx="6" fill="#f0f4f8" stroke="#2A7F62" strokeWidth="0.8"/>
+  <text x="660" y="225" textAnchor="middle" fontSize="10" fontWeight="500" fill="#2A7F62" fontFamily="sans-serif">Moodle</text>
+  <text x="660" y="242" textAnchor="middle" fontSize="9" fill="#6b7280" fontFamily="sans-serif">REST API</text>
+  <text x="660" y="256" textAnchor="middle" fontSize="9" fill="#6b7280" fontFamily="sans-serif">Web Services</text>
+  <line x1="600" y1="240" x2="564" y2="250" stroke="#2A7F62" strokeWidth="1" strokeDasharray="4,3" markerEnd="url(#llm)"/>
+
+  {/* ngrok tunnel */}
+  <rect x="192" y="230" width="130" height="36" rx="6" fill="#d4a017" opacity="0.2" stroke="#d4a017" strokeWidth="0.8"/>
+  <text x="257" y="252" textAnchor="middle" fontSize="9" fill="#8a6d00" fontFamily="sans-serif">ngrok tunnel (dev)</text>
+
+  {/* Colab */}
+  <rect x="382" y="310" width="180" height="24" rx="4" fill="#2C3E50" opacity="0.15" stroke="#2C3E50" strokeWidth="0.5"/>
+  <text x="472" y="326" textAnchor="middle" fontSize="9" fill="#2C3E50" fontFamily="sans-serif">Running on Google Colab (free tier GPU)</text>
+</svg>
+
+<span style={{display: 'block', textAlign: 'center', fontSize: '0.85rem', color: '#6b7280', marginTop: '-0.5rem', marginBottom: '2rem'}}>The full stack — from student query to recommendation, running on free Colab GPUs</span>
+
+**Llama as the generation model.** We chose Meta's Llama because it was open-source, could be self-hosted (critical for data privacy — we're handling student data), and had a strong community building tooling around it. The challenge was running a model this size on a single Colab GPU with limited VRAM.
+
+**4-bit quantization via BitsAndBytes.** This was the enabler. BitsAndBytes compresses the model's weights from 16-bit floating point to 4-bit integers, dramatically reducing memory requirements while preserving most of the model's capability. The quality tradeoff was acceptable for our use case — we didn't need the model to write poetry, we needed it to understand educational queries and generate relevant recommendations. Quantization brought the memory footprint within Colab's free-tier GPU limits.
+
+```python
+# Model loading with 4-bit quantization
+bnb_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_quant_type="nf4",
+    bnb_4bit_compute_dtype=torch.float16
+)
+
+model = AutoModelForCausalLM.from_pretrained(
+    "meta-llama/Llama-2-7b-chat-hf",
+    quantization_config=bnb_config,
+    device_map="auto"
+)
+```
+
+**Sentence-transformers for semantic matching.** Before the query reaches Llama, it goes through a sentence-transformer model that converts the natural language input into a vector embedding. Course descriptions in the platform are pre-embedded using the same model. The system computes cosine similarity between the query embedding and the course embeddings to find the most relevant matches — ranked by semantic proximity, not keyword overlap.
+
+This is what makes "I need help with 12th standard physics, I learn better with visual explanations" return educators who use video and diagram-heavy teaching, even if their course description never uses the word "visual."
+
+### The RAG Approach That Didn't Work
+
+The original plan was retrieval-augmented generation over Moodle's data. The idea was elegant: embed all of Moodle's course content, user reviews, and educator profiles into a vector store. When a student queries the chatbot, retrieve the most relevant chunks from the vector store and inject them as context into Llama's prompt. The model generates a response grounded in actual platform data, reducing hallucination.
+
+It didn't work. Two reasons.
+
+**First, time.** Building a proper RAG pipeline — with document chunking, embedding pipeline, vector store management, retrieval logic, and context window management — is a significant engineering effort. We were building this alongside coursework, with a two-person team. The RAG implementation kept growing in scope while the deadline stayed fixed.
+
+**Second, complexity.** Moodle's data structure is deeply relational — courses link to categories link to enrolments link to user profiles link to ratings. Flattening this into documents suitable for embedding and retrieval meant losing the relational context that makes the recommendations meaningful. A course description chunk without its associated educator profile, ratings, and enrolment data is just text — it doesn't carry enough signal for a good recommendation.
+
+We tried. We built parts of it. And we made the call to pivot before the deadline forced a half-finished implementation.
+
+### What We Built Instead
+
+The working system uses a **context-injection approach with prompt engineering.** Instead of dynamic RAG retrieval, the system pre-assembles a structured context block from Moodle's data (via the REST API) and injects it directly into the prompt alongside the student's query.
+
+The pipeline works like this:
+
+**Step 1: Embed the query.** The student's natural language input is converted to a vector using the sentence-transformer model.
+
+**Step 2: Semantic matching.** The query embedding is compared against pre-computed course embeddings using cosine similarity. The top-N matches are retrieved — these are the candidate courses.
+
+**Step 3: Context assembly.** For each candidate course, the system pulls structured metadata from Moodle via the REST API: course description, educator name, rating, teaching style indicators, availability. This is assembled into a formatted context block.
+
+**Step 4: Prompt construction.** The context block and the student's original query are injected into a carefully engineered prompt template that instructs Llama to recommend courses based only on the provided context — reducing hallucination by grounding the model's output in real platform data.
+
+**Step 5: Generation.** Llama generates a natural language recommendation — conversational, specific, and grounded in actual course data from the platform.
+
+**Step 6: Response delivery.** The response is returned via FastAPI to the Moodle plugin frontend, rendered in the chatbot interface.
+
+<svg width="100%" viewBox="0 0 740 180" xmlns="http://www.w3.org/2000/svg" style={{maxWidth: '740px', margin: '2rem auto', display: 'block'}}>
+  <defs>
+    <marker id="pip" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M2 2L8 5L2 8" fill="none" stroke="#2A7F62" strokeWidth="1.5" strokeLinecap="round"/>
+    </marker>
+  </defs>
+
+  <rect x="10" y="50" width="90" height="60" rx="6" fill="#1F4E79"/>
+  <text x="55" y="75" textAnchor="middle" fontSize="9" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">Query</text>
+  <text x="55" y="90" textAnchor="middle" fontSize="8" fill="#a8c4e0" fontFamily="sans-serif">natural lang</text>
+
+  <line x1="100" y1="80" x2="120" y2="80" stroke="#2A7F62" strokeWidth="1" markerEnd="url(#pip)"/>
+
+  <rect x="122" y="50" width="90" height="60" rx="6" fill="#1F4E79" opacity="0.85"/>
+  <text x="167" y="75" textAnchor="middle" fontSize="9" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">Embed</text>
+  <text x="167" y="90" textAnchor="middle" fontSize="8" fill="#a8c4e0" fontFamily="sans-serif">sentence-xfmr</text>
+
+  <line x1="212" y1="80" x2="232" y2="80" stroke="#2A7F62" strokeWidth="1" markerEnd="url(#pip)"/>
+
+  <rect x="234" y="50" width="90" height="60" rx="6" fill="#2A7F62"/>
+  <text x="279" y="75" textAnchor="middle" fontSize="9" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">Match</text>
+  <text x="279" y="90" textAnchor="middle" fontSize="8" fill="#a8dfc9" fontFamily="sans-serif">cosine sim</text>
+
+  <line x1="324" y1="80" x2="344" y2="80" stroke="#2A7F62" strokeWidth="1" markerEnd="url(#pip)"/>
+
+  <rect x="346" y="50" width="90" height="60" rx="6" fill="#2C3E50"/>
+  <text x="391" y="75" textAnchor="middle" fontSize="9" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">Context</text>
+  <text x="391" y="90" textAnchor="middle" fontSize="8" fill="#b0bec5" fontFamily="sans-serif">Moodle API</text>
+
+  <line x1="436" y1="80" x2="456" y2="80" stroke="#2A7F62" strokeWidth="1" markerEnd="url(#pip)"/>
+
+  <rect x="458" y="50" width="90" height="60" rx="6" fill="#2A7F62" opacity="0.85"/>
+  <text x="503" y="75" textAnchor="middle" fontSize="9" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">Generate</text>
+  <text x="503" y="90" textAnchor="middle" fontSize="8" fill="#a8dfc9" fontFamily="sans-serif">Llama 4-bit</text>
+
+  <line x1="548" y1="80" x2="568" y2="80" stroke="#2A7F62" strokeWidth="1" markerEnd="url(#pip)"/>
+
+  <rect x="570" y="50" width="90" height="60" rx="6" fill="#1F4E79"/>
+  <text x="615" y="75" textAnchor="middle" fontSize="9" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">Respond</text>
+  <text x="615" y="90" textAnchor="middle" fontSize="8" fill="#a8c4e0" fontFamily="sans-serif">chatbot UI</text>
+
+  {/* Labels */}
+  <text x="167" y="135" textAnchor="middle" fontSize="8" fill="#6b7280" fontFamily="sans-serif">Vector space</text>
+  <text x="279" y="135" textAnchor="middle" fontSize="8" fill="#6b7280" fontFamily="sans-serif">Top-N courses</text>
+  <text x="391" y="135" textAnchor="middle" fontSize="8" fill="#6b7280" fontFamily="sans-serif">Structured data</text>
+  <text x="503" y="135" textAnchor="middle" fontSize="8" fill="#6b7280" fontFamily="sans-serif">Grounded output</text>
+</svg>
+
+<span style={{display: 'block', textAlign: 'center', fontSize: '0.85rem', color: '#6b7280', marginTop: '-0.5rem', marginBottom: '2rem'}}>The recommendation pipeline — embed, match, assemble context, generate, deliver</span>
+
+### Serving: FastAPI + ngrok
+
+The LLM runs on Google Colab. The Moodle platform runs on our self-hosted server. These are two different environments that need to communicate.
+
+We built a **FastAPI server** on Colab that exposes the recommendation pipeline as an API endpoint. During development, **ngrok** tunnels the Colab-hosted API to a public URL that the Moodle plugin can call. The Moodle chatbot plugin — a local plugin sitting in Moodle's directory structure — sends the student's query to the FastAPI endpoint via Moodle's web service capabilities, receives the recommendation response, and renders it in the chatbot interface.
+
+The FastAPI server handles query processing, context assembly, the embedding + matching + generation pipeline, and response formatting — all in a single endpoint. It's not production-grade architecture, but it works, and it was designed to be replaceable: the Moodle plugin doesn't care whether the API runs on Colab or on SageMaker, as long as the endpoint contract stays the same.
+
+### The Moodle Plugin
+
+Moodle's plugin architecture supports local plugins — code that resides in Moodle's directory structure without interfering with core functionality. Our chatbot plugin follows the standard structure:
+
+- `version.php` — plugin version and dependencies
+- `db/install.xml` — database tables (if needed)
+- `lib.php` — PHP code handling chatbot requests and responses
+- `settings.php` — configuration (API endpoint URL, model parameters)
+- `index.php` — the frontend interface, embedded in Moodle's frames
+
+The plugin communicates with the externally-hosted LLM via Moodle's REST API and web service capabilities. This means the chatbot integrates seamlessly into the Moodle experience — students don't know they're talking to an LLM running on a GPU in Google's data center. They see a chatbot widget inside their learning platform.
+
+### The Prompt Engineering
+
+With RAG off the table, the quality of the recommendations depended almost entirely on how well we could engineer the prompts. This was less glamorous than building a vector store, but it was where most of the iteration happened.
+
+The key insight: **the model doesn't need to know everything about every course.** It needs to know about the 5-10 most relevant courses (selected by the embedding-based matching) in enough detail to make a useful recommendation. The prompt template structures this context explicitly — course name, educator, rating, teaching style, availability — so the model has all the signal it needs without requiring retrieval over the entire knowledge base.
+
+We iterated on the prompt template extensively. Early versions produced generic responses ("Here are some physics courses you might like"). Later versions, with tighter context formatting and more specific instruction phrasing, produced recommendations that referenced specific educators, explained why they were a good match, and suggested alternatives if the top match wasn't ideal.
+
+### What We Learned
+
+**Embeddings are more powerful than we expected.** Before building this, we thought of search as keyword matching. Sentence-transformers changed that understanding fundamentally. The ability to match "I learn better with visual explanations" to courses that use diagrams and videos — without either text containing the same words — was the moment the project shifted from "chatbot experiment" to "this could actually work."
+
+**RAG is an engineering project, not a research project.** We went in thinking RAG was a clever algorithm to implement. We came out understanding it's an infrastructure problem — chunking, embedding pipelines, vector store management, retrieval tuning, context window management. Each of those is a project in itself. For a two-person team with a deadline, the simpler approach that works beats the sophisticated approach that's half-built.
+
+**Quantization makes LLMs accessible.** Running Llama on free Colab GPUs using 4-bit quantization was the enabling decision. Without BitsAndBytes, we would have needed paid compute or a smaller, less capable model. The quality tradeoff was minimal for our use case — quantization opened the door.
+
+**The pivot was the right call.** Dropping RAG and shipping a working prompt-engineered system was a better outcome than delivering a broken RAG pipeline. In startup terms: ship the thing that works, not the thing that sounds impressive. We can always add RAG later when there's more data, more compute, and more time.
+
+### What's Next
+
+The immediate roadmap: migrate the LLM from Colab to AWS SageMaker (funded by the YIP grant), which eliminates the ngrok tunnel and gives us persistent, reliable inference. Implement proper RAG once the platform has enough course data and user interaction history to make retrieval meaningful. And continue iterating on the recommendation quality — the embedding model, the prompt templates, and the feedback loop from student ratings of recommendations.
+
+The longer vision: Athena's LLM should know not just what courses exist, but how students with similar profiles have succeeded. That's a recommendation engine that improves with every interaction — and it's built on the same foundation we've already shipped.
+
+*For the full Athena startup story — the problem, the platform, the competitions, and the social impact model — see: [Athena: Fixing Supplementary Education by Making Quality Visible](/side-projects/athena).*

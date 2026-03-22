@@ -1,21 +1,358 @@
 ---
-title: "The 2019 Rover: 10 Students, Zero Parents, One Science Fair"
+title: "The 2019 Rover: A Build Guide and a Leadership Story"
 date: "2026-03-19"
-description: "How I led a team of 10 school students to build a life-sized extraterrestrial rover for a science fair — managing everything from budget to logistics with no adult involvement."
-tags: ["Robotics", "Leadership", "School"]
+description: "How ten school students built a life-sized, driveable rover from secondhand car parts and lead-acid batteries — a step-by-step breakdown of the build, the crisis two hours before judging, and what we'd do differently with a Raspberry Pi and GPS."
+tags: ["Robotics", "Leadership", "Team Management", "School", "Build Guide"]
 contentType: "case-study"
-traits: ["leadership", "robotics"]
+traits: ["leadership", "robotics", "case-study", "build-guide"]
 heroImage: ""
 ---
 
-### The Project
+### Build Something Nobody Expects From School Students
 
-In 2019, I led a team of 10 students at Christ Nagar school to build a life-sized extraterrestrial rover for the annual science exhibition. No parents were involved. We managed the budget, the design, the construction, and the logistics ourselves.
+In 2019, our school announced a science exhibition. Most teams were building the usual — volcanoes, solar systems, circuit boards on poster displays. We decided to build a life-sized, driveable extraterrestrial rover.
 
-### What I Learned About Teams
+Not a miniature. Not a model. A four-wheeled machine nearly two metres long, with a seat from a scrapped car, secondhand automobile wheels, and enough battery power to drive across the exhibition floor. Built entirely by ten students, self-funded, zero parent involvement.
 
-The team naturally split into two groups — the intellectually talented students who thrived on design and testing, and others who wanted to contribute but weren't sure how. Instead of letting this become a divide, I made it the team's strength: the design-focused students handled technical work while others managed logistics, materials, and presentation. Everyone had ownership over something, and that's what kept the project moving.
+I was sixteen. This is how we built it, how it almost didn't work, and what it taught me about leading people.
 
-Many mistakes happened along the way. We learned from all of them and delivered. The rover was one of the standout exhibits at the fair — not because it was technically perfect, but because a group of school students built something life-sized, end-to-end, without anyone holding their hand.
+<svg width="100%" viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg" style={{maxWidth: '760px', margin: '2rem auto', display: 'block'}}>
+  <rect x="0" y="0" width="760" height="340" rx="8" fill="#f0f4f8" stroke="#d1d9e0" strokeWidth="0.8"/>
+  <text x="380" y="28" textAnchor="middle" fontSize="12" fontWeight="600" fill="#2C3E50" fontFamily="sans-serif" letterSpacing="1">ROVER — TOP-DOWN BLUEPRINT</text>
+  <text x="380" y="44" textAnchor="middle" fontSize="9" fill="#6b7280" fontFamily="sans-serif">~1.5–2m long · ~0.8m wide · 4-wheel differential drive</text>
 
-*This project taught me something I still apply at Signify: most people want to work — you just need to inspire them and make them feel involved.*
+  {/* Chassis outline */}
+  <rect x="180" y="60" width="400" height="240" rx="16" fill="none" stroke="#2C3E50" strokeWidth="2" strokeDasharray="8,4"/>
+  <text x="380" y="80" textAnchor="middle" fontSize="9" fill="#6b7280" fontFamily="sans-serif">Mild steel box section frame</text>
+
+  {/* Wheels */}
+  <rect x="155" y="80" width="30" height="55" rx="6" fill="#2C3E50"/>
+  <text x="170" y="112" textAnchor="middle" fontSize="7" fill="#f9fafb" fontFamily="sans-serif">FL</text>
+  <rect x="155" y="225" width="30" height="55" rx="6" fill="#2C3E50"/>
+  <text x="170" y="257" textAnchor="middle" fontSize="7" fill="#f9fafb" fontFamily="sans-serif">RL</text>
+  <rect x="575" y="80" width="30" height="55" rx="6" fill="#2C3E50"/>
+  <text x="590" y="112" textAnchor="middle" fontSize="7" fill="#f9fafb" fontFamily="sans-serif">FR</text>
+  <rect x="575" y="225" width="30" height="55" rx="6" fill="#2C3E50"/>
+  <text x="590" y="257" textAnchor="middle" fontSize="7" fill="#f9fafb" fontFamily="sans-serif">RR</text>
+
+  {/* Motors */}
+  <rect x="195" y="230" width="70" height="35" rx="4" fill="#1F4E79"/>
+  <text x="230" y="252" textAnchor="middle" fontSize="8" fill="#f9fafb" fontFamily="sans-serif">Motor L</text>
+  <text x="230" y="262" textAnchor="middle" fontSize="7" fill="#a8c4e0" fontFamily="sans-serif">24V DC</text>
+  <rect x="495" y="230" width="70" height="35" rx="4" fill="#1F4E79"/>
+  <text x="530" y="252" textAnchor="middle" fontSize="8" fill="#f9fafb" fontFamily="sans-serif">Motor R</text>
+  <text x="530" y="262" textAnchor="middle" fontSize="7" fill="#a8c4e0" fontFamily="sans-serif">24V DC</text>
+
+  {/* Batteries */}
+  <rect x="290" y="210" width="80" height="45" rx="4" fill="#2A7F62"/>
+  <text x="330" y="232" textAnchor="middle" fontSize="8" fill="#f9fafb" fontFamily="sans-serif">Batt 1</text>
+  <text x="330" y="244" textAnchor="middle" fontSize="7" fill="#a8dfc9" fontFamily="sans-serif">12V Lead-Acid</text>
+  <rect x="390" y="210" width="80" height="45" rx="4" fill="#2A7F62"/>
+  <text x="430" y="232" textAnchor="middle" fontSize="8" fill="#f9fafb" fontFamily="sans-serif">Batt 2</text>
+  <text x="430" y="244" textAnchor="middle" fontSize="7" fill="#a8dfc9" fontFamily="sans-serif">12V Lead-Acid</text>
+  <text x="380" y="270" textAnchor="middle" fontSize="8" fontWeight="600" fill="#2A7F62" fontFamily="sans-serif">IN SERIES → 24V</text>
+
+  {/* Seat */}
+  <rect x="310" y="100" width="140" height="80" rx="10" fill="#2C3E50" opacity="0.15" stroke="#2C3E50" strokeWidth="1"/>
+  <text x="380" y="140" textAnchor="middle" fontSize="10" fill="#2C3E50" fontFamily="sans-serif">Driver Seat</text>
+  <text x="380" y="155" textAnchor="middle" fontSize="8" fill="#6b7280" fontFamily="sans-serif">(salvaged car seat)</text>
+
+  {/* Kill switch */}
+  <circle cx="260" cy="130" r="12" fill="#c0392b" opacity="0.8"/>
+  <text x="260" y="134" textAnchor="middle" fontSize="7" fontWeight="600" fill="#f9fafb" fontFamily="sans-serif">KILL</text>
+
+  {/* Wiring lines */}
+  <line x1="370" y1="230" x2="265" y2="248" stroke="#c8a951" strokeWidth="1.5" strokeDasharray="4,2"/>
+  <line x1="390" y1="230" x2="495" y2="248" stroke="#c8a951" strokeWidth="1.5" strokeDasharray="4,2"/>
+
+  {/* Dimensions */}
+  <line x1="140" y1="60" x2="140" y2="300" stroke="#6b7280" strokeWidth="0.5"/>
+  <text x="135" y="180" textAnchor="end" fontSize="8" fill="#6b7280" fontFamily="sans-serif" transform="rotate(-90,135,180)">~1.5–2m</text>
+  <line x1="180" y1="310" x2="580" y2="310" stroke="#6b7280" strokeWidth="0.5"/>
+  <text x="380" y="325" textAnchor="middle" fontSize="8" fill="#6b7280" fontFamily="sans-serif">~0.8m</text>
+</svg>
+
+<span style={{display: 'block', textAlign: 'center', fontSize: '0.85rem', color: '#6b7280', marginTop: '-0.5rem', marginBottom: '2rem'}}>Top-down layout — steel chassis, four secondhand wheels, salvaged seat, two lead-acid batteries in series, two DC motors, one kill switch. That's the entire rover.</span>
+
+### The Team
+
+Ten students signed up. Within the first week, two groups naturally emerged — and this is where the project could have fallen apart.
+
+One group was technically driven. They wanted to get into the design immediately — arguing about chassis dimensions, motor specs, how to mount the wheels. They had ideas and the confidence to push them.
+
+The other group wanted to be part of it just as much, but they didn't know how. They'd show up, watch the technical students debate, and stand around not sure where they fit. It wasn't that they weren't motivated — they genuinely wanted to contribute. They just couldn't see what their contribution would look like on a project this technical.
+
+That gap — between wanting to help and knowing how to help — is where most student teams lose half their members. People drift away quietly, the core group gets overloaded, and the project either shrinks in scope or collapses.
+
+I didn't want two groups. I wanted one team. So I started pulling people in — not with big speeches, but practically. "Come to the scrap dealer with me, I need someone who can negotiate." "You're good with numbers — here's the budget sheet, you own it now." "We need someone to figure out how much wire we need between the batteries and the motors — can you measure it out?" Small, specific things that connected them to the project in a way that felt real.
+
+The technically talented students handled design and testing. The others took on procurement, budgeting, administration, and fabrication support. But the teams were fluid — when the chassis needed welding, half the team was at the fabrication shop regardless of what their "role" was. When we needed to source parts, whoever was free went. Nobody was boxed in.
+
+The thing I figured out — and I was sixteen, I didn't have a word for it — is that most people want to work. They really do. They just need someone to show them where they fit and make them feel like their piece matters. Once that clicked, the team ran itself.
+
+### The Budget
+
+We pooled money from our own pockets — no school funding, no sponsors, no parents writing cheques. Everyone contributed what they could. One person tracked the spending. The total came to roughly ₹40,000 for the exhibition rover — significant money for school students funding something out of pocket.
+
+Every decision was filtered through cost. We used steel instead of aluminium because it was cheaper to weld. We bought secondhand wheels because new ones would have eaten a quarter of the budget. The seat came from a scrap yard. The batteries were the cheapest high-current option available. We didn't have the luxury of choosing the best component — we chose the best component we could afford, and designed around its limitations.
+
+### The Build: Step by Step
+
+If you're a student wanting to attempt something similar, here's exactly how we did it. The exhibition rover was deliberately simple — no fancy electronics, no speed controllers, no computers. It needed to drive across a floor convincingly. That's it.
+
+#### Step 1: Chassis
+
+Mild steel box sections, welded into a rectangular frame roughly 1.5–2 metres long. We got the welding done at a local fabrication shop — a few of us spent days there, learning to hold pieces in place while the welder worked. The frame needed to support two lead-acid batteries, a human driver, and two motors — so it had to be sturdy. That made it heavy, which made everything else harder. That's the core tradeoff when you're building on a school budget: cheap materials are heavy, and heavy frames need more power.
+
+#### Step 2: Wheels
+
+Four secondhand automobile wheels from a scrap dealer. No suspension — wheels bolted directly to stub axles welded onto the frame. Rough ride, but it eliminated an entire subsystem. One less thing to build, one less thing to break.
+
+#### Step 3: Seat
+
+Salvaged from a scrapped car. Bolted to crossmembers on the chassis. We spent about an hour at the scrap yard trying different seats until we found one that fit the frame width.
+
+#### Step 4: Power System
+
+Two 12V lead-acid batteries — the kind you find in UPS systems and auto-rickshaws. Cheap, high current capability, available everywhere. Also extremely heavy, which is why the chassis needed to be so robust.
+
+Connected in **series** (12V + 12V = 24V) to power the motors at their full rated voltage. Getting this right turned out to be the difference between the rover working and not — more on that in the crisis section.
+
+#### Step 5: Drive System
+
+Two 24V DC geared motors, one on each side. **Differential drive** — speed difference between the two sides creates steering. No separate steering linkage needed.
+
+Here's what made the base rover so simple: **there were no motor controllers.** The motors were wired directly to the batteries through a switch. Power on, the rover moves. Power off, it stops. No speed modulation, no throttle, no electronics between the batteries and the motors.
+
+This was a deliberate choice. For the exhibition, we needed the rover to drive a short distance across a hall. We didn't need variable speed. We didn't need precision steering. We needed it to move, look impressive, and not catch fire. Direct connection was the simplest way to guarantee that.
+
+<svg width="100%" viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" style={{maxWidth: '700px', margin: '2rem auto', display: 'block'}}>
+  <text x="350" y="22" textAnchor="middle" fontSize="11" fontWeight="600" fill="#2C3E50" fontFamily="sans-serif">Differential Drive — How Steering Works</text>
+
+  {/* Straight */}
+  <rect x="20" y="45" width="200" height="130" rx="6" fill="#f0f4f8" stroke="#d1d9e0" strokeWidth="0.6"/>
+  <text x="120" y="65" textAnchor="middle" fontSize="9" fontWeight="600" fill="#2C3E50" fontFamily="sans-serif">STRAIGHT</text>
+  <rect x="50" y="80" width="20" height="60" rx="3" fill="#1F4E79"/>
+  <rect x="170" y="80" width="20" height="60" rx="3" fill="#1F4E79"/>
+  <rect x="80" y="95" width="80" height="30" rx="4" fill="#2C3E50" opacity="0.15" stroke="#2C3E50" strokeWidth="0.5"/>
+  <text x="60" y="160" textAnchor="middle" fontSize="8" fill="#2A7F62" fontFamily="sans-serif">= speed</text>
+  <text x="180" y="160" textAnchor="middle" fontSize="8" fill="#2A7F62" fontFamily="sans-serif">= speed</text>
+  <text x="120" y="78" textAnchor="middle" fontSize="16" fill="#2A7F62" fontFamily="sans-serif">↑</text>
+
+  {/* Turn right */}
+  <rect x="250" y="45" width="200" height="130" rx="6" fill="#f0f4f8" stroke="#d1d9e0" strokeWidth="0.6"/>
+  <text x="350" y="65" textAnchor="middle" fontSize="9" fontWeight="600" fill="#2C3E50" fontFamily="sans-serif">TURN RIGHT</text>
+  <rect x="280" y="80" width="20" height="60" rx="3" fill="#1F4E79"/>
+  <rect x="400" y="80" width="20" height="60" rx="3" fill="#1F4E79" opacity="0.4"/>
+  <rect x="310" y="95" width="80" height="30" rx="4" fill="#2C3E50" opacity="0.15" stroke="#2C3E50" strokeWidth="0.5"/>
+  <text x="290" y="160" textAnchor="middle" fontSize="8" fill="#2A7F62" fontFamily="sans-serif">FAST</text>
+  <text x="410" y="160" textAnchor="middle" fontSize="8" fill="#6b7280" fontFamily="sans-serif">SLOW</text>
+  <text x="365" y="78" textAnchor="middle" fontSize="14" fill="#2C3E50" fontFamily="sans-serif">↗</text>
+
+  {/* Pivot */}
+  <rect x="480" y="45" width="200" height="130" rx="6" fill="#f0f4f8" stroke="#d1d9e0" strokeWidth="0.6"/>
+  <text x="580" y="65" textAnchor="middle" fontSize="9" fontWeight="600" fill="#2C3E50" fontFamily="sans-serif">PIVOT</text>
+  <rect x="510" y="80" width="20" height="60" rx="3" fill="#1F4E79"/>
+  <rect x="630" y="80" width="20" height="60" rx="3" fill="#c0392b" opacity="0.6"/>
+  <rect x="540" y="95" width="80" height="30" rx="4" fill="#2C3E50" opacity="0.15" stroke="#2C3E50" strokeWidth="0.5"/>
+  <text x="520" y="160" textAnchor="middle" fontSize="8" fill="#2A7F62" fontFamily="sans-serif">FWD</text>
+  <text x="640" y="160" textAnchor="middle" fontSize="8" fill="#c0392b" fontFamily="sans-serif">REV</text>
+  <text x="580" y="78" textAnchor="middle" fontSize="14" fill="#2C3E50" fontFamily="sans-serif">↻</text>
+</svg>
+
+<span style={{display: 'block', textAlign: 'center', fontSize: '0.85rem', color: '#6b7280', marginTop: '-0.5rem', marginBottom: '2rem'}}>No steering linkage needed — speed difference between left and right motors does all the turning</span>
+
+#### Step 6: Wiring
+
+High-gauge copper wire, soldered connections, insulated joints. A master kill switch within the driver's reach. The wiring on the base rover was minimal — batteries → switch → motors. No controllers, no throttle circuits, no signal wires. Just power delivery.
+
+This is also the part where we made the mistake that nearly killed the project.
+
+### Component List
+
+#### Base Rover (what we exhibited): ~₹40,000
+
+| Component | Spec | Approx. Cost (₹) | Notes |
+|---|---|---|---|
+| Chassis material | Mild steel box sections | ~3,000 | |
+| Fabrication/welding | Shop charges | ~5,000 | Local shop, negotiate |
+| Wheels (x4) | Secondhand auto wheels + axles | ~5,000 | Scrap dealer |
+| Seat | Salvaged car seat | ~1,000 | Scrap yard |
+| Batteries (x2) | 12V lead-acid, 26Ah+ | ~5,000 | UPS/rickshaw type |
+| DC Motors (x2) | 24V DC geared, high-torque | ~7,000 | Must handle heavy load |
+| Wiring + electrical | High-gauge copper, kill switch, connectors, solder, insulation | ~2,500 | Don't skimp |
+| Misc | Fasteners, paint, transport, unexpected costs | ~3,500 | Always budget extra |
+| **Subtotal** | | **~₹40,000** | Self-funded by 10 students |
+
+No motor controllers. No throttle. No electronics. Batteries wired to motors through a switch. That's the whole electrical system.
+
+#### ADAS Prototype (experimental): ~₹25,000–30,000 additional
+
+| Component | Spec | Approx. Cost (₹) | Notes |
+|---|---|---|---|
+| Motor Controllers (x2) | 24V DC, 30A+ rated | ~8,000 | Beefy — sized for peak current |
+| Throttle controllers (x2) | Motorcycle twist-grip | ~1,500 | Variable speed control |
+| Potentiometer | Rotary pot | ~200 | Speed range limiter |
+| Raspberry Pi 4 | 4GB kit | ~4,000 | ADAS brain |
+| Ultrasonic sensors (x4) | HC-SR04 or equivalent | ~800 | Obstacle detection |
+| Camera module | Pi camera v2 | ~1,500 | OpenCV object detection |
+| GPS module | NEO-6M or similar | ~800 | Waypoint navigation |
+| Small test chassis | For prototype testing | ~5,000 | Didn't test ADAS on the real rover |
+| Misc wiring + mounting | | ~2,000 | |
+| **Subtotal** | | **~₹25,000–30,000** | |
+
+**Total across both builds: ~₹65,000–70,000.**
+
+I've looked up current prices for someone attempting this today — components have gone up since 2019, so expect the base rover to cost closer to ₹50,000–55,000 and the full setup with ADAS experimentation closer to ₹80,000.
+
+### The Crisis: Two Hours Before the Judges
+
+The rover was assembled. Judges were arriving in two hours. We powered it up for the final test.
+
+The motors barely turned. Wheels twitched but couldn't move the rover's weight.
+
+We'd wired each 12V battery directly to each motor — we figured 12V was enough to get them spinning. It wasn't. The motors were rated for 24V. At half voltage, they produced a fraction of the torque needed to move a two-metre steel chassis loaded with lead-acid batteries across a concrete floor.
+
+Worse — the wires were heating up. At 12V, the motors drew more current trying to compensate for the low voltage. The wires weren't sized for that current. Insulation started softening. One connection melted through.
+
+Two hours. Weeks of work. Ten people looking at me.
+
+I thought about what we'd covered in physics that term. Voltage, current, series and parallel circuits. The problem was actually simple once I stopped panicking: we had two 12V batteries and motors that needed 24V. Wire the batteries **in series** — positive of one to negative of the other — and the total voltage becomes 24V. Feed that to both motors.
+
+I redrew the wiring on the spot. We cut the old connections, resoldered the battery terminals in series, rerouted the wires, checked every joint, and switched it on.
+
+The rover drove. Full power, both motors pulling, steering responding. Two hours later, the judges watched a life-sized machine built by school students roll across the exhibition floor.
+
+<svg width="100%" viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" style={{maxWidth: '720px', margin: '2rem auto', display: 'block'}}>
+  {/* Wrong wiring */}
+  <rect x="10" y="10" width="340" height="200" rx="8" fill="#c0392b" opacity="0.05" stroke="#c0392b" strokeWidth="1"/>
+  <text x="180" y="35" textAnchor="middle" fontSize="11" fontWeight="600" fill="#c0392b" fontFamily="sans-serif">✗ WRONG — 12V to each motor</text>
+
+  <rect x="40" y="55" width="100" height="40" rx="4" fill="#2A7F62"/>
+  <text x="90" y="78" textAnchor="middle" fontSize="9" fill="#f9fafb" fontFamily="sans-serif">Batt A (12V)</text>
+  <rect x="40" y="130" width="100" height="40" rx="4" fill="#2A7F62"/>
+  <text x="90" y="153" textAnchor="middle" fontSize="9" fill="#f9fafb" fontFamily="sans-serif">Batt B (12V)</text>
+
+  <rect x="210" y="55" width="100" height="40" rx="4" fill="#1F4E79"/>
+  <text x="260" y="78" textAnchor="middle" fontSize="9" fill="#f9fafb" fontFamily="sans-serif">Motor L (24V)</text>
+  <rect x="210" y="130" width="100" height="40" rx="4" fill="#1F4E79"/>
+  <text x="260" y="153" textAnchor="middle" fontSize="9" fill="#f9fafb" fontFamily="sans-serif">Motor R (24V)</text>
+
+  <line x1="140" y1="75" x2="210" y2="75" stroke="#c0392b" strokeWidth="2"/>
+  <text x="175" y="68" textAnchor="middle" fontSize="8" fill="#c0392b" fontFamily="sans-serif">12V</text>
+  <line x1="140" y1="150" x2="210" y2="150" stroke="#c0392b" strokeWidth="2"/>
+  <text x="175" y="143" textAnchor="middle" fontSize="8" fill="#c0392b" fontFamily="sans-serif">12V</text>
+
+  <text x="180" y="195" textAnchor="middle" fontSize="9" fill="#c0392b" fontFamily="sans-serif">Half voltage → no torque → wires melt</text>
+
+  {/* Right wiring */}
+  <rect x="370" y="10" width="340" height="200" rx="8" fill="#2A7F62" opacity="0.05" stroke="#2A7F62" strokeWidth="1"/>
+  <text x="540" y="35" textAnchor="middle" fontSize="11" fontWeight="600" fill="#2A7F62" fontFamily="sans-serif">✓ FIXED — batteries in series, 24V</text>
+
+  <rect x="395" y="80" width="80" height="40" rx="4" fill="#2A7F62"/>
+  <text x="435" y="103" textAnchor="middle" fontSize="9" fill="#f9fafb" fontFamily="sans-serif">Batt A</text>
+  <rect x="480" y="80" width="80" height="40" rx="4" fill="#2A7F62"/>
+  <text x="520" y="103" textAnchor="middle" fontSize="9" fill="#f9fafb" fontFamily="sans-serif">Batt B</text>
+
+  <line x1="475" y1="100" x2="480" y2="100" stroke="#c8a951" strokeWidth="2"/>
+  <text x="478" y="76" textAnchor="middle" fontSize="7" fontWeight="600" fill="#c8a951" fontFamily="sans-serif">SERIES</text>
+
+  <text x="478" y="140" textAnchor="middle" fontSize="9" fontWeight="600" fill="#2A7F62" fontFamily="sans-serif">= 24V total</text>
+
+  <rect x="585" y="60" width="100" height="35" rx="4" fill="#1F4E79"/>
+  <text x="635" y="81" textAnchor="middle" fontSize="9" fill="#f9fafb" fontFamily="sans-serif">Motor L</text>
+  <rect x="585" y="110" width="100" height="35" rx="4" fill="#1F4E79"/>
+  <text x="635" y="131" textAnchor="middle" fontSize="9" fill="#f9fafb" fontFamily="sans-serif">Motor R</text>
+
+  <line x1="560" y1="95" x2="585" y2="78" stroke="#2A7F62" strokeWidth="1.5"/>
+  <line x1="560" y1="105" x2="585" y2="128" stroke="#2A7F62" strokeWidth="1.5"/>
+  <text x="572" y="102" textAnchor="middle" fontSize="7" fill="#2A7F62" fontFamily="sans-serif">24V</text>
+
+  <text x="540" y="195" textAnchor="middle" fontSize="9" fill="#2A7F62" fontFamily="sans-serif">Full voltage → full torque → rover drives</text>
+</svg>
+
+<span style={{display: 'block', textAlign: 'center', fontSize: '0.85rem', color: '#6b7280', marginTop: '-0.5rem', marginBottom: '2rem'}}>The fix was basic school physics — wire batteries in series for 24V instead of 12V to each motor separately</span>
+
+### What We Tested But Didn't Ship
+
+The exhibition rover was deliberately crude — direct drive, no electronics, manual control via a switch. It didn't need to be more. But alongside it, we'd been building something more interesting on a smaller prototype.
+
+This is where the motor controllers came in. The prototype had proper speed control — motorcycle twist-grip throttles wired through beefy DC motor controllers, with a potentiometer for overall speed limiting. Variable speed, proportional steering, the works. A completely different driving experience from the on/off switch of the exhibition rover.
+
+On top of that:
+
+**Obstacle detection.** A Raspberry Pi with ultrasonic sensors. When sensors detected an object within a threshold distance, the Pi sent a signal to cut motor power. We got this working reliably on the prototype.
+
+**Camera-based detection.** A Pi camera module running basic OpenCV. Partially working — could detect large objects, but not reliably enough for real-time autonomous driving.
+
+**GPS navigation.** A GPS module connected to the Pi for waypoint-based navigation — program a destination, the Pi plans a path, sends speed commands to each motor. We sketched the architecture and ordered the GPS module but never got to full integration.
+
+None of this made it onto the exhibition rover — we ran out of time, and the exhibition didn't require it. But the ideas didn't disappear. Years later, the autonomous navigation system I designed for the **[ISRO IRoC-U rover proposal](/side-projects/iroc-rover)** — ROS Noetic, stereo cameras, IMU dead-reckoning, greedy path planning — was a direct evolution of what we'd drawn on a whiteboard in school.
+
+### What We'd Improve in a V2
+
+<svg width="100%" viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" style={{maxWidth: '720px', margin: '2rem auto', display: 'block'}}>
+  <text x="360" y="22" textAnchor="middle" fontSize="11" fontWeight="600" fill="#2C3E50" fontFamily="sans-serif">V2 Improvements Roadmap</text>
+
+  {/* Base rover center */}
+  <rect x="270" y="90" width="180" height="70" rx="8" fill="#2C3E50"/>
+  <text x="360" y="120" textAnchor="middle" fontSize="11" fontWeight="600" fill="#f9fafb" fontFamily="sans-serif">Base Rover</text>
+  <text x="360" y="138" textAnchor="middle" fontSize="9" fill="#b0bec5" fontFamily="sans-serif">Steel · Lead-acid · Direct drive</text>
+
+  {/* LiPo */}
+  <rect x="20" y="40" width="140" height="45" rx="6" fill="#2A7F62"/>
+  <text x="90" y="62" textAnchor="middle" fontSize="9" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">LiPo Batteries</text>
+  <text x="90" y="76" textAnchor="middle" fontSize="8" fill="#a8dfc9" fontFamily="sans-serif">1/4 the weight</text>
+  <line x1="160" y1="62" x2="270" y2="110" stroke="#2A7F62" strokeWidth="1" strokeDasharray="4,3"/>
+
+  {/* Aluminium */}
+  <rect x="20" y="110" width="140" height="45" rx="6" fill="#1F4E79"/>
+  <text x="90" y="132" textAnchor="middle" fontSize="9" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">Aluminium Frame</text>
+  <text x="90" y="146" textAnchor="middle" fontSize="8" fill="#a8c4e0" fontFamily="sans-serif">Half the frame weight</text>
+  <line x1="160" y1="132" x2="270" y2="125" stroke="#1F4E79" strokeWidth="1" strokeDasharray="4,3"/>
+
+  {/* Ackermann */}
+  <rect x="20" y="180" width="140" height="45" rx="6" fill="#6b7280"/>
+  <text x="90" y="202" textAnchor="middle" fontSize="9" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">Ackermann Steering</text>
+  <text x="90" y="216" textAnchor="middle" fontSize="8" fill="#d1d9e0" fontFamily="sans-serif">Proper front-wheel linkage</text>
+  <line x1="160" y1="202" x2="270" y2="140" stroke="#6b7280" strokeWidth="1" strokeDasharray="4,3"/>
+
+  {/* ADAS */}
+  <rect x="560" y="40" width="140" height="65" rx="6" fill="#2A7F62"/>
+  <text x="630" y="60" textAnchor="middle" fontSize="9" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">Full ADAS</text>
+  <text x="630" y="74" textAnchor="middle" fontSize="8" fill="#a8dfc9" fontFamily="sans-serif">Pi + Ultrasonic + Camera</text>
+  <text x="630" y="88" textAnchor="middle" fontSize="8" fill="#a8dfc9" fontFamily="sans-serif">+ GPS navigation</text>
+  <line x1="450" y1="110" x2="560" y2="72" stroke="#2A7F62" strokeWidth="1" strokeDasharray="4,3"/>
+
+  {/* Telemetry */}
+  <rect x="560" y="125" width="140" height="45" rx="6" fill="#1F4E79"/>
+  <text x="630" y="147" textAnchor="middle" fontSize="9" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">Telemetry</text>
+  <text x="630" y="161" textAnchor="middle" fontSize="8" fill="#a8c4e0" fontFamily="sans-serif">Live data to laptop</text>
+  <line x1="450" y1="125" x2="560" y2="147" stroke="#1F4E79" strokeWidth="1" strokeDasharray="4,3"/>
+
+  {/* IRoC link */}
+  <rect x="560" y="195" width="140" height="45" rx="6" fill="#c8a951" opacity="0.8"/>
+  <text x="630" y="215" textAnchor="middle" fontSize="9" fontWeight="500" fill="#1a1a2e" fontFamily="sans-serif">→ ISRO IRoC-U</text>
+  <text x="630" y="229" textAnchor="middle" fontSize="8" fill="#1a1a2e" fontFamily="sans-serif">The evolution continues</text>
+  <line x1="630" y1="170" x2="630" y2="195" stroke="#c8a951" strokeWidth="1" strokeDasharray="4,3"/>
+</svg>
+
+<span style={{display: 'block', textAlign: 'center', fontSize: '0.85rem', color: '#6b7280', marginTop: '-0.5rem', marginBottom: '2rem'}}>Everything we'd improve — and how the school rover's ADAS concepts evolved into the ISRO rover proposal years later</span>
+
+If I were building this again with more time and a slightly bigger budget:
+
+- **LiPo batteries instead of lead-acid** — a fraction of the weight for the same voltage. The entire chassis could be lighter, which means smaller motors and better handling.
+- **Aluminium frame instead of steel** — needs TIG welding or bolted extrusions, but cuts frame weight dramatically.
+- **Ackermann steering** — a proper front-wheel linkage instead of differential drive. More complex to build, much more precise to drive.
+- **Full ADAS integration** — mount the Raspberry Pi, ultrasonic sensors, camera, and GPS on the real rover. Run the obstacle detection and navigation code we'd already proven on the prototype.
+- **Telemetry** — stream battery voltage, motor current, and GPS position to a laptop for real-time monitoring.
+
+### What This Project Taught Me
+
+Two things I've carried into every role since.
+
+**People engage when they own something.** The students who seemed disengaged at the start weren't unmotivated — they just didn't see where they fit. Once they had a piece of the project that was genuinely theirs, they showed up every day. I see the same thing in product teams. A Product Owner's job isn't to do the work — it's to make sure every person knows what their contribution is and why it matters.
+
+**When things break, go back to basics.** The wiring crisis wasn't solved by expertise — I was sixteen, I had none. It was solved by understanding school physics well enough to reason through a problem under pressure. Whether it's a battery wiring issue or a production incident, the instinct is the same: stop panicking, think about what's actually happening, and fix it at the root.
+
+I didn't know the word "Product Owner" when I was sixteen. But I was already doing the job — pulling a team together, managing a budget, making technical decisions under constraints, and delivering something real on a deadline.

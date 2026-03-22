@@ -1,27 +1,87 @@
 ---
 title: "EcoSift: Portable AI-Powered Waste Segregation"
 date: "2026-03-19"
-description: "Truck-mounted waste segregation units using deep learning-controlled robotic arms and an innovative plastic sorting system based on melting point differentiation."
+description: "Truck-mounted waste segregation units using deep learning-controlled robotic arms and an innovative plastic sorting system based on melting point differentiation — addressing Kerala's overflowing landfill crisis."
 tags: ["Robotics", "Deep Learning", "Social Impact", "Startup", "CAD"]
 contentType: "case-study"
 traits: ["startup", "robotics", "social-impact"]
 heroImage: ""
 ---
 
-### The Landfill Problem
+### Kerala Has a Waste Problem It Can't Landfill Away
 
-Kerala's landfills are overflowing. Government initiatives for new sites keep failing. The existing waste management system relies on manual segregation at households — but events, tourist attractions, and non-compliant households generate unsorted waste that goes straight to dumps. The problem isn't processing waste — there are recycling plants ready to take it. The problem is segregating it efficiently at the source.
+Kerala generates more waste than its infrastructure can handle. Landfills in Thiruvananthapuram and Kochi are at capacity. Government initiatives to establish new ones keep failing — nobody wants a landfill in their backyard. The existing system relies on Haritha Karma Sena — a community-based workforce that manually collects and segregates household waste. It works, up to a point. But it doesn't scale.
 
-### The Solution: Mobile Segregation Units
+The problem isn't processing waste. There are recycling plants ready to take segregated material. The bottleneck is the segregation itself. Households are supposed to sort their waste, but compliance is inconsistent. Events, festivals, and tourist attractions generate massive spikes of unsorted waste that the existing system can't absorb. Beaches accumulate plastic that nobody is responsible for collecting. And manual segregation of plastics — the most persistent category — is effectively impossible at the precision recycling requires.
 
-EcoSift uses portable waste segregation units mounted on trucks. Each unit contains a deep learning-powered segregation module with robotic arms that identify and sort waste into four categories: plastic, metal, biodegradable, and glass. Sorted waste is compressed using hydraulic presses for efficient transport to recycling facilities.
+The waste exists. The recycling capacity exists. What's missing is the bridge between them.
 
-The units are mobile by design — deployed to high-waste events, rotated between neighborhoods, or sent to clean up beaches during off-peak periods. One unit, many use cases.
+### The Idea: Bring the Segregation to the Waste
 
-A separate Plastic Segregator Module goes further: it sorts plastics by melting point using heated conveyor belts at calibrated temperatures, enabling precise recycling of different plastic grades — a capability that traditional air-blowing methods can't match.
+Instead of transporting unsorted waste to centralised processing plants, EcoSift takes the segregation to the source. The concept: portable waste segregation units mounted on the back of trucks. Each unit is a self-contained processing system that can be deployed wherever waste accumulates — events, neighbourhoods, beaches, festival grounds — and moved when the job is done.
+
+High waste production at a wedding? Deploy a unit. Beach cleanup campaign? Send a unit. Low production period? Rotate units to landfill clearance duty. The same infrastructure serves multiple use cases because it's mobile by design.
+
+The system has two modules, each housed in a shipping container on a truck bed.
+
+### Module 1: The General Waste Segregator
+
+The first module handles the initial sort. Mixed waste enters the container — either fed manually or scooped in by an excavator attachment for beach/landfill operations.
+
+Inside, a camera system powered by a deep learning model (YOLOv4) scans the waste stream and classifies each item into four categories: **plastic, metal, biodegradable, and glass.** The model generates coordinates for each detected item, which are fed to a processor controlling **robotic arms** — one dedicated to each waste category.
+
+Each arm picks up its assigned material and deposits it into a specific chute. The chutes lead to **hydraulic presses** on the opposite side of the container, one per category. The presses compress the sorted waste into dense blocks — dramatically reducing volume for storage and transport.
+
+Materials too large or too small for the robotic arms fall into a manual sorting bin at the end of the line.
+
+An **incinerator module** handles the leftover residue — low-density plastic fragments, food remnants, material that can't be meaningfully recycled. Combustion happens on-site, reducing what would otherwise go to landfill.
+
+### Module 2: The Plastic Segregator
+
+This is where it gets interesting. General segregation separates plastic from metal, glass, and biodegradable waste. But "plastic" isn't one material — it's dozens of polymers with different properties, different melting points, and different recycling requirements. Mixing PET with HDPE during recycling produces weak, unusable material. Precision sorting by plastic type is what makes recycling actually work.
+
+Traditional methods — air blowing, density separation — are imprecise. Our approach, adapted from research published in IRJET on thermal adhesion-based plastic sorting, uses **melting point differentiation.**
+
+The process:
+
+1. **Grinder** — plastic waste is shredded into small, uniform pieces for easier handling.
+2. **Preheated conveyor belt** at ~100°C runs the length of the container. The ground plastic travels along this belt.
+3. **Secondary heated belts** positioned around the main belt, each calibrated to a specific temperature matching different plastic melting points: Polypropylene (PP) at ~160°C, High-Density Polyethylene (HDPE) at ~130°C, Low-Density Polyethylene (LDPE) at ~120°C, PET at ~260°C.
+4. As plastic particles pass each heated belt, pieces whose melting point matches that temperature **soften slightly and adhere** to the belt through selective thermal adhesion.
+5. Each belt carries its captured plastic type away from the main stream, where the material **cools, solidifies, and detaches** — separated by a wedge using gravity.
+6. Uncaptured high-grade plastics (like Polycarbonate) that don't melt at any stage are collected at the end for separate processing.
+
+The belts are **Teflon-coated** — chosen for non-stick properties at temperatures below plastic solidification points, and thermal stability up to ~300°C.
+
+### Cost Considerations
+
+The segregator module — the core innovation — was costed at roughly **Rs. 2.08 lakh** for components and machining:
+
+| Component | Approx. Cost (Rs.) |
+|---|---|
+| Processor (Raspberry Pi) | ~6,700 |
+| Robotic arms (servos + machining) | ~1,20,000 |
+| Electronics (motor drivers, fuses, sensors) | ~5,000 |
+| Wiring | ~2,000 |
+| Conveyor belt mechanism | ~10,000 |
+| Modular conveyor belt (plastic segregator) | ~5,000 |
+| Hydraulic press | ~20,000 |
+| General materials + construction | ~30,000 |
+| Overhead | ~10,000 |
+| **Total (segregator module)** | **~Rs. 2,08,700** |
+
+A complete unit — including the truck, excavator attachment, and full container fit-out — would cost approximately Rs. 1 crore if everything were purchased new. But the plan was never to buy trucks and excavators. EcoSift is designed to **collaborate with municipal corporations** — they provide the vehicles and heavy machinery (which they already own), we provide the segregation technology. That brings the actual deployment cost down to the module cost plus integration.
+
+### Validation
+
+EcoSift was tested and refined through competition:
+
+- **Dekathon 2.0** — Runner-up (Rs. 25,000 + internship offer at FABLAB Kochi)
+- **Best Startup Award** — Space Ventura, Don Bosco Kollam
+- **Exhibited at Keraleeyam 2023** — Kerala's state development festival, direct conversations with investors and other startup founders
 
 ### Where It Stands
 
-The concept has been validated through competition wins (Dekathon runner-up with ₹25,000 prize + FABLAB Kochi internship offer, Best Startup at Space Ventura, exhibited at Keraleeyam 2023). CAD models of both the portable segregator and plastic segregator modules are complete. Proof-of-concept arm control has been tested.
+Proof of concept for the robotic arm control has been tested. CAD models are complete for both modules. The deep learning detection model (YOLOv4) has been validated on waste classification tasks. The plastic segregation approach is grounded in published research and adapted for a portable, containerised form factor.
 
-*Full write-up with CAD renders and technical deep-dive coming soon.*
+The next step is a working prototype of the segregator module — actual arm movement controlled by the detection model, sorting real waste into real categories. The partnership model with municipal corporations is the deployment path — the technology is portable, the vehicles already exist in municipal fleets.

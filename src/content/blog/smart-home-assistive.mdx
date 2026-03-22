@@ -1,25 +1,61 @@
 ---
-title: "From Smart Home to Assistive Technology"
+title: "Three Internships, Three Lenses"
 date: "2026-03-19"
-description: "An IoT automation system that started as a smart home project and evolved into assistive technology for differently-abled users — because the best technology adapts to the people who need it most."
-tags: ["IoT", "Matter Protocol", "Accessibility", "Google Assistant"]
+description: "What KELTRON, All India Radio, and an assistive technology program taught me about what you can build, how deep technology goes, and who it should be for."
+tags: ["IoT", "Matter Protocol", "Accessibility", "Broadcast Engineering", "Internships"]
 contentType: "case-study"
-traits: ["iot", "accessibility", "social-impact"]
+traits: ["iot", "accessibility", "social-impact", "case-study"]
 heroImage: ""
 ---
 
-### Smart Home v1
+### Most Students Pick Internships That Look Good on a Resume. I Picked Ones That Didn't Make Sense Together.
 
-During my internship at KELTRON, I developed a smart home automation system using the Matter protocol and Google Embedded Assistant API. The concept: a unified system that manages everyday tasks — adjusting lights, controlling temperature, reordering household supplies — through voice commands and intelligent automation. "Set dinner mood" → lights dim, thermostat adjusts, music plays.
+A smart home IoT lab. A government radio station built on technology from the 1940s. A room full of differently-abled people who navigate the world without one or more of the senses I take for granted.
 
-I presented this at the IET Present Around the World competition, reaching the local network finals.
+On paper, these three internships have nothing in common. In practice, each one gave me a lens I use every day — what technology can do, how deep it actually goes, and who it should really be for.
 
-### The Pivot to Assistive Technology
+### KELTRON: What You Can Build
 
-During a separate Assistive Technology internship, I spent time with differently-abled individuals — including a vision-impaired chess player ranked among India's highest. Understanding their daily challenges made me rethink the smart home project entirely. The same automation that was a convenience for an able-bodied person was a necessity for someone with a disability.
+KELTRON is one of Kerala's leading technology companies, and in 2022 they were exploring where IoT could take their product line. I interned there and built a **smart home automation system** — a prototype that managed the small, repetitive parts of daily life so you could focus on what matters.
 
-I adapted the system to focus on accessibility: voice-to-text conversion for vision-impaired users, automated environmental controls that reduce physical dependency, and interfaces designed for users who can't interact with traditional screens.
+The concept used the **Matter protocol** for device connectivity — an open standard that lets smart devices from different brands talk to each other without proprietary hubs. **Google's Embedded Assistant API** handled voice commands. The system could manage lights, fans, temperature — and the more interesting part — automate decisions. Detect that a gas cylinder is running low and trigger a replacement order. Notice a light bulb has failed and flag it. Respond to a single voice command like "set dinner mood" by dimming lights, adjusting the thermostat, and starting music — simultaneously.
 
-### What It Taught Me
+The challenges were real. Cost — the components added up fast for something that was supposed to be a consumer product. Network speed — Matter runs on local communication, but the Google Assistant needed reliable internet. And the big question we kept running into: **was the technology actually ready for this?** The answer in 2022 was "almost." The pieces existed. The integration was still fragile.
 
-Technology built for convenience is nice. Technology built for necessity changes lives. I've carried this principle into every project since — including integrating accessibility considerations into the Athena education platform.
+I presented this project at the **IET Present Around the World** competition and reached the local network finals. The exercise of explaining a technical system to a non-technical judging panel taught me something I didn't expect — that a good demo is worth more than a perfect system. The prototype wasn't bulletproof, but it showed the concept clearly enough that judges could imagine it in their own homes.
+
+### All India Radio: How Deep Technology Goes
+
+In 2023, I interned at All India Radio — and walked into a completely different world. No IoT. No AI. No Python scripts. Just broadcast infrastructure that has been keeping a country of 1.4 billion people informed since 1936.
+
+The internship was observational. I wasn't building anything. I was watching, asking questions, and trying to understand how a system that most people take entirely for granted actually works under the hood.
+
+What I found surprised me. The transformation of an audio signal from a voice in a studio to a radio wave hitting a receiver involves layers of engineering that predate computer science but directly inform it. **Sampling** — converting a continuous audio signal into discrete digital values. **Compression algorithms** — reducing the data without losing perceptible quality. **Noise reduction** — cleaning signals that travel through electromagnetic interference. I sat in on live recording sessions and watched engineers manage signal chains, adjust levels in real time, and troubleshoot transmission issues that had no error logs to read.
+
+This wasn't cutting-edge technology. It was foundational technology — the kind that modern systems are built on top of and most people never think about. The sampling concepts I saw at AIR are the same ones that underpin every digital audio system, every voice assistant, every streaming service. Compression algorithms used in 1950s broadcasting evolved into the codecs running on every phone today.
+
+The lesson wasn't technical. It was about **depth.** Every system that seems simple from the outside has layers of engineering underneath that someone had to figure out. The smart home system I'd built at KELTRON used voice recognition without me understanding how voice signals get digitised in the first place. AIR filled that gap. It made me a better engineer by showing me what sits beneath the abstractions I'd been building on.
+
+### Assistive Technology: Who It Should Be For
+
+The third internship changed how I think about everything I build.
+
+The assistive technology program was structured — working with differently-abled individuals, understanding their daily challenges, and exploring how technology could address them. I brought the smart home system I'd built at KELTRON, adapted with accessibility modifications — voice-to-text conversion for vision-impaired users, simplified interfaces, audio feedback instead of visual indicators.
+
+But before I presented anything, I spent time listening. And one person's story stayed with me.
+
+I met a **vision-impaired chess player ranked among India's highest.** This was someone who had achieved extraordinary things in a domain that most people assume requires sight. Talking to him and others in the program, I began to understand something I hadn't considered: the automation I'd built at KELTRON as a **convenience** for an able-bodied person was a **necessity** for someone with a disability.
+
+The "set dinner mood" command that dims lights and plays music — that's a nice feature for most people. For someone who can't see the light switch, can't read the thermostat, can't navigate a touchscreen app, it's the difference between independence and dependence. The gas cylinder reorder that saves a trip to the phone — it saves an able-bodied person two minutes. It saves a vision-impaired person a task that requires asking someone else for help.
+
+The same technology. Completely different stakes.
+
+I presented the adapted system to the group. They were genuinely interested — asked questions, suggested features, wanted to see it come to life. The technology wasn't fully there yet at the time — voice recognition accuracy, network reliability, cost — the same limitations I'd hit at KELTRON were even more critical when the user couldn't fall back on a screen. But the need was unmistakable.
+
+That experience shaped every project I've built since. When we designed the **[Athena](/blog/athena)** education platform, we integrated voice-to-text and accessibility features from the start — not as an afterthought, but as a core design requirement. Because I'd sat in a room with people for whom "afterthought accessibility" means "not accessible."
+
+### Three Lenses
+
+KELTRON taught me what I could build. All India Radio showed me how deep the foundations go. The assistive technology program taught me who I should be building for.
+
+I don't think any one of these internships alone would have shifted my perspective. It was the combination — building something functional, then understanding the layers beneath it, then seeing it through the eyes of someone who needs it differently than I do. That sequence is what turned three unrelated internships into a way of thinking about technology that I still carry.
