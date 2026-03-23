@@ -1,0 +1,63 @@
+<svg width="100%" viewBox="0 0 740 340" xmlns="http://www.w3.org/2000/svg" style="max-width: 740px; margin: 2rem auto; display: block">
+  <defs>
+    <marker id="llm" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M2 2L8 5L2 8" fill="none" stroke="#2A7F62" stroke-width="1.5" stroke-linecap="round"/>
+    </marker>
+  </defs>
+
+  
+  <rect x="20" y="130" width="130" height="60" rx="8" fill="#1F4E79"/>
+  <text x="85" y="155" text-anchor="middle" font-size="10" font-weight="500" fill="#f9fafb" font-family="sans-serif">Student Query</text>
+  <text x="85" y="172" text-anchor="middle" font-size="9" fill="#a8c4e0" font-family="sans-serif">"help with physics"</text>
+
+  <line x1="150" y1="160" x2="190" y2="160" stroke="#2A7F62" stroke-width="1.2" marker-end="url(#llm)"/>
+
+  
+  <rect x="192" y="110" width="130" height="100" rx="8" fill="#2C3E50"/>
+  <text x="257" y="138" text-anchor="middle" font-size="11" font-weight="600" fill="#f9fafb" font-family="sans-serif">FastAPI Server</text>
+  <line x1="207" y1="146" x2="307" y2="146" stroke="#b0bec5" stroke-width="0.3"/>
+  <text x="257" y="164" text-anchor="middle" font-size="9" fill="#b0bec5" font-family="sans-serif">Query processing</text>
+  <text x="257" y="178" text-anchor="middle" font-size="9" fill="#b0bec5" font-family="sans-serif">Context assembly</text>
+  <text x="257" y="192" text-anchor="middle" font-size="9" fill="#b0bec5" font-family="sans-serif">Response formatting</text>
+
+  
+  <line x1="322" y1="140" x2="380" y2="80" stroke="#1F4E79" stroke-width="1.2" marker-end="url(#llm)"/>
+  <line x1="322" y1="180" x2="380" y2="240" stroke="#2A7F62" stroke-width="1.2" marker-end="url(#llm)"/>
+
+  
+  <rect x="382" y="40" width="180" height="80" rx="8" fill="#1F4E79"/>
+  <text x="472" y="65" text-anchor="middle" font-size="11" font-weight="600" fill="#f9fafb" font-family="sans-serif">Sentence Transformers</text>
+  <line x1="397" y1="75" x2="547" y2="75" stroke="#a8c4e0" stroke-width="0.3"/>
+  <text x="472" y="92" text-anchor="middle" font-size="9" fill="#a8c4e0" font-family="sans-serif">Query → vector embedding</text>
+  <text x="472" y="106" text-anchor="middle" font-size="9" fill="#a8c4e0" font-family="sans-serif">Cosine similarity matching</text>
+
+  
+  <rect x="382" y="200" width="180" height="100" rx="8" fill="#2A7F62"/>
+  <text x="472" y="225" text-anchor="middle" font-size="11" font-weight="600" fill="#f9fafb" font-family="sans-serif">Llama (4-bit quantized)</text>
+  <line x1="397" y1="235" x2="547" y2="235" stroke="#a8dfc9" stroke-width="0.3"/>
+  <text x="472" y="252" text-anchor="middle" font-size="9" fill="#a8dfc9" font-family="sans-serif">BitsAndBytes quantization</text>
+  <text x="472" y="266" text-anchor="middle" font-size="9" fill="#a8dfc9" font-family="sans-serif">Prompt-engineered context</text>
+  <text x="472" y="280" text-anchor="middle" font-size="9" fill="#a8dfc9" font-family="sans-serif">Natural language response</text>
+
+  
+  <rect x="600" y="40" width="120" height="80" rx="6" fill="#f0f4f8" stroke="#1F4E79" stroke-width="0.8"/>
+  <text x="660" y="65" text-anchor="middle" font-size="10" font-weight="500" fill="#1F4E79" font-family="sans-serif">Course Data</text>
+  <text x="660" y="82" text-anchor="middle" font-size="9" fill="#6b7280" font-family="sans-serif">Pre-embedded</text>
+  <text x="660" y="96" text-anchor="middle" font-size="9" fill="#6b7280" font-family="sans-serif">course descriptions</text>
+  <line x1="600" y1="80" x2="564" y2="80" stroke="#1F4E79" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#llm)"/>
+
+  
+  <rect x="600" y="200" width="120" height="70" rx="6" fill="#f0f4f8" stroke="#2A7F62" stroke-width="0.8"/>
+  <text x="660" y="225" text-anchor="middle" font-size="10" font-weight="500" fill="#2A7F62" font-family="sans-serif">Moodle</text>
+  <text x="660" y="242" text-anchor="middle" font-size="9" fill="#6b7280" font-family="sans-serif">REST API</text>
+  <text x="660" y="256" text-anchor="middle" font-size="9" fill="#6b7280" font-family="sans-serif">Web Services</text>
+  <line x1="600" y1="240" x2="564" y2="250" stroke="#2A7F62" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#llm)"/>
+
+  
+  <rect x="192" y="230" width="130" height="36" rx="6" fill="#d4a017" opacity="0.2" stroke="#d4a017" stroke-width="0.8"/>
+  <text x="257" y="252" text-anchor="middle" font-size="9" fill="#8a6d00" font-family="sans-serif">ngrok tunnel (dev)</text>
+
+  
+  <rect x="382" y="310" width="180" height="24" rx="4" fill="#2C3E50" opacity="0.15" stroke="#2C3E50" stroke-width="0.5"/>
+  <text x="472" y="326" text-anchor="middle" font-size="9" fill="#2C3E50" font-family="sans-serif">Running on Google Colab (free tier GPU)</text>
+</svg>

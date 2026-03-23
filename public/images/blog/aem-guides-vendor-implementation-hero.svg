@@ -1,0 +1,68 @@
+<svg width="100%" viewBox="0 0 760 560" xmlns="http://www.w3.org/2000/svg" style="max-width: 760px; margin: 2rem auto; display: block">
+  <defs>
+    <marker id="dt" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#2A7F62" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="dtNo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#c0392b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="dtWarn" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#d4a017" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <rect x="260" y="10" width="240" height="44" rx="8" fill="#1F4E79"/>
+  <text x="380" y="37" text-anchor="middle" font-size="12" font-weight="600" fill="#f9fafb" font-family="sans-serif">Platform underutilised for 2 years</text>
+  <line x1="380" y1="54" x2="380" y2="78" stroke="#2C3E50" stroke-width="1.2"/>
+
+  <rect x="260" y="78" width="240" height="44" rx="22" fill="none" stroke="#1F4E79" stroke-width="1.5"/>
+  <text x="380" y="98" text-anchor="middle" font-size="11" font-weight="500" fill="#1F4E79" font-family="sans-serif">Can the internal team upskill</text>
+  <text x="380" y="112" text-anchor="middle" font-size="11" font-weight="500" fill="#1F4E79" font-family="sans-serif">on DITA-OT?</text>
+  <line x1="260" y1="100" x2="150" y2="100" stroke="#c0392b" stroke-width="1.2" marker-end="url(#dtNo)"/>
+  <text x="205" y="92" text-anchor="middle" font-size="10" font-weight="600" fill="#c0392b" font-family="sans-serif">No — skills audit</text>
+  <rect x="28" y="82" width="120" height="36" rx="6" fill="#f5e6e6" stroke="#c0392b" stroke-width="0.8"/>
+  <text x="88" y="99" text-anchor="middle" font-size="10" fill="#c0392b" font-family="sans-serif">No DITA expertise</text>
+  <text x="88" y="111" text-anchor="middle" font-size="10" fill="#c0392b" font-family="sans-serif">found in-house</text>
+
+  <line x1="380" y1="122" x2="380" y2="150" stroke="#2C3E50" stroke-width="1.2"/>
+  <rect x="260" y="150" width="240" height="44" rx="22" fill="none" stroke="#1F4E79" stroke-width="1.5"/>
+  <text x="380" y="170" text-anchor="middle" font-size="11" font-weight="500" fill="#1F4E79" font-family="sans-serif">Can an LLM automate</text>
+  <text x="380" y="184" text-anchor="middle" font-size="11" font-weight="500" fill="#1F4E79" font-family="sans-serif">DITA-OT authoring?</text>
+  <line x1="500" y1="172" x2="590" y2="172" stroke="#d4a017" stroke-width="1.2"/>
+  <text x="545" y="164" text-anchor="middle" font-size="10" font-weight="600" fill="#d4a017" font-family="sans-serif">Partial</text>
+  <rect x="592" y="154" width="140" height="36" rx="6" fill="#fef9e7" stroke="#d4a017" stroke-width="0.8"/>
+  <text x="662" y="171" text-anchor="middle" font-size="10" fill="#8a6d00" font-family="sans-serif">Prototype built but</text>
+  <text x="662" y="183" text-anchor="middle" font-size="10" fill="#8a6d00" font-family="sans-serif">not production-ready</text>
+
+  <line x1="380" y1="194" x2="380" y2="222" stroke="#2C3E50" stroke-width="1.2"/>
+  <rect x="270" y="222" width="220" height="38" rx="8" fill="#2C3E50"/>
+  <text x="380" y="246" text-anchor="middle" font-size="12" font-weight="600" fill="#f9fafb" font-family="sans-serif">Specialist vendor required</text>
+
+  <line x1="380" y1="260" x2="380" y2="288" stroke="#2C3E50" stroke-width="1.2"/>
+  <rect x="250" y="288" width="260" height="44" rx="22" fill="none" stroke="#d4a017" stroke-width="1.5"/>
+  <text x="380" y="308" text-anchor="middle" font-size="11" font-weight="500" fill="#d4a017" font-family="sans-serif">Initial vendor evaluation</text>
+  <text x="380" y="322" text-anchor="middle" font-size="11" font-weight="500" fill="#d4a017" font-family="sans-serif">5 firms — structured scoring</text>
+  <line x1="510" y1="310" x2="600" y2="310" stroke="#d4a017" stroke-width="1.2" marker-end="url(#dtWarn)"/>
+  <rect x="602" y="292" width="140" height="36" rx="6" fill="#fef9e7" stroke="#d4a017" stroke-width="0.8"/>
+  <text x="672" y="309" text-anchor="middle" font-size="10" fill="#8a6d00" font-family="sans-serif">Pitches fell short —</text>
+  <text x="672" y="321" text-anchor="middle" font-size="10" fill="#8a6d00" font-family="sans-serif">limited niche expertise</text>
+
+  <line x1="380" y1="332" x2="380" y2="360" stroke="#2C3E50" stroke-width="1.2"/>
+  <rect x="260" y="360" width="240" height="38" rx="8" fill="#1F4E79" opacity="0.8"/>
+  <text x="380" y="384" text-anchor="middle" font-size="11" font-weight="600" fill="#f9fafb" font-family="sans-serif">Expanded search — leveraged Adobe</text>
+  <rect x="555" y="352" width="180" height="52" rx="6" fill="#e8f5f0" stroke="#2A7F62" stroke-width="0.8"/>
+  <text x="645" y="371" text-anchor="middle" font-size="10" fill="#2A7F62" font-family="sans-serif">Adobe recommendation</text>
+  <text x="645" y="385" text-anchor="middle" font-size="10" fill="#2A7F62" font-family="sans-serif">2 near-identical implementations</text>
+  <text x="645" y="399" text-anchor="middle" font-size="10" fill="#2A7F62" font-family="sans-serif">Competitive pricing</text>
+  <line x1="555" y1="379" x2="502" y2="379" stroke="#2A7F62" stroke-width="1" marker-end="url(#dt)"/>
+
+  <line x1="380" y1="398" x2="380" y2="430" stroke="#2A7F62" stroke-width="1.2"/>
+  <rect x="250" y="430" width="260" height="44" rx="8" fill="#2A7F62" opacity="0.9"/>
+  <text x="380" y="450" text-anchor="middle" font-size="11" font-weight="600" fill="#f9fafb" font-family="sans-serif">Pitch immediately convincing</text>
+  <text x="380" y="464" text-anchor="middle" font-size="10" fill="#a8dfc9" font-family="sans-serif">Due diligence confirmed the decision</text>
+
+  <line x1="380" y1="474" x2="380" y2="502" stroke="#2A7F62" stroke-width="1.2"/>
+  <rect x="280" y="502" width="200" height="40" rx="8" fill="#2A7F62"/>
+  <text x="380" y="520" text-anchor="middle" font-size="11" font-weight="600" fill="#f9fafb" font-family="sans-serif">Selected vendor engaged</text>
+  <text x="380" y="534" text-anchor="middle" font-size="10" fill="#a8dfc9" font-family="sans-serif">Non-partner — procurement required</text>
+</svg>

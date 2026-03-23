@@ -1,0 +1,28 @@
+<svg width="100%" viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" style="max-width: 720px; margin: 2rem auto; display: block">
+  <rect x="0" y="0" width="720" height="220" rx="8" fill="#f0f4f8" stroke="#d1d9e0" stroke-width="0.8"/>
+  <text x="360" y="22" text-anchor="middle" font-size="11" font-weight="600" fill="#2C3E50" font-family="sans-serif">FAST vs Conventional Two-Way</text>
+  <rect x="20" y="38" width="330" height="165" rx="6" fill="#fff" stroke="#d1d9e0" stroke-width="0.6"/>
+  <text x="185" y="58" text-anchor="middle" font-size="9" font-weight="600" fill="#c0392b" font-family="sans-serif">Conventional (e.g. B&W 606)</text>
+  <rect x="40" y="70" width="90" height="28" rx="4" fill="#1F4E79"/>
+  <text x="85" y="88" text-anchor="middle" font-size="8" fill="#f9fafb" font-family="sans-serif">Woofer 6.5"</text>
+  <rect x="40" y="105" width="90" height="28" rx="4" fill="#2A7F62"/>
+  <text x="85" y="123" text-anchor="middle" font-size="8" fill="#f9fafb" font-family="sans-serif">Tweeter 1"</text>
+  <text x="185" y="84" text-anchor="middle" font-size="8" fill="#c0392b" font-family="sans-serif">Crossover @ 2–4 kHz</text>
+  <text x="185" y="96" text-anchor="middle" font-size="7" fill="#c0392b" font-family="sans-serif">In the vocal band</text>
+  <text x="185" y="130" text-anchor="middle" font-size="7" fill="#6b7280" font-family="sans-serif">Phase rotation + radiation shift</text>
+  <text x="185" y="150" text-anchor="middle" font-size="7" fill="#6b7280" font-family="sans-serif">Needs subwoofer for &lt;50 Hz</text>
+  <text x="185" y="185" text-anchor="middle" font-size="8" font-weight="600" fill="#c0392b" font-family="sans-serif">Two sources in the vocal band</text>
+  <rect x="370" y="38" width="330" height="165" rx="6" fill="#fff" stroke="#d1d9e0" stroke-width="0.6"/>
+  <text x="535" y="58" text-anchor="middle" font-size="9" font-weight="600" fill="#2A7F62" font-family="sans-serif">FAST (Our Build)</text>
+  <rect x="390" y="70" width="90" height="28" rx="4" fill="#2A7F62"/>
+  <text x="435" y="84" text-anchor="middle" font-size="7" fill="#f9fafb" font-family="sans-serif">Full-Range 4"</text>
+  <text x="435" y="94" text-anchor="middle" font-size="6" fill="#a8dfc9" font-family="sans-serif">350 Hz – 20 kHz</text>
+  <rect x="390" y="105" width="90" height="28" rx="4" fill="#1F4E79"/>
+  <text x="435" y="119" text-anchor="middle" font-size="7" fill="#f9fafb" font-family="sans-serif">Subwoofer 8"</text>
+  <text x="435" y="129" text-anchor="middle" font-size="6" fill="#a8c4e0" font-family="sans-serif">Below 350 Hz</text>
+  <text x="535" y="84" text-anchor="middle" font-size="8" fill="#2A7F62" font-family="sans-serif">Crossover @ 350 Hz</text>
+  <text x="535" y="96" text-anchor="middle" font-size="7" fill="#2A7F62" font-family="sans-serif">Below vocal band</text>
+  <text x="535" y="130" text-anchor="middle" font-size="7" fill="#6b7280" font-family="sans-serif">Single point source across</text>
+  <text x="535" y="150" text-anchor="middle" font-size="7" fill="#6b7280" font-family="sans-serif">full vocal range. Bass to 30 Hz.</text>
+  <text x="535" y="185" text-anchor="middle" font-size="8" font-weight="600" fill="#2A7F62" font-family="sans-serif">One source for everything you hear</text>
+</svg>

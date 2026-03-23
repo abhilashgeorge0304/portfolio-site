@@ -1,0 +1,41 @@
+<svg width="100%" viewBox="0 0 740 340" xmlns="http://www.w3.org/2000/svg" style="max-width: 740px; margin: 2rem auto; display: block">
+  
+  <rect x="270" y="10" width="200" height="40" rx="8" fill="#1F4E79"/>
+  <text x="370" y="35" text-anchor="middle" font-size="12" font-weight="600" fill="#f9fafb" font-family="sans-serif">Product Line Templates</text>
+
+  
+  <line x1="310" y1="50" x2="100" y2="85" stroke="#2C3E50" stroke-width="1"/>
+  <line x1="350" y1="50" x2="290" y2="85" stroke="#2C3E50" stroke-width="1"/>
+  <line x1="390" y1="50" x2="470" y2="85" stroke="#2C3E50" stroke-width="1"/>
+  <line x1="430" y1="50" x2="650" y2="85" stroke="#2C3E50" stroke-width="1"/>
+
+  <rect x="20" y="85" width="160" height="36" rx="6" fill="#2C3E50"/>
+  <text x="100" y="107" text-anchor="middle" font-size="10" font-weight="500" fill="#f9fafb" font-family="sans-serif">Quote Header</text>
+
+  <rect x="210" y="85" width="160" height="36" rx="6" fill="#2C3E50"/>
+  <text x="290" y="107" text-anchor="middle" font-size="10" font-weight="500" fill="#f9fafb" font-family="sans-serif">Sales Agreement</text>
+
+  <rect x="390" y="85" width="160" height="36" rx="6" fill="#2C3E50"/>
+  <text x="470" y="107" text-anchor="middle" font-size="10" font-weight="500" fill="#f9fafb" font-family="sans-serif">Pricing &amp; Warranty</text>
+
+  <rect x="570" y="85" width="160" height="36" rx="6" fill="#2C3E50"/>
+  <text x="650" y="107" text-anchor="middle" font-size="10" font-weight="500" fill="#f9fafb" font-family="sans-serif">Disclaimers</text>
+
+  
+  <line x1="230" y1="121" x2="230" y2="150" stroke="#d4a017" stroke-width="1"/>
+  <line x1="350" y1="121" x2="350" y2="150" stroke="#d4a017" stroke-width="1"/>
+
+  <rect x="160" y="150" width="140" height="32" rx="6" fill="#d4a017" opacity="0.2" stroke="#d4a017" stroke-width="0.8"/>
+  <text x="230" y="170" text-anchor="middle" font-size="9.5" font-weight="500" fill="#8a6d00" font-family="sans-serif">Partner variant</text>
+
+  <rect x="320" y="150" width="140" height="32" rx="6" fill="#d4a017" opacity="0.2" stroke="#d4a017" stroke-width="0.8"/>
+  <text x="390" y="170" text-anchor="middle" font-size="9.5" font-weight="500" fill="#8a6d00" font-family="sans-serif">Dealer variant</text>
+
+  <text x="310" y="204" text-anchor="middle" font-size="9" fill="#6b7280" font-family="sans-serif">(Checkbox-driven: "Select for Partner, unselect for Dealer")</text>
+
+  
+  <rect x="100" y="225" width="540" height="80" rx="8" fill="#f0f4f8" stroke="#1F4E79" stroke-width="0.8"/>
+  <text x="370" y="248" text-anchor="middle" font-size="10" font-weight="600" fill="#1F4E79" font-family="sans-serif">Dynamic File Linking Pattern</text>
+  <text x="370" y="268" text-anchor="middle" font-size="10" fill="#2C3E50" font-family="sans-serif" font-style="italic">../{DocumentType}/{BookletLanguage}/{TemplateName}/{SalesArea}.docx</text>
+  <text x="370" y="290" text-anchor="middle" font-size="9" fill="#6b7280" font-family="sans-serif">Every file path is parameterised — one wrong filename breaks the entire document export</text>
+</svg>

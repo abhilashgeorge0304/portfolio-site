@@ -1,0 +1,45 @@
+<svg width="100%" viewBox="0 0 740 200" xmlns="http://www.w3.org/2000/svg" style="max-width: 740px; margin: 2rem auto; display: block">
+  <defs>
+    <marker id="tp" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M2 2L8 5L2 8" fill="none" stroke="#2A7F62" stroke-width="1.5" stroke-linecap="round"/>
+    </marker>
+  </defs>
+
+  
+  <rect x="10" y="60" width="140" height="70" rx="8" fill="#2C3E50"/>
+  <text x="80" y="85" text-anchor="middle" font-size="11" font-weight="500" fill="#f9fafb" font-family="sans-serif">Raw Data</text>
+  <text x="80" y="100" text-anchor="middle" font-size="9" fill="#b0bec5" font-family="sans-serif">Multi-language</text>
+  <text x="80" y="114" text-anchor="middle" font-size="9" fill="#b0bec5" font-family="sans-serif">Excel source</text>
+
+  <line x1="150" y1="95" x2="180" y2="95" stroke="#2A7F62" stroke-width="1.2" marker-end="url(#tp)"/>
+
+  
+  <rect x="182" y="30" width="280" height="130" rx="8" fill="#1F4E79"/>
+  <text x="322" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#f9fafb" font-family="sans-serif">Python Translation Layer</text>
+  <line x1="197" y1="64" x2="447" y2="64" stroke="#a8c4e0" stroke-width="0.4"/>
+  <text x="322" y="84" text-anchor="middle" font-size="9.5" fill="#a8c4e0" font-family="sans-serif">1. Check persistent JSON cache</text>
+  <text x="322" y="100" text-anchor="middle" font-size="9.5" fill="#a8c4e0" font-family="sans-serif">2. Translate only uncached values</text>
+  <text x="322" y="116" text-anchor="middle" font-size="9.5" fill="#a8c4e0" font-family="sans-serif">3. Normalise known phrase variants</text>
+  <text x="322" y="132" text-anchor="middle" font-size="9.5" fill="#a8c4e0" font-family="sans-serif">4. Write updated cache to disk</text>
+  <text x="322" y="148" text-anchor="middle" font-size="9.5" fill="#a8c4e0" font-family="sans-serif">5. Return cleaned dataframe</text>
+
+  <line x1="462" y1="95" x2="492" y2="95" stroke="#2A7F62" stroke-width="1.2" marker-end="url(#tp)"/>
+
+  
+  <rect x="494" y="40" width="110" height="50" rx="6" fill="#2A7F62"/>
+  <text x="549" y="62" text-anchor="middle" font-size="10" font-weight="500" fill="#f9fafb" font-family="sans-serif">DAX Model</text>
+  <text x="549" y="78" text-anchor="middle" font-size="9" fill="#a8dfc9" font-family="sans-serif">KPIs &amp; measures</text>
+
+  <line x1="549" y1="90" x2="549" y2="110" stroke="#2A7F62" stroke-width="1"/>
+
+  <rect x="494" y="110" width="110" height="50" rx="6" fill="#2A7F62" opacity="0.7"/>
+  <text x="549" y="132" text-anchor="middle" font-size="10" font-weight="500" fill="#f9fafb" font-family="sans-serif">Dashboard</text>
+  <text x="549" y="148" text-anchor="middle" font-size="9" fill="#a8dfc9" font-family="sans-serif">Visuals &amp; filters</text>
+
+  
+  <rect x="610" y="55" width="120" height="80" rx="6" fill="#fef9e7" stroke="#d4a017" stroke-width="0.8"/>
+  <text x="670" y="78" text-anchor="middle" font-size="9.5" font-weight="600" fill="#8a6d00" font-family="sans-serif">Persistent Cache</text>
+  <text x="670" y="94" text-anchor="middle" font-size="9" fill="#8a6d00" font-family="sans-serif">JSON on disk</text>
+  <text x="670" y="110" text-anchor="middle" font-size="9" fill="#8a6d00" font-family="sans-serif">Survives across</text>
+  <text x="670" y="122" text-anchor="middle" font-size="9" fill="#8a6d00" font-family="sans-serif">refreshes</text>
+</svg>

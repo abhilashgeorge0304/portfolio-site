@@ -1,5 +1,7 @@
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
 import Portfolio from "@/components/Portfolio";
-import { getPortfolioData } from "@/lib/getPortfolioData";
 
 export const metadata = {
   title: "Side Projects | Abhilash George",
@@ -7,13 +9,28 @@ export const metadata = {
 };
 
 export default function SideProjectsPage() {
-  const allProjects = getPortfolioData();
-  const sideProjects = allProjects.filter(p => !["aem-guides-vendor-implementation", "datadog-observability", "cpq-automation", "powerbi-fault-dashboard"].includes(p.blogSlug));
+  const sideProjectSlugs = ["athena", "ecosift", "iroc-rover", "speaker-building"];
+  
+  const sideProjects = sideProjectSlugs.map(slug => {
+    try {
+      const fileContents = fs.readFileSync(path.join(process.cwd(), 'src', 'content', 'blog', `${slug}.mdx`), 'utf8');
+      const { data } = matter(fileContents);
+      return {
+        blogSlug: slug,
+        title: data.title || slug,
+        description: data.description || '',
+        tags: Array.isArray(data.tags) ? data.tags : [],
+        imageUrl: data.heroImage || '',
+      };
+    } catch (err) {
+      return null;
+    }
+  }).filter((p): p is NonNullable<typeof p> => p !== null);
 
   return (
     <main className="flex min-h-screen flex-col pt-16">
       <Portfolio 
-        projects={sideProjects} 
+        projects={sideProjects}
         title="Side Projects & Tinkering" 
         sectionId="side-projects-page" 
         viewAllLink="/blog" 

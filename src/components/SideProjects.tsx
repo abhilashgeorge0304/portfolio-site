@@ -20,6 +20,7 @@ const sideProjects = [
       "A supplementary education platform that surfaces quality tutors over marketing budgets. Moodle-based with an LLM-powered recommendation chatbot. Won YIP state-level (₹75K grant). Received ~₹20L acquisition offer — declined to preserve non-profit model.",
     tags: ["Ed-Tech", "Startup", "LLM", "Moodle"],
     blogSlug: "athena",
+    imageUrl: "/images/athena-logo.jpg",
   },
   {
     title: "EcoSift",
@@ -27,6 +28,7 @@ const sideProjects = [
       "Portable AI-powered waste segregation system — truck-mounted units using deep learning-controlled robotic arms and an innovative plastic sorting system based on melting point differentiation. Full CAD models complete.",
     tags: ["Robotics", "Deep Learning", "Social Impact", "Startup"],
     blogSlug: "ecosift",
+    imageUrl: "",
   },
   {
     title: "ISRO IRoC-U Rover",
@@ -34,6 +36,7 @@ const sideProjects = [
       "Quadrupedal wheel-leg hybrid rover proposal for ISRO's Robotics Challenge. Raspberry Pi 4, ROS Noetic, TensorFlow Lite for object detection, stereo camera depth calculation, autonomous navigation with pick-and-place arm.",
     tags: ["Robotics", "ROS", "TensorFlow Lite", "ISRO"],
     blogSlug: "iroc-rover",
+    imageUrl: "",
   },
 ];
 
@@ -59,7 +62,15 @@ const SideProjects: React.FC = () => {
             >
               <div className="group relative h-48 overflow-hidden bg-gray-300">
                 <div className="flex h-full w-full items-center justify-center text-gray-500">
-                  <span className="text-lg font-semibold">{project.title}</span>
+                  {project.imageUrl ? (
+                    <img
+                      src={project.imageUrl}
+                      alt={project.title}
+                      className="h-full w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
+                    />
+                  ) : (
+                    <span className="text-lg font-semibold">{project.title}</span>
+                  )}
                 </div>
               </div>
               <div className="p-6">

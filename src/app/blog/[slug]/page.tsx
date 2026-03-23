@@ -175,15 +175,6 @@ export default async function BlogPostPage({
           )}
         </header>
 
-        {post.frontmatter.heroImage && (
-          <div className="mb-8 overflow-hidden rounded-xl shadow-lg relative w-full h-[400px]">
-            <img 
-              src={post.frontmatter.heroImage} 
-              alt={post.frontmatter.title}
-              className="object-cover w-full h-full"
-            />
-          </div>
-        )}
 
         <div className="prose prose-lg max-w-none dark:prose-invert">
           <MDXRemote source={post.content} components={mdxComponents} />

@@ -1,0 +1,55 @@
+<svg width="100%" viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg" style="max-width: 760px; margin: 2rem auto; display: block">
+  <rect x="0" y="0" width="760" height="340" rx="8" fill="#f0f4f8" stroke="#d1d9e0" stroke-width="0.8"/>
+  <text x="380" y="28" text-anchor="middle" font-size="12" font-weight="600" fill="#2C3E50" font-family="sans-serif" letter-spacing="1">ROVER — TOP-DOWN BLUEPRINT</text>
+  <text x="380" y="44" text-anchor="middle" font-size="9" fill="#6b7280" font-family="sans-serif">~1.5–2m long · ~0.8m wide · 4-wheel differential drive</text>
+
+  
+  <rect x="180" y="60" width="400" height="240" rx="16" fill="none" stroke="#2C3E50" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="380" y="80" text-anchor="middle" font-size="9" fill="#6b7280" font-family="sans-serif">Mild steel box section frame</text>
+
+  
+  <rect x="155" y="80" width="30" height="55" rx="6" fill="#2C3E50"/>
+  <text x="170" y="112" text-anchor="middle" font-size="7" fill="#f9fafb" font-family="sans-serif">FL</text>
+  <rect x="155" y="225" width="30" height="55" rx="6" fill="#2C3E50"/>
+  <text x="170" y="257" text-anchor="middle" font-size="7" fill="#f9fafb" font-family="sans-serif">RL</text>
+  <rect x="575" y="80" width="30" height="55" rx="6" fill="#2C3E50"/>
+  <text x="590" y="112" text-anchor="middle" font-size="7" fill="#f9fafb" font-family="sans-serif">FR</text>
+  <rect x="575" y="225" width="30" height="55" rx="6" fill="#2C3E50"/>
+  <text x="590" y="257" text-anchor="middle" font-size="7" fill="#f9fafb" font-family="sans-serif">RR</text>
+
+  
+  <rect x="195" y="230" width="70" height="35" rx="4" fill="#1F4E79"/>
+  <text x="230" y="252" text-anchor="middle" font-size="8" fill="#f9fafb" font-family="sans-serif">Motor L</text>
+  <text x="230" y="262" text-anchor="middle" font-size="7" fill="#a8c4e0" font-family="sans-serif">24V DC</text>
+  <rect x="495" y="230" width="70" height="35" rx="4" fill="#1F4E79"/>
+  <text x="530" y="252" text-anchor="middle" font-size="8" fill="#f9fafb" font-family="sans-serif">Motor R</text>
+  <text x="530" y="262" text-anchor="middle" font-size="7" fill="#a8c4e0" font-family="sans-serif">24V DC</text>
+
+  
+  <rect x="290" y="210" width="80" height="45" rx="4" fill="#2A7F62"/>
+  <text x="330" y="232" text-anchor="middle" font-size="8" fill="#f9fafb" font-family="sans-serif">Batt 1</text>
+  <text x="330" y="244" text-anchor="middle" font-size="7" fill="#a8dfc9" font-family="sans-serif">12V Lead-Acid</text>
+  <rect x="390" y="210" width="80" height="45" rx="4" fill="#2A7F62"/>
+  <text x="430" y="232" text-anchor="middle" font-size="8" fill="#f9fafb" font-family="sans-serif">Batt 2</text>
+  <text x="430" y="244" text-anchor="middle" font-size="7" fill="#a8dfc9" font-family="sans-serif">12V Lead-Acid</text>
+  <text x="380" y="270" text-anchor="middle" font-size="8" font-weight="600" fill="#2A7F62" font-family="sans-serif">IN SERIES → 24V</text>
+
+  
+  <rect x="310" y="100" width="140" height="80" rx="10" fill="#2C3E50" opacity="0.15" stroke="#2C3E50" stroke-width="1"/>
+  <text x="380" y="140" text-anchor="middle" font-size="10" fill="#2C3E50" font-family="sans-serif">Driver Seat</text>
+  <text x="380" y="155" text-anchor="middle" font-size="8" fill="#6b7280" font-family="sans-serif">(salvaged car seat)</text>
+
+  
+  <circle cx="260" cy="130" r="12" fill="#c0392b" opacity="0.8"/>
+  <text x="260" y="134" text-anchor="middle" font-size="7" font-weight="600" fill="#f9fafb" font-family="sans-serif">KILL</text>
+
+  
+  <line x1="370" y1="230" x2="265" y2="248" stroke="#c8a951" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <line x1="390" y1="230" x2="495" y2="248" stroke="#c8a951" stroke-width="1.5" stroke-dasharray="4,2"/>
+
+  
+  <line x1="140" y1="60" x2="140" y2="300" stroke="#6b7280" stroke-width="0.5"/>
+  <text x="135" y="180" text-anchor="end" font-size="8" fill="#6b7280" font-family="sans-serif" transform="rotate(-90,135,180)">~1.5–2m</text>
+  <line x1="180" y1="310" x2="580" y2="310" stroke="#6b7280" stroke-width="0.5"/>
+  <text x="380" y="325" text-anchor="middle" font-size="8" fill="#6b7280" font-family="sans-serif">~0.8m</text>
+</svg>
