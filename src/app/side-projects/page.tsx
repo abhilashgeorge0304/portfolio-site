@@ -22,7 +22,7 @@ export default function SideProjectsPage() {
         tags: Array.isArray(data.tags) ? data.tags : [],
         imageUrl: data.heroImage || '',
       };
-    } catch (err) {
+    } catch {
       return null;
     }
   }).filter((p): p is NonNullable<typeof p> => p !== null);
