@@ -25,6 +25,14 @@ const Contact: React.FC = () => {
           </p>
           <p className="text-gray-300">
             <a
+              href="tel:+916238825363"
+              className="hover:text-primary transition duration-300"
+            >
+              📞 +91 6238825363
+            </a>
+          </p>
+          <p className="text-gray-300">
+            <a
               href="https://linkedin.com/in/abhilashgeorge34"
               target="_blank"
               rel="noopener noreferrer"

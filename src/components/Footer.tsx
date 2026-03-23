@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
       <div className="container mx-auto text-center text-sm">
         <div className="mb-4 flex justify-center space-x-6">
           <a
-            href="https://www.linkedin.com/in/rejozmathew/"
+            href="https://linkedin.com/in/abhilashgeorge34"
             target="_blank"
             rel="noopener noreferrer"
             // Adjusted link colors for light background
@@ -28,7 +28,7 @@ const Footer: React.FC = () => {
             </svg>
           </a>
           <a
-            href="https://github.com/rejozmathew"
+            href="https://github.com/abhilashgeorge0304"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-primary text-gray-500 transition duration-300"
@@ -50,7 +50,7 @@ const Footer: React.FC = () => {
         </div>
         {/* Adjusted copyright text color */}
         <p className="text-gray-600">
-          &copy; {new Date().getFullYear()} Rejo Z Mathew. All rights reserved.
+          &copy; {new Date().getFullYear()} Abhilash George. All rights reserved.
         </p>
       </div>
     </footer>

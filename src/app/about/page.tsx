@@ -44,6 +44,14 @@ export default function AboutPage() {
               </p>
               <p>
                 <a
+                  href="tel:+916238825363"
+                  className="text-primary hover:underline"
+                >
+                  +91 6238825363
+                </a>
+              </p>
+              <p>
+                <a
                   href="https://linkedin.com/in/abhilashgeorge34"
                   target="_blank"
                   rel="noopener noreferrer"
