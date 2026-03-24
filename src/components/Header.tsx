@@ -10,7 +10,7 @@ const navLinks = [
   { href: "/about", label: "About", sectionId: "about" },
   { href: "/projects", label: "Projects", sectionId: "projects" },
   { href: "/leadership", label: "Leadership", sectionId: "leadership" },
-  { href: "/side-projects", label: "Side Projects", sectionId: "side-projects" },
+  { href: "/side-projects", label: "DIY Projects", sectionId: "side-projects" },
   { href: "/education", label: "Education", sectionId: "education" },
   { href: "/blog", label: "Blog" },
   { href: "/certifications", label: "Certifications", sectionId: "certifications" },

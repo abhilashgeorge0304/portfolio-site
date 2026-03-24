@@ -31,12 +31,12 @@ const sideProjects = [
     imageUrl: "",
   },
   {
-    title: "ISRO IRoC-U Rover",
+    title: "The 2019 Rover",
     description:
-      "Quadrupedal wheel-leg hybrid rover proposal for ISRO's Robotics Challenge. Raspberry Pi 4, ROS Noetic, TensorFlow Lite for object detection, stereo camera depth calculation, autonomous navigation with pick-and-place arm.",
-    tags: ["Robotics", "ROS", "TensorFlow Lite", "ISRO"],
-    blogSlug: "iroc-rover",
-    imageUrl: "",
+      "How ten school students built a life-sized, driveable rover from secondhand car parts and lead-acid batteries — a step-by-step breakdown of the build.",
+    tags: ["Robotics", "Leadership", "Build Guide", "DIY Projects"],
+    blogSlug: "school-rover",
+    imageUrl: "/images/blog/school-rover-hero.svg",
   },
 ];
 
@@ -45,7 +45,7 @@ const SideProjects: React.FC = () => {
     <section id="side-projects" className="bg-white py-20">
       <div className="container mx-auto px-4">
         <h2 className="border-primary mb-12 border-b-2 pb-2 text-center text-3xl font-bold text-gray-900">
-          Side Projects &amp; Startups
+          DIY Projects and Startups
         </h2>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {sideProjects.map((project, index) => (
@@ -106,7 +106,7 @@ const SideProjects: React.FC = () => {
             href="/side-projects"
             className="btn-primary inline-block rounded px-6 py-3 text-lg font-semibold text-white shadow transition duration-300"
           >
-            View All Side Projects →
+            View All DIY Projects →
           </Link>
         </div>
       </div>

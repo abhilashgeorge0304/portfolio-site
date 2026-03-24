@@ -7,6 +7,8 @@ import { mdxComponents } from '@/components/MdxComponents';
 import readingTime from 'reading-time';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import RoverEasterEgg from '@/components/RoverEasterEgg';
+import AutoScrollEasterEgg from '@/components/AutoScrollEasterEgg';
 
 const postsDirectory = path.join(process.cwd(), 'src', 'content', 'blog');
 
@@ -177,6 +179,8 @@ export default async function BlogPostPage({
 
 
         <div className="prose prose-lg max-w-none dark:prose-invert">
+          {post.slug === 'school-rover' && <RoverEasterEgg />}
+          {post.slug === 'cpq-automation' && <AutoScrollEasterEgg />}
           <MDXRemote source={post.content} components={mdxComponents} />
         </div>
       </article>

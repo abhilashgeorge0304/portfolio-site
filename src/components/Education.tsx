@@ -2,7 +2,6 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
 
 interface EducationItem {
   institution: string;
@@ -25,7 +24,7 @@ const educationHistory: EducationItem[] = [
     year: "2019–2021",
   },
   {
-    institution: "Christ Nagar Central School",
+    institution: "Christ Nagar Hr Sec School",
     location: "Trivandrum, Kerala, India",
     degree: "CBSE (Class X)",
     year: "2019",
@@ -78,15 +77,6 @@ const Education: React.FC = () => {
               </p>
             </motion.div>
           ))}
-        </div>
-
-        <div className="mt-16 text-center">
-          <Link
-            href="/certifications"
-            className="btn-primary inline-block rounded px-6 py-3 text-lg font-semibold text-white shadow transition duration-300"
-          >
-            View My Certifications
-          </Link>
         </div>
       </div>
     </section>

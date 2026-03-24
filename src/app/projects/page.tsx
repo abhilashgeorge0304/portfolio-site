@@ -17,7 +17,7 @@ export default function ProjectsPage() {
         title="Featured Work" 
         sectionId="projects-page" 
         viewAllLink="/blog" 
-        viewAllText="View detailed case studies in the Blog" 
+        viewAllText="More case studies in the blog" 
       />
     </main>
   );

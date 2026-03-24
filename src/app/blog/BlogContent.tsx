@@ -14,19 +14,19 @@ export interface PostMetadata {
   traits: string[];
 }
 
-type FilterType = 'all' | 'case-study' | 'technical' | 'hobby';
+type FilterType = 'all' | 'case-study' | 'technical' | 'diy-projects';
 
 function formatContentType(ct: string): string {
   if (ct === 'technical') return 'Technical Deep Dive';
   if (ct === 'case-study') return 'Case Study';
-  if (ct === 'hobby') return 'Hobby';
+  if (ct === 'diy-projects') return 'DIY Projects';
   return ct;
 }
 
 function contentTypeBadgeClass(ct: string): string {
   if (ct === 'technical') return 'bg-teal-100 text-teal-700';
   if (ct === 'case-study') return 'bg-violet-100 text-violet-700';
-  if (ct === 'hobby') return 'bg-amber-100 text-amber-700';
+  if (ct === 'diy-projects') return 'bg-amber-100 text-amber-700';
   return 'bg-gray-100 text-gray-600';
 }
 
@@ -36,13 +36,13 @@ export default function BlogContent({ posts }: { posts: PostMetadata[] }) {
   const filtered =
     activeFilter === 'all'
       ? posts
-      : posts.filter((p) => p.contentType === activeFilter);
+      : posts.filter((p) => p.contentType === activeFilter || p.traits.includes(activeFilter));
 
   const filters: { value: FilterType; label: string }[] = [
     { value: 'all', label: 'All' },
     { value: 'case-study', label: 'Case Study' },
     { value: 'technical', label: 'Technical Deep Dive' },
-    { value: 'hobby', label: 'Hobby' },
+    { value: 'diy-projects', label: 'DIY Projects' },
   ];
 
   return (
@@ -70,13 +70,22 @@ export default function BlogContent({ posts }: { posts: PostMetadata[] }) {
             className="border-b border-gray-200 dark:border-gray-700 pb-6"
           >
             {/* Content type badge */}
-            {post.contentType && (
+            {(post.contentType || post.traits.includes('diy-projects')) && (
               <div className="mb-2">
-                <span
-                  className={`inline-block text-xs font-semibold px-2.5 py-0.5 rounded ${contentTypeBadgeClass(post.contentType)}`}
-                >
-                  {formatContentType(post.contentType)}
-                </span>
+                {post.contentType && post.contentType !== 'diy-projects' && (
+                  <span
+                    className={`inline-block text-xs font-semibold px-2.5 py-0.5 rounded ${contentTypeBadgeClass(post.contentType)}`}
+                  >
+                    {formatContentType(post.contentType)}
+                  </span>
+                )}
+                {post.traits.includes('diy-projects') && (
+                  <span
+                    className={`inline-block text-xs font-semibold px-2.5 py-0.5 rounded bg-amber-100 text-amber-700 ${post.contentType && post.contentType !== 'diy-projects' ? 'ml-2' : ''}`}
+                  >
+                    DIY Projects
+                  </span>
+                )}
               </div>
             )}
 

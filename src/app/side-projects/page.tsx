@@ -4,7 +4,7 @@ import matter from 'gray-matter';
 import Portfolio from "@/components/Portfolio";
 
 export const metadata = {
-  title: "Side Projects | Abhilash George",
+  title: "DIY Projects | Abhilash George",
   description: "Hackathons, hardware, and tinkering by Abhilash George.",
 };
 
@@ -31,7 +31,7 @@ export default function SideProjectsPage() {
     <main className="flex min-h-screen flex-col pt-16">
       <Portfolio 
         projects={sideProjects}
-        title="Side Projects & Tinkering" 
+        title="DIY Projects and Startups" 
         sectionId="side-projects-page" 
         viewAllLink="/blog" 
         viewAllText="Read more on the Blog" 
