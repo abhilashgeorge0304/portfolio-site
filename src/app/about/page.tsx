@@ -8,24 +8,25 @@ export default function AboutPage() {
           </h2>
           <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
             <p>
-              I&apos;m a Product Owner and Digital Functional Engineer at Signify Digital, 
-              Bangalore. In my first year, I&apos;ve driven a €90K platform rescue, built 
-              observability dashboards serving two audiences, automated deployment 
-              pipelines, and coordinated 12-person cross-functional delivery — while 
-              simultaneously running Scrum ceremonies, managing initiative budgets, 
-              and stepping into SME roles when needed.
+              Product Owner and Digital Functional Engineer at Signify Digital, Bangalore.
+              Lean Six Sigma Green Belt and Google-certified Project Management professional.
             </p>
             <p>
-              Before Signify, I spent four years in college not just studying Computer 
-              Science but leading — running student organisations, winning startup 
-              competitions, building rovers, and delivering talks. I believe the most 
-              valuable skills aren&apos;t taught in classrooms: how to motivate people, 
-              how to sell an idea, and how to ship something real.
+              At Signify, I evaluated a dormant ~€50K platform and mapped how it could
+              consolidate documentation workflows under the Adobe ecosystem. Built the vendor
+              business case, analysed RFPs from five firms, and currently manage the full
+              implementation lifecycle across twelve people and five teams. In parallel, I
+              built an observability layer from scratch, facilitated Scrum across a distributed
+              India-Netherlands team, and automated deployment processes that previously took
+              weeks.
             </p>
             <p>
-              I&apos;m looking for Product Owner roles where I can bring this combination 
-              of technical grounding, stakeholder management, and relentless ownership 
-              to products that matter.
+              Before Signify, I spent four years in college not just studying Computer Science
+              but leading — six leadership roles across student organisations, a state-winning
+              startup (Athena, Rs. 75K grant), a life-sized rover built by a team of ten, and
+              a guest talk at CUSAT while still in ninth grade. The most valuable skills I&apos;ve
+              picked up weren&apos;t taught in classrooms: how to align people, how to pitch an
+              idea, and how to ship something real under constraints.
             </p>
           </div>
 

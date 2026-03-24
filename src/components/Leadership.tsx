@@ -30,25 +30,27 @@ const Leadership: React.FC = () => {
         </h2>
         <div className="space-y-6 text-lg text-gray-300">
           <p>
-            Engineering college wasn&apos;t just about coursework — it was four years of
-            building things, leading people, and learning how to sell an idea to a
-            room full of skeptics.
-          </p>
-          <p>
             As <strong className="text-gray-100">Vice-Chairperson of ISTE MBCET</strong> (2022–23),
-            I organised technical workshops and inter-college events that reached
-            hundreds of students. As <strong className="text-gray-100">President of the Creative
-            Club</strong> at Christ Nagar (2019–20), I ran cultural events end-to-end —
-            budgeting, logistics, volunteer management — learning that leadership is
-            mostly about showing up when nobody else wants to.
-          </p>
-          <p>
-            I served as <strong className="text-gray-100">Start-Up Lead at IIC</strong> (2023–25),
+            organised technical workshops and inter-college events reaching hundreds of
+            students. As <strong className="text-gray-100">President of the Creative Club</strong> at
+            Christ Nagar Higher Secondary School (2019–20), ran cultural events end-to-end —
+            budgeting, logistics, volunteer coordination. Served as{' '}
+            <strong className="text-gray-100">Start-Up Lead at IIC</strong> (2023–25),
             <strong className="text-gray-100"> Joint Secretary of IET</strong> (2023–25),
             <strong className="text-gray-100"> Treasurer of CSI</strong> (2022–24), and
             <strong className="text-gray-100"> Technical Officer at IEDC</strong> (2022–23) —
-            six overlapping leadership roles that taught me how to context-switch,
-            delegate, and keep multiple teams moving at once.
+            four concurrent roles that meant context-switching between teams daily.
+          </p>
+          <p>
+            Delivered a <strong className="text-gray-100">guest talk on swarm robotics at
+            CUSAT&apos;s annual tech fest</strong> in 2018 — as a ninth grader, presenting to
+            an audience of undergraduate and postgraduate engineering students. The interaction
+            there shifted my technical direction from hobby robotics to embedded systems.
+          </p>
+          <p>
+            Led a <strong className="text-gray-100">team of 10 to design and build a life-sized
+            driveable rover</strong> for a school science exhibition (2019) — Rs. 40K pooled
+            from students, resolved a critical electrical failure two hours before judging.
           </p>
         </div>
 
@@ -87,6 +89,12 @@ const Leadership: React.FC = () => {
             Exhibited at <strong className="text-gray-100">Keraleeyam 2023</strong> and managed waste ops at Greenfield Stadium during an international cricket match
           </motion.li>
         </motion.ul>
+
+        <p className="mt-8 text-gray-400 italic text-base">
+          Six years of leading teams, managing budgets, and shipping results across very
+          different contexts — from school exhibitions to college hackathons to state-level
+          competitions.
+        </p>
 
         <div className="mt-12 text-center">
           <Link

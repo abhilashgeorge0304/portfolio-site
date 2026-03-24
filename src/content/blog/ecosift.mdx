@@ -24,6 +24,33 @@ High waste production at a wedding? Deploy a unit. Beach cleanup campaign? Send 
 
 The system has two modules, each housed in a shipping container on a truck bed.
 
+<svg width="100%" viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" style={{maxWidth: '720px', margin: '2rem auto', display: 'block'}}>
+  <rect x="0" y="0" width="720" height="200" rx="8" fill="#f0f4f8" stroke="#d1d9e0" strokeWidth="0.8"/>
+  <text x="360" y="22" textAnchor="middle" fontSize="11" fontWeight="600" fill="#2C3E50" fontFamily="sans-serif">EcoSift System Overview — Truck-Mounted Portable Segregation</text>
+  <rect x="30" y="110" width="200" height="40" rx="4" fill="#6b7280"/>
+  <text x="130" y="134" textAnchor="middle" fontSize="9" fill="#f9fafb" fontFamily="sans-serif">TRUCK CHASSIS</text>
+  <rect x="250" y="45" width="200" height="100" rx="6" fill="#1F4E79"/>
+  <text x="350" y="75" textAnchor="middle" fontSize="9" fontWeight="600" fill="#f9fafb" fontFamily="sans-serif">MODULE 1</text>
+  <text x="350" y="90" textAnchor="middle" fontSize="8" fill="#a8c4e0" fontFamily="sans-serif">General Waste Segregator</text>
+  <text x="350" y="105" textAnchor="middle" fontSize="7" fill="#a8c4e0" fontFamily="sans-serif">YOLOv4 + Robotic Arms</text>
+  <text x="350" y="120" textAnchor="middle" fontSize="7" fill="#a8c4e0" fontFamily="sans-serif">+ Hydraulic Press</text>
+  <rect x="470" y="45" width="200" height="100" rx="6" fill="#2A7F62"/>
+  <text x="570" y="75" textAnchor="middle" fontSize="9" fontWeight="600" fill="#f9fafb" fontFamily="sans-serif">MODULE 2</text>
+  <text x="570" y="90" textAnchor="middle" fontSize="8" fill="#a8dfc9" fontFamily="sans-serif">Plastic Segregator</text>
+  <text x="570" y="105" textAnchor="middle" fontSize="7" fill="#a8dfc9" fontFamily="sans-serif">Heated Conveyor Belts</text>
+  <text x="570" y="120" textAnchor="middle" fontSize="7" fill="#a8dfc9" fontFamily="sans-serif">Melting Point Sorting</text>
+  <rect x="30" y="45" width="80" height="100" rx="4" fill="#c8a951" opacity="0.8"/>
+  <text x="70" y="85" textAnchor="middle" fontSize="8" fontWeight="500" fill="#1a1a2e" fontFamily="sans-serif">Excavator</text>
+  <text x="70" y="100" textAnchor="middle" fontSize="7" fill="#1a1a2e" fontFamily="sans-serif">Module</text>
+  <line x1="110" y1="95" x2="250" y2="95" stroke="#c8a951" strokeWidth="1.5" strokeDasharray="4,3"/>
+  <text x="180" y="88" textAnchor="middle" fontSize="7" fill="#c8a951" fontFamily="sans-serif">waste feed</text>
+  <line x1="450" y1="95" x2="470" y2="95" stroke="#6b7280" strokeWidth="1.5"/>
+  <text x="460" y="88" textAnchor="middle" fontSize="6" fill="#6b7280" fontFamily="sans-serif">plastic</text>
+  <text x="360" y="175" textAnchor="middle" fontSize="8" fill="#6b7280" fontFamily="sans-serif" fontStyle="italic">Deployable to events, beaches, neighbourhoods, landfills — mobile by design</text>
+</svg>
+
+<span style={{display: 'block', textAlign: 'center', fontSize: '0.85rem', color: '#6b7280', marginTop: '-0.5rem', marginBottom: '2rem'}}>Two container modules on a truck bed — the excavator feeds waste into Module 1, plastic output passes to Module 2 for precision sorting</span>
+
 ### Module 1: The General Waste Segregator
 
 The first module handles the initial sort. Mixed waste enters the container — either fed manually or scooped in by an excavator attachment for beach/landfill operations.
@@ -35,6 +62,42 @@ Each arm picks up its assigned material and deposits it into a specific chute. T
 Materials too large or too small for the robotic arms fall into a manual sorting bin at the end of the line.
 
 An **incinerator module** handles the leftover residue — low-density plastic fragments, food remnants, material that can't be meaningfully recycled. Combustion happens on-site, reducing what would otherwise go to landfill.
+
+<svg width="100%" viewBox="0 0 720 180" xmlns="http://www.w3.org/2000/svg" style={{maxWidth: '720px', margin: '2rem auto', display: 'block'}}>
+  <rect x="0" y="0" width="720" height="180" rx="8" fill="#f0f4f8" stroke="#d1d9e0" strokeWidth="0.8"/>
+  <text x="360" y="22" textAnchor="middle" fontSize="11" fontWeight="600" fill="#2C3E50" fontFamily="sans-serif">Module 1 — General Waste Segregation Flow</text>
+  <rect x="20" y="55" width="80" height="50" rx="4" fill="#6b7280"/>
+  <text x="60" y="78" textAnchor="middle" fontSize="7" fill="#f9fafb" fontFamily="sans-serif">Mixed</text>
+  <text x="60" y="90" textAnchor="middle" fontSize="7" fill="#f9fafb" fontFamily="sans-serif">Waste In</text>
+  <line x1="100" y1="80" x2="125" y2="80" stroke="#2C3E50" strokeWidth="1.5" markerEnd="url(#arr)"/>
+  <defs><marker id="arr" markerWidth="6" markerHeight="4" refX="6" refY="2" orient="auto"><path d="M0,0 L6,2 L0,4" fill="#2C3E50"/></marker></defs>
+  <rect x="125" y="45" width="90" height="70" rx="4" fill="#1F4E79"/>
+  <text x="170" y="70" textAnchor="middle" fontSize="7" fill="#f9fafb" fontFamily="sans-serif">Camera +</text>
+  <text x="170" y="82" textAnchor="middle" fontSize="7" fill="#f9fafb" fontFamily="sans-serif">YOLOv4</text>
+  <text x="170" y="100" textAnchor="middle" fontSize="6" fill="#a8c4e0" fontFamily="sans-serif">Classification</text>
+  <line x1="215" y1="80" x2="240" y2="80" stroke="#2C3E50" strokeWidth="1.5" markerEnd="url(#arr)"/>
+  <rect x="240" y="45" width="90" height="70" rx="4" fill="#2A7F62"/>
+  <text x="285" y="70" textAnchor="middle" fontSize="7" fill="#f9fafb" fontFamily="sans-serif">Robotic Arms</text>
+  <text x="285" y="84" textAnchor="middle" fontSize="6" fill="#a8dfc9" fontFamily="sans-serif">x4 (one per</text>
+  <text x="285" y="96" textAnchor="middle" fontSize="6" fill="#a8dfc9" fontFamily="sans-serif">category)</text>
+  <line x1="330" y1="80" x2="355" y2="80" stroke="#2C3E50" strokeWidth="1.5" markerEnd="url(#arr)"/>
+  <rect x="355" y="45" width="70" height="70" rx="4" fill="#2C3E50"/>
+  <text x="390" y="75" textAnchor="middle" fontSize="7" fill="#f9fafb" fontFamily="sans-serif">4 Chutes</text>
+  <text x="390" y="90" textAnchor="middle" fontSize="6" fill="#b0bec5" fontFamily="sans-serif">Sort bins</text>
+  <line x1="425" y1="80" x2="450" y2="80" stroke="#2C3E50" strokeWidth="1.5" markerEnd="url(#arr)"/>
+  <rect x="450" y="45" width="85" height="70" rx="4" fill="#c8a951" opacity="0.8"/>
+  <text x="492" y="70" textAnchor="middle" fontSize="7" fill="#1a1a2e" fontFamily="sans-serif">Hydraulic</text>
+  <text x="492" y="84" textAnchor="middle" fontSize="7" fill="#1a1a2e" fontFamily="sans-serif">Press</text>
+  <text x="492" y="98" textAnchor="middle" fontSize="6" fill="#1a1a2e" fontFamily="sans-serif">Compression</text>
+  <line x1="535" y1="80" x2="560" y2="80" stroke="#2C3E50" strokeWidth="1.5" markerEnd="url(#arr)"/>
+  <rect x="560" y="55" width="80" height="50" rx="4" fill="#2A7F62" opacity="0.7"/>
+  <text x="600" y="78" textAnchor="middle" fontSize="7" fill="#f9fafb" fontFamily="sans-serif">Compressed</text>
+  <text x="600" y="90" textAnchor="middle" fontSize="7" fill="#f9fafb" fontFamily="sans-serif">Blocks Out</text>
+  <text x="285" y="140" textAnchor="middle" fontSize="7" fill="#6b7280" fontFamily="sans-serif">Residue → Incinerator (on-site combustion)</text>
+  <text x="600" y="140" textAnchor="middle" fontSize="7" fill="#6b7280" fontFamily="sans-serif">Plastic → Module 2</text>
+</svg>
+
+<span style={{display: 'block', textAlign: 'center', fontSize: '0.85rem', color: '#6b7280', marginTop: '-0.5rem', marginBottom: '2rem'}}>Waste enters → camera classifies → robotic arms sort into four categories → hydraulic press compresses → blocks ready for transport</span>
 
 ### Module 2: The Plastic Segregator
 
@@ -52,6 +115,38 @@ The process:
 6. Uncaptured high-grade plastics (like Polycarbonate) that don't melt at any stage are collected at the end for separate processing.
 
 The belts are **Teflon-coated** — chosen for non-stick properties at temperatures below plastic solidification points, and thermal stability up to ~300°C.
+
+<svg width="100%" viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" style={{maxWidth: '720px', margin: '2rem auto', display: 'block'}}>
+  <rect x="0" y="0" width="720" height="220" rx="8" fill="#f0f4f8" stroke="#d1d9e0" strokeWidth="0.8"/>
+  <text x="360" y="22" textAnchor="middle" fontSize="11" fontWeight="600" fill="#2C3E50" fontFamily="sans-serif">Module 2 — Plastic Segregation by Melting Point</text>
+  <rect x="20" y="80" width="70" height="50" rx="4" fill="#6b7280"/>
+  <text x="55" y="103" textAnchor="middle" fontSize="7" fill="#f9fafb" fontFamily="sans-serif">Grinder</text>
+  <text x="55" y="115" textAnchor="middle" fontSize="6" fill="#d1d9e0" fontFamily="sans-serif">Shred</text>
+  <line x1="90" y1="105" x2="120" y2="105" stroke="#2C3E50" strokeWidth="1.5"/>
+  <rect x="120" y="70" width="480" height="25" rx="3" fill="#c8a951" opacity="0.3" stroke="#c8a951" strokeWidth="1"/>
+  <text x="360" y="87" textAnchor="middle" fontSize="8" fill="#c8a951" fontFamily="sans-serif">Main Preheated Conveyor Belt (~100°C) →</text>
+  <rect x="155" y="110" width="95" height="45" rx="4" fill="#2A7F62" opacity="0.6"/>
+  <text x="202" y="128" textAnchor="middle" fontSize="8" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">LDPE</text>
+  <text x="202" y="142" textAnchor="middle" fontSize="7" fill="#a8dfc9" fontFamily="sans-serif">~120°C</text>
+  <rect x="270" y="110" width="95" height="45" rx="4" fill="#2A7F62" opacity="0.7"/>
+  <text x="317" y="128" textAnchor="middle" fontSize="8" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">HDPE</text>
+  <text x="317" y="142" textAnchor="middle" fontSize="7" fill="#a8dfc9" fontFamily="sans-serif">~130°C</text>
+  <rect x="385" y="110" width="95" height="45" rx="4" fill="#2A7F62" opacity="0.85"/>
+  <text x="432" y="128" textAnchor="middle" fontSize="8" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">PP</text>
+  <text x="432" y="142" textAnchor="middle" fontSize="7" fill="#a8dfc9" fontFamily="sans-serif">~160°C</text>
+  <rect x="500" y="110" width="95" height="45" rx="4" fill="#2A7F62"/>
+  <text x="547" y="128" textAnchor="middle" fontSize="8" fontWeight="500" fill="#f9fafb" fontFamily="sans-serif">PET</text>
+  <text x="547" y="142" textAnchor="middle" fontSize="7" fill="#a8dfc9" fontFamily="sans-serif">~260°C</text>
+  <rect x="615" y="100" width="80" height="30" rx="4" fill="#6b7280" opacity="0.5"/>
+  <text x="655" y="118" textAnchor="middle" fontSize="7" fill="#f9fafb" fontFamily="sans-serif">Residual PC</text>
+  <text x="202" y="175" textAnchor="middle" fontSize="7" fill="#6b7280" fontFamily="sans-serif">↓ sorted</text>
+  <text x="317" y="175" textAnchor="middle" fontSize="7" fill="#6b7280" fontFamily="sans-serif">↓ sorted</text>
+  <text x="432" y="175" textAnchor="middle" fontSize="7" fill="#6b7280" fontFamily="sans-serif">↓ sorted</text>
+  <text x="547" y="175" textAnchor="middle" fontSize="7" fill="#6b7280" fontFamily="sans-serif">↓ sorted</text>
+  <text x="360" y="200" textAnchor="middle" fontSize="8" fill="#6b7280" fontFamily="sans-serif" fontStyle="italic">Selective thermal adhesion — each plastic type sticks at its melting point, cools, and detaches</text>
+</svg>
+
+<span style={{display: 'block', textAlign: 'center', fontSize: '0.85rem', color: '#6b7280', marginTop: '-0.5rem', marginBottom: '2rem'}}>Ground plastic travels along the main belt. Secondary heated belts at calibrated temperatures capture each plastic type through selective thermal adhesion.</span>
 
 ### Cost Considerations
 

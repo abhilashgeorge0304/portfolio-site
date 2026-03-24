@@ -18,6 +18,50 @@ The brief was open-ended: work on robotics projects, learn how things work in a 
 
 I built the concept using Lego Mindstorms — two robots, one leader and one follower. The leader navigated a path. The follower tracked the leader using sensors, maintaining distance and mirroring its movements. If the leader turned left, the follower adjusted. If the leader stopped, the follower stopped.
 
+<svg width="100%" viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" style={{maxWidth: '700px', margin: '2rem auto', display: 'block'}}>
+  <rect x="0" y="0" width="700" height="200" rx="8" fill="#f0f4f8" stroke="#d1d9e0" strokeWidth="0.8"/>
+  <text x="350" y="22" textAnchor="middle" fontSize="11" fontWeight="600" fill="#2C3E50" fontFamily="sans-serif">Swarm Robotics — Leader-Follower Coordination</text>
+
+  {/* Straight */}
+  <rect x="15" y="40" width="210" height="140" rx="6" fill="#fff" stroke="#d1d9e0" strokeWidth="0.6"/>
+  <text x="120" y="60" textAnchor="middle" fontSize="9" fontWeight="600" fill="#2C3E50" fontFamily="sans-serif">MOVE FORWARD</text>
+  <rect x="50" y="80" width="50" height="30" rx="4" fill="#1F4E79"/>
+  <text x="75" y="99" textAnchor="middle" fontSize="7" fill="#f9fafb" fontFamily="sans-serif">LEADER</text>
+  <rect x="130" y="80" width="50" height="30" rx="4" fill="#2A7F62"/>
+  <text x="155" y="99" textAnchor="middle" fontSize="7" fill="#f9fafb" fontFamily="sans-serif">FOLLOWER</text>
+  <line x1="100" y1="95" x2="130" y2="95" stroke="#c8a951" strokeWidth="1.5" strokeDasharray="4,2"/>
+  <text x="115" y="88" textAnchor="middle" fontSize="6" fill="#c8a951" fontFamily="sans-serif">sensor</text>
+  <text x="75" y="125" textAnchor="middle" fontSize="14" fill="#1F4E79">↑</text>
+  <text x="155" y="125" textAnchor="middle" fontSize="14" fill="#2A7F62">↑</text>
+  <text x="120" y="165" textAnchor="middle" fontSize="8" fill="#6b7280" fontFamily="sans-serif">Both move — follower mirrors</text>
+
+  {/* Turn */}
+  <rect x="245" y="40" width="210" height="140" rx="6" fill="#fff" stroke="#d1d9e0" strokeWidth="0.6"/>
+  <text x="350" y="60" textAnchor="middle" fontSize="9" fontWeight="600" fill="#2C3E50" fontFamily="sans-serif">LEADER TURNS</text>
+  <rect x="270" y="80" width="50" height="30" rx="4" fill="#1F4E79"/>
+  <text x="295" y="99" textAnchor="middle" fontSize="7" fill="#f9fafb" fontFamily="sans-serif">LEADER</text>
+  <rect x="370" y="90" width="50" height="30" rx="4" fill="#2A7F62"/>
+  <text x="395" y="109" textAnchor="middle" fontSize="7" fill="#f9fafb" fontFamily="sans-serif">FOLLOWER</text>
+  <line x1="320" y1="95" x2="370" y2="105" stroke="#c8a951" strokeWidth="1.5" strokeDasharray="4,2"/>
+  <text x="295" y="125" textAnchor="middle" fontSize="14" fill="#1F4E79">↗</text>
+  <text x="395" y="135" textAnchor="middle" fontSize="14" fill="#2A7F62">↗</text>
+  <text x="350" y="165" textAnchor="middle" fontSize="8" fill="#6b7280" fontFamily="sans-serif">Follower detects + adjusts</text>
+
+  {/* Stop */}
+  <rect x="475" y="40" width="210" height="140" rx="6" fill="#fff" stroke="#d1d9e0" strokeWidth="0.6"/>
+  <text x="580" y="60" textAnchor="middle" fontSize="9" fontWeight="600" fill="#2C3E50" fontFamily="sans-serif">LEADER STOPS</text>
+  <rect x="510" y="80" width="50" height="30" rx="4" fill="#1F4E79" opacity="0.5"/>
+  <text x="535" y="99" textAnchor="middle" fontSize="7" fill="#f9fafb" fontFamily="sans-serif">LEADER</text>
+  <rect x="590" y="80" width="50" height="30" rx="4" fill="#2A7F62" opacity="0.5"/>
+  <text x="615" y="99" textAnchor="middle" fontSize="7" fill="#f9fafb" fontFamily="sans-serif">FOLLOWER</text>
+  <line x1="560" y1="95" x2="590" y2="95" stroke="#c8a951" strokeWidth="1.5" strokeDasharray="4,2"/>
+  <text x="535" y="125" textAnchor="middle" fontSize="10" fill="#1F4E79" fontFamily="sans-serif">■</text>
+  <text x="615" y="125" textAnchor="middle" fontSize="10" fill="#2A7F62" fontFamily="sans-serif">■</text>
+  <text x="580" y="165" textAnchor="middle" fontSize="8" fill="#6b7280" fontFamily="sans-serif">Both halt — distance maintained</text>
+</svg>
+
+<span style={{display: 'block', textAlign: 'center', fontSize: '0.85rem', color: '#6b7280', marginTop: '-0.5rem', marginBottom: '2rem'}}>Three states of the leader-follower system — the follower uses sensors to track the leader's position, maintaining distance and mirroring movements</span>
+
 Two robots isn't a "swarm" in any academic sense. But the principle was there — decentralised coordination, local sensing, emergent behaviour. And for a ninth grader working with Lego, it was enough to demonstrate the concept convincingly.
 
 The college students doing internships at UST watched me build and test it over a few weeks. They asked questions. They were curious. And then they asked something I didn't expect: would I come present this at their university's tech fest?
@@ -50,4 +94,4 @@ Up to that point, I'd been building with Lego Mindstorms and Arduino. They were 
 
 Every significant project after CUSAT traces back to that shift. The **smart home system** I built at KELTRON, the **assistive technology adaptation** for differently-abled users, the **school rover's ADAS prototype** with ultrasonic sensors and a camera module, and eventually the **[ISRO IRoC-U rover proposal](/blog/iroc-rover)** running ROS and TensorFlow Lite on a Pi 4 — all of it grew from a ninth grader standing next to a gas cylinder project at a tech fest, realising that the tools to build real things were within reach.
 
-The swarm robots were Lego. The ISRO rover runs neural networks. But the instinct is the same: build something, put it in front of people who know more than you, and pay attention to what they show you back.
+The swarm robots were Lego. The ISRO rover runs neural networks. The gap between them is ten years, a computer science degree, and one conversation next to a gas cylinder project at a tech fest.

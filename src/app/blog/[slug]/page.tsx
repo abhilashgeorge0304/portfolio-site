@@ -61,6 +61,8 @@ function normalizeTags(raw: string | string[] | undefined): string[] {
 function formatContentType(ct: string): string {
   if (ct === 'technical') return 'Technical Deep Dive';
   if (ct === 'strategy') return 'Strategy';
+  if (ct === 'case-study') return 'Case Study';
+  if (ct === 'diy-projects') return 'DIY Projects';
   return ct;
 }
 
@@ -80,6 +82,8 @@ function formatTrait(trait: string): string {
 function contentTypeBadgeClass(ct: string): string {
   if (ct === 'technical') return 'bg-teal-100 text-teal-700';
   if (ct === 'strategy') return 'bg-violet-100 text-violet-700';
+  if (ct === 'case-study') return 'bg-blue-100 text-blue-700';
+  if (ct === 'diy-projects') return 'bg-amber-100 text-amber-700';
   return 'bg-gray-100 text-gray-600';
 }
 
@@ -137,7 +141,7 @@ export default async function BlogPostPage({
             {post.frontmatter.title}
           </h1>
 
-          <p className="text-sm text-gray-400 mb-3">
+          <p className="text-sm text-gray-500 mb-3">
             Published on{' '}
             {new Date(post.frontmatter.date).toLocaleDateString()} |{' '}
             {post.readingTime}
@@ -154,7 +158,7 @@ export default async function BlogPostPage({
               {traits.map((trait) => (
                 <span
                   key={trait}
-                  className="inline-block bg-white/10 text-white/80 text-xs font-medium px-2 py-0.5 rounded"
+                  className="inline-block bg-gray-100 text-gray-700 text-xs font-medium px-2 py-0.5 rounded"
                 >
                   {formatTrait(trait)}
                 </span>
@@ -168,7 +172,7 @@ export default async function BlogPostPage({
               {tags.map((tag) => (
                 <span
                   key={tag}
-                  className="inline-block bg-white/10 text-white/70 text-xs font-medium px-2.5 py-0.5 rounded"
+                  className="inline-block bg-gray-100 text-gray-700 text-xs font-medium px-2.5 py-0.5 rounded"
                 >
                   {tag}
                 </span>

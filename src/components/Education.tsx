@@ -24,7 +24,7 @@ const educationHistory: EducationItem[] = [
     year: "2019–2021",
   },
   {
-    institution: "Christ Nagar Hr Sec School",
+    institution: "Christ Nagar Higher Secondary School",
     location: "Trivandrum, Kerala, India",
     degree: "CBSE (Class X)",
     year: "2019",
