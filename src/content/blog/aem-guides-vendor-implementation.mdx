@@ -28,7 +28,7 @@ The earlier implementation work below explains how the adoption effort began.
 
 ### An Enterprise Platform Gathering Dust
 
-AEM Guides had been part of our organisation's content stack for nearly two years — officially adopted, practically unused. The platform runs on DITA-OT, a structured authoring format with its own technical demands, and a customised Antora CSS layer on top. The team's technical writers simply didn't have the expertise to work with it. An approximately €50,000-per-year platform investment was going unused.
+AEM Guides had been part of our organisation's content stack for nearly two years, but its adoption effort had stalled. The platform runs on DITA-OT, a structured authoring format with its own technical demands, and a customised Antora CSS layer on top. The team's technical writers simply didn't have the expertise to work with it. The approximately €50,000-per-year platform investment needed a viable adoption plan.
 
 Nobody had been formally assigned to fix this. I took it on anyway — first as a Functional Engineer trying to solve it technically, and later as Product Owner driving the full implementation. This is the story of the decisions, dependencies, and coordination that got it there.
 
@@ -119,7 +119,7 @@ I also ran a formal skills audit across the organisation. Nobody had DITA expert
 
 ### Decision 2: Which Vendor?
 
-With internal options exhausted, I built the business case for a €40K specialist vendor engagement and presented it to senior leadership. Getting approval meant showing not just why we needed a vendor, but why continued annual platform spending needed a viable adoption plan.
+With internal options exhausted, I built the business case for specialist implementation with the technical lead and presented it to senior leadership. Getting approval meant showing not just why we needed a vendor, but why continued annual platform spending needed a viable adoption plan.
 
 **The first round didn't give us what we needed.** We evaluated five firms through a structured scoring process — analysing the RFPs submitted by each against the specific requirements of an AEM Guides implementation designed to consolidate our documentation workflows and bring everything under the Adobe ecosystem. I coordinated discussions between Digital and Business stakeholders and ran scope-of-work, budget, and technical conversations with senior representatives at each firm. To make the evaluation rigorous, I designed a scoring matrix across five technical dimensions — each scored out of 10 independently by the cross-functional team.
 
@@ -297,7 +297,7 @@ Before the vendor engagement could start, I needed to understand — and make vi
   <rect x="200" y="420" width="360" height="36" rx="6" fill="#1F4E79" opacity="0.08" stroke="#1F4E79" strokeWidth="1"/>
   <text x="380" y="443" textAnchor="middle" fontSize="10" fontWeight="600" fill="#1F4E79" fontFamily="sans-serif">Single point of contact across all teams — weekly/biweekly sync cadence</text>
 
-  <text x="380" y="480" textAnchor="middle" fontSize="9" fill="#6b7280" fontFamily="sans-serif">Initial implementation team: 7 internal + 5 vendor specialists</text>
+  <text x="380" y="480" textAnchor="middle" fontSize="9" fill="#6b7280" fontFamily="sans-serif">15+ contributors coordinated across five teams</text>
 </svg>
 
 <span style={{display: 'block', textAlign: 'center', fontSize: '0.85rem', color: '#6b7280', marginTop: '-0.5rem', marginBottom: '2rem'}}>Ecosystem map — systems, teams, and access dependencies that all needed to come together</span>
@@ -411,4 +411,4 @@ Three things I'd do differently if I started this over.
 
 ### Where Things Stand
 
-The vendor's onboarding is complete and implementation is underway. A platform that sat dormant for nearly two years now has a specialist vendor engaged, a governance structure in place, defined success criteria, a deployment pipeline from dev through to production, and active testing to protect the shared AEM layer — built on structured evaluation, dependency mapping, persistent coordination, and a willingness to own a problem that nobody had asked me to solve.
+The vendor's onboarding is complete and implementation is underway. A stalled two-year adoption effort now has a specialist vendor engaged, a governance structure in place, defined success criteria, a deployment pipeline from dev through to production, and active testing to protect the shared AEM layer — built on structured evaluation, dependency mapping, persistent coordination, and a willingness to own a problem that nobody had asked me to solve.

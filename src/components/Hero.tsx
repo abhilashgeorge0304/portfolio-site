@@ -45,13 +45,12 @@ const Hero: React.FC = () => {
                   Contact Me
                 </Link>
                 <a
-                  href="/Abhilash_George_Resume.docx"
+                  href="/Abhilash_George_Resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="rounded border border-primary px-4 py-2 font-bold text-primary shadow transition duration-300 hover:bg-primary/10"
-                  download
                 >
-                  Download Resume (DOCX)
+                  View Resume
                 </a>
               </div>
             </div>

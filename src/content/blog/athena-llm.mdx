@@ -121,23 +121,13 @@ model = AutoModelForCausalLM.from_pretrained(
 
 This is what makes "I need help with 12th standard physics, I learn better with visual explanations" return educators who use video and diagram-heavy teaching, even if their course description never uses the word "visual."
 
-### The RAG Approach That Didn't Work
+### Retrieval scope and structured context
 
-The original plan was retrieval-augmented generation over Moodle's data. The idea was elegant: embed all of Moodle's course content, user reviews, and educator profiles into a vector store. When a student queries the chatbot, retrieve the most relevant chunks from the vector store and inject them as context into Llama's prompt. The model generates a response grounded in actual platform data, reducing hallucination.
+I moved from fine-tuning to retrieval-augmented generation using sentence-transformers and FastAPI to control hallucinations. Semantic course matching retrieves relevant information, which is assembled into structured context for the self-hosted Llama 2 model.
 
-It didn't work. Two reasons.
+Moodle's relational data made context selection an important part of the implementation. Recommendations needed relevant course information rather than an unbounded dump of the platform's content. Prompt construction and response constraints complemented retrieval by grounding the answer in that selected context.
 
-**First, time.** Building a proper RAG pipeline — with document chunking, embedding pipeline, vector store management, retrieval logic, and context window management — is a significant engineering effort. We were building this alongside coursework, with a two-person team. The RAG implementation kept growing in scope while the deadline stayed fixed.
-
-**Second, complexity.** Moodle's data structure is deeply relational — courses link to categories link to enrolments link to user profiles link to ratings. Flattening this into documents suitable for embedding and retrieval meant losing the relational context that makes the recommendations meaningful. A course description chunk without its associated educator profile, ratings, and enrolment data is just text — it doesn't carry enough signal for a good recommendation.
-
-We tried. We built parts of it. And we made the call to pivot before the deadline forced a half-finished implementation.
-
-### What We Built Instead
-
-The working system uses a **context-injection approach with prompt engineering.** Instead of dynamic RAG retrieval, the system pre-assembles a structured context block from Moodle's data (via the REST API) and injects it directly into the prompt alongside the student's query.
-
-The pipeline works like this:
+### Recommendation flow
 
 **Step 1: Embed the query.** The student's natural language input is converted to a vector using the sentence-transformer model.
 
@@ -223,7 +213,7 @@ The plugin communicates with the externally-hosted LLM via Moodle's REST API and
 
 ### The Prompt Engineering
 
-With RAG off the table, the quality of the recommendations depended almost entirely on how well we could engineer the prompts. This was less glamorous than building a vector store, but it was where most of the iteration happened.
+Retrieval alone does not determine recommendation quality. The prompts also need to make the selected course context usable and constrain the model's response. Prompt design remained an important part of the iteration.
 
 The key insight: **the model doesn't need to know everything about every course.** It needs to know about the 5-10 most relevant courses (selected by the embedding-based matching) in enough detail to make a useful recommendation. The prompt template structures this context explicitly — course name, educator, rating, teaching style, availability — so the model has all the signal it needs without requiring retrieval over the entire knowledge base.
 
@@ -237,11 +227,11 @@ We iterated on the prompt template extensively. Early versions produced generic 
 
 **Quantization makes LLMs accessible.** Running Llama on free Colab GPUs using 4-bit quantization was the enabling decision. Without BitsAndBytes, we would have needed paid compute or a smaller, less capable model. The quality tradeoff was minimal for our use case — quantization opened the door.
 
-**The pivot was the right call.** Dropping RAG and shipping a working prompt-engineered system was a better outcome than delivering a broken RAG pipeline. In startup terms: ship the thing that works, not the thing that sounds impressive. We can always add RAG later when there's more data, more compute, and more time.
+**Ground recommendations in course context.** Moving from fine-tuning to retrieval-augmented generation made relevant course information part of the request. Sentence-transformers, FastAPI and the self-hosted model formed the earlier recommendation engine.
 
 ### What's Next
 
-The immediate roadmap: migrate the LLM from Colab to AWS SageMaker (funded by the YIP grant), which eliminates the ngrok tunnel and gives us persistent, reliable inference. Implement proper RAG once the platform has enough course data and user interaction history to make retrieval meaningful. And continue iterating on the recommendation quality — the embedding model, the prompt templates, and the feedback loop from student ratings of recommendations.
+This article covers the earlier recommendation engine. The current Athena rebuild focuses on native coursework and provider-operations tooling; [the product overview](/blog/athena) describes its release scope and roadmap.
 
 The longer vision: Athena's LLM should know not just what courses exist, but how students with similar profiles have succeeded. That's a recommendation engine that improves with every interaction — and it's built on the same foundation we've already shipped.
 

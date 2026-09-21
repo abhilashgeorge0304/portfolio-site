@@ -140,7 +140,7 @@ Email runs through Zoho Mail (admin@athena.edu), integrated with Moodle for auto
 
 The prototype was built on hardware we already had. The initial architecture ran on an Unraid server at home — Moodle on an Ubuntu VM, MariaDB in a Docker container, Nginx Proxy Manager handling reverse proxy, Cloudflare routing the domain (athena.college) to our dynamic home IP. BigBlueButton ran alongside on a trial basis.
 
-This wasn't a temporary hack — it was a deliberate choice. As a non-profit funded by a ₹75,000 grant, we couldn't afford cloud hosting during development. Self-hosting let us build, break, and iterate without burning through the grant on infrastructure.
+This wasn't a temporary hack — it was a deliberate choice. As a tuition marketplace project backed by a ₹75,000 state-level grant, we couldn't afford cloud hosting during development. Self-hosting let us build, break, and iterate without burning through the grant on infrastructure.
 
 <svg width="100%" viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" style={{maxWidth: '760px', margin: '2rem auto', display: 'block'}}>
   {/* Phase 1: Self-hosted */}
@@ -220,7 +220,7 @@ At 10–100 users (~5-8 educators), a t2.micro EC2 instance runs within the AWS 
 
 One of Athena's distinguishing features is the AI-powered chatbot — an LLM integrated directly into the Moodle interface via a custom plugin.
 
-We chose a quantised version of Meta's Llama 8B Instruct model. Early experiments with traditional training approaches led to hallucinated outputs, so we pivoted to **embedding techniques** — dynamically feeding contextual data to the model so responses stay grounded in real academic content.
+We used a self-hosted Llama 2 model. We moved from fine-tuning to **retrieval-augmented generation**, using sentence-transformers and FastAPI to ground recommendations in relevant course context and control hallucinations.
 
 The dataset was curated by sourcing semester-end examination papers from the college library, spanning Civil, Mechanical, CSE, ECE, and EEE. Each question was annotated with marks allocation, difficulty level, module number, and course title. This structured dataset allows the model's embeddings to match student queries to relevant academic material with contextual awareness.
 
@@ -228,7 +228,7 @@ The chatbot plugin is built as a Moodle local plugin: `version.php` for metadata
 
 The workflow: student submits query → plugin converts to JSON → secure API call to LLM server → embedding-based context matching → language model generates response → JSON transformers reformat for Moodle → response rendered in chatbot UI. Every interaction is logged for feedback collection and model improvement.
 
-*For the full technical deep dive into the LLM implementation — including the RAG approach we tried that didn't work, the 4-bit quantization on free Colab GPUs, and the FastAPI serving architecture — see: [Building an LLM-Powered Recommendation Engine on Moodle](/side-projects/athena-llm).*
+*For the earlier recommendation engine's retrieval, model-serving and prompt-design work, see [Athena's Llama 2 and RAG recommendation engine](/blog/athena-llm).*
 
 ### The Social Impact Model
 
@@ -238,7 +238,7 @@ Students can request specific topics. Notifications go to all available educator
 
 A machine learning algorithm (in development) will prioritise requests based on the student's intellectual ability, effort, and location — ensuring that a student who is struggling academically, trying hard, and in a rural area gets help before a student who is simply looking for extra practice. Educators will also rate students on specific parameters, creating a two-sided feedback loop that the algorithm trains on.
 
-This isn't a bolt-on CSR feature. It's baked into the platform's core design. When a parent searches for a tutor, the system surfaces educators with strong ratings *and* a track record of community contribution. The non-profit structure means we can optimise for this outcome without needing to monetise either side of the marketplace.
+These social-impact ideas were explored in the earlier prototype. The current tuition marketplace rebuild focuses on native coursework and provider operations; live tutor Q&A is deferred to protect first-release scope.
 
 ### Validation: Surveys, Competitions, and Private Beta
 
@@ -251,8 +251,6 @@ This isn't a bolt-on CSR feature. It's baked into the platform's core design. Wh
 - **PRAYAAG 3.0** — Ideathon winner
 - **Keraleeyam 2023** — exhibited at Kerala's state development festival, direct conversations with investors
 
-One notable moment: Inspire Education approached us with a partnership offer after a competition. We declined — their vision diverged from our non-profit model in ways that would have undermined the core value proposition. Saying no to money when you're a grant-funded college startup is hard. It was also the right call.
-
 **Private beta.** We leased the prototype to three private tutors for beta testing. All three gave positive feedback. They requested additional features — a parent portal and parent-level ratings — which are under consideration. The beta confirmed that the platform works in practice, not just in demos.
 
 ### Development Stages
@@ -263,14 +261,14 @@ The project followed a structured development path:
 
 **Stage 2 — Prototype.** Built the self-hosted version on Unraid. Integrated Moodle, MariaDB, BigBlueButton, Zoho Mail. Developed the LLM chatbot. Tested on real hardware with real users. Entered competitions to stress-test the pitch and the product.
 
-**Stage 3 — Scaling (current).** Migrating to AWS. Streamlining the architecture for cost-efficiency. Developing the dataset for LLM training. Running the private beta.
+**Stage 3 — Earlier scaling exploration.** Migrating to AWS. Streamlining the architecture for cost-efficiency. Developing the dataset for LLM training. Running the private beta.
 
-**Stage 4 — Future.** Implement the educator recommendation system using the LLM. Integrate RAG with a vector database for real-time knowledge updates. Customise branding. Expand the beta. Explore deployment on university campuses as a cost-effective alternative to Google-based solutions.
+**Stage 4 — Ideas considered for that version.** Implement the educator recommendation system using the LLM. Integrate RAG with a vector database for real-time knowledge updates. Customise branding. Expand the beta. Explore deployment on university campuses as a cost-effective alternative to Google-based solutions.
 
 ### Where Things Stand
 
-The platform is live at athena.college. Three tutors are actively using it in private beta. The AWS migration is funded and in progress. The LLM chatbot responds to student queries. The survey, competitions, and beta have validated the concept from three different angles.
+Athena is now being rebuilt as a tuition marketplace with native coursework and provider-operations tooling. I own requirements, release scope, acceptance scenarios and the roadmap, with architecture and data modelling developed alongside an adviser. The earlier Moodle prototype informed the product decisions described here.
 
 The vision hasn't changed: every parent should be able to find the best tutor for their child based on actual quality, not advertising spend. Every good educator should be discoverable regardless of their marketing budget. And every underprivileged student should have access to quality supplementary education, earned through a system that rewards educators for contributing.
 
-We're not there yet. But the foundation is built, the concept is validated, the platform is live, and users are on it. The rest is execution.
+The current priority is a focused first release. I evaluated six coursework approaches, chose native implementation, and documented the trade-offs and conditions for revisiting that choice.
