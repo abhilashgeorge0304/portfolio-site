@@ -17,8 +17,8 @@ const sideProjects = [
   {
     title: "Athena",
     description:
-      "A supplementary education platform that surfaces quality tutors over marketing budgets. Moodle-based with an LLM-powered recommendation chatbot. Won YIP state-level (₹75K grant). Received ~₹20L acquisition offer — declined to preserve non-profit model.",
-    tags: ["Ed-Tech", "Startup", "LLM", "Moodle"],
+      "Founder and Product Owner of a tuition marketplace backed by a ₹75,000 state-level grant. Leading the current rebuild around native coursework and provider-operations tooling, following an earlier Moodle and RAG recommendation engine.",
+    tags: ["Product Ownership", "EdTech", "Roadmapping", "LMS", "RAG"],
     blogSlug: "athena",
     imageUrl: "/images/athena-logo.jpg",
   },

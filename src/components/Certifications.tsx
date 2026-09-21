@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 
 interface CertificationItem {
+  inProgress?: boolean;
   issuingBody: string;
   name: string;
 }
@@ -18,6 +19,8 @@ const certificationsList: CertificationItem[] = [
     issuingBody: "Coursera / Google",
     name: "Google Project Management Certificate",
   },
+  { issuingBody: "Scrum.org", name: "Professional Scrum Product Owner I (PSPO I)", inProgress: true },
+  { issuingBody: "AWS", name: "AWS Certified Cloud Practitioner", inProgress: true },
 ];
 
 const cardAnimationVariants = {
@@ -55,7 +58,7 @@ const Certifications: React.FC = () => {
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
-              <div className="text-primary mb-3">
+              {!cert.inProgress && <div className="text-primary mb-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="mx-auto h-10 w-10"
@@ -70,11 +73,12 @@ const Certifications: React.FC = () => {
                     d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-              </div>
+              </div>}
               <h3 className="mb-1 text-lg font-semibold text-gray-900">
                 {cert.name}
               </h3>
               <p className="text-sm text-gray-600">{cert.issuingBody}</p>
+              {cert.inProgress && <p className="mt-2 text-sm font-semibold text-gray-700">In progress</p>}
             </motion.div>
           ))}
         </div>

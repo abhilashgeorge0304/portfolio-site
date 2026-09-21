@@ -1,3 +1,4 @@
+import { pageMetadata } from "@/lib/seo";
 import fs from 'fs';
 import path from 'path';
 import { notFound } from 'next/navigation';
@@ -100,14 +101,16 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = getPostBySlug(slug);
 
-  if (!post) {
-    return { title: 'Post Not Found', description: '' };
+  if (!post || post.frontmatter.hidden === true) {
+    return { title: 'Post Not Found', description: '', robots: { index: false } };
   }
 
-  return {
-    title: post.frontmatter.title,
-    description: post.frontmatter.description,
-  };
+  return pageMetadata(
+    post.frontmatter.title,
+    post.frontmatter.description,
+    `/blog/${slug}`,
+    normalizeTags(post.frontmatter.tags),
+  );
 }
 
 export default async function BlogPostPage({

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { profileTitle, profileDescription, profileKeywords, siteUrl } from "@/lib/seo";
 import { Inter } from "next/font/google"; // Import Inter
 import "./globals.css";
 import Header from "@/components/Header"; // Import Header
@@ -13,9 +14,11 @@ const inter = Inter({
 
 // Update metadata
 export const metadata: Metadata = {
-  title: "Abhilash George | Product Owner & Digital Functional Engineer",
-  description:
-    "Portfolio showcasing product ownership, technical delivery, and operational leadership at Signify Digital.",
+  metadataBase: new URL(siteUrl),
+  title: profileTitle,
+  description: profileDescription,
+  keywords: profileKeywords,
+  authors: [{ name: "Abhilash George", url: siteUrl }],
 };
 
 export default function RootLayout({

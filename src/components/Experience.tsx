@@ -15,38 +15,48 @@ interface ExperienceItem {
 }
 
 const experiences: ExperienceItem[] = [
-  {
-    company: "Signify Digital",
-    location: "Bangalore",
-    title: "Product Owner | AEM Guides",
-    dates: "Apr 2025 – Present",
-    narrativeIntro:
-      "After identifying a platform adoption gap and exploring an LLM-based solution as a Functional Engineer, took on product ownership to drive AEM Guides — a €50K investment that had sat dormant for nearly two years — toward active implementation.",
-    description: [
-      "Ran an internal skills audit confirming no DITA capability existed in-house; built the business case for a €40K vendor engagement, presented it to senior leadership, and secured approval",
-      "Led vendor evaluation across 5 firms — designed a scoring matrix, facilitated rating sessions with the wider team, and ran scope, budget, and technical discussions with each firm's senior representatives. When initial pitches fell short, expanded the search through Adobe's recommendation — the selected vendor had completed near-identical implementations for two other organisations",
-      "Owned the full vendor lifecycle as single point of contact across Digital, Business, the vendor, Adobe, and the Assets team — coordinating 12 people (7 internal + 5 vendor) on project planning, procurement, and onboarding through offboarding",
-      "Resolved a live AEM stability issue where Assets background processes conflicted with Guides — coordinated with Adobe to restrict post-processing to Guides-specific elements",
-      "Drove alignment between previously siloed Assets and Guides teams — coordinated release schedules, cross-team meetings, and mutual visibility on roadmaps and dependencies",
-      "Took on testing Guides packages from the AEM Assets side after production deployment — because the responsibility fell between teams",
-    ],
-  },
-  {
-    company: "Signify Digital",
-    location: "Bangalore",
-    title: "Digital Functional Engineer",
-    subtitle: "Scrum Master · Initiative Lead · Datadog SME · CPQ & Power BI Developer",
-    dates: "Jan 2025 – Present",
-    narrativeIntro:
-      "Worked across a separate product team in parallel, taking on delivery, observability, process, and development responsibilities.",
-    description: [
-      "Scrum Master: Facilitated Sprint Planning, Standups, Reviews, and Retros; introduced a weekly \"Coffee Corners\" ritual — an informal Friday session connecting the team with our Netherlands-based manager — that improved remote communication, team bonding, and how needs were surfaced in both directions",
-      "Datadog SME: Stepped into observability ownership after the team's tech lead resigned; managed stakeholder conversations, feasibility assessments, dashboard creation, and alert standardisation. When an external team changed API keys and brought down production services, coordinated cross-team RCA and restored all services same-day",
-      "AEM Guides (Functional Engineer phase): Diagnosed why the platform sat unused for two years; got enough of a grounding in DITA-OT and Antora CSS to pinpoint the bottleneck; self-hosted a private LLM — within company policy — to explore automated authoring, directly informing the vendor strategy that followed",
-      "Initiative Lead: Owned delivery reporting, budget forecasting (forecast vs. actual), and resource allocation tracking across team members with split assignments",
-      "Developed CPQ configurations and managed change requests including approval flows; built Power BI reports with automated multi-language translation using a Python persistent caching layer",
-    ],
-  },
+{
+  "company": "Signify Digital",
+  "location": "Bangalore",
+  "title": "Product Owner | AEM Guides",
+  "dates": "September 2025 – Present",
+  "narrativeIntro": "Own delivery and production readiness for AEM Guides, an approximately €50,000-per-year enterprise platform investment, restarting a stalled two-year adoption effort and consolidating documentation under the Adobe ecosystem.",
+  "description": [
+    "Built the business case for specialist implementation with the technical lead and led a five-firm vendor evaluation using a scoring matrix, technical deep-dives and consultation with Adobe.",
+    "Validated requirements and acceptance criteria with the authoring team and technical lead for branding, reusable content and publishing outputs. Prioritised first-release scope and deferred machine-translation integration to protect cost and timeline.",
+    "Established weekly build–test–feedback cycles with the implementation partner.",
+    "Coordinate 15+ contributors across five teams, managing onboarding, access, package-transfer and testing dependencies. Cleared blockers to end-to-end testing and declined a deployment that would have bypassed agreed first-release testing.",
+    "Resolved recurring AEM stability issues with Adobe and aligned Assets, Guides and external HCL testing teams through shared release calendars and cross-team syncs."
+  ]
+},
+{
+  "company": "Signify Digital",
+  "location": "Bangalore",
+  "title": "Digital Functional Engineer",
+  "subtitle": "Datadog Dashboards · CPQ Automation · Power BI",
+  "dates": "January 2025 – Present",
+  "narrativeIntro": "Hands-on engineering across quote-to-order configuration, operational analytics and delivery coordination for a distributed India–Netherlands team.",
+  "description": [
+    "Built an internal tool that generates dependent JSON configuration rule sets from structured Excel or UI input, automating repetitive browser configuration and QA-to-production checks. Cut turnaround from weeks to hours, with engineering retaining verification and deployment.",
+    "Owned quote-to-order configuration logic for B2B enterprise lighting sales, including pricing tiers, discount rules and multi-level approval workflows governing sales-rep discount authority and business-leader sign-off. Applied Lean principles to eliminate manual waste.",
+    "Designed Datadog dashboards for business processing activity and service output, alongside engineering execution-stage and VM health signals. Scoped V1 and defined the V2 backlog before handing ownership to the team.",
+    "Reduced escalation volume by approximately 40%, shifted recurring escalation meetings to monthly service reviews and gave leadership direct visibility into team output.",
+    "Built Power BI fault-analysis dashboards with Python-based multilingual translation.",
+    "Facilitated Scrum, delivery reporting, and budget and resource tracking across a distributed India–Netherlands team."
+  ]
+},
+{
+  "company": "Athena",
+  "title": "Founder & Product Owner",
+  "dates": "Independent product",
+  "narrativeIntro": "Lead product and technical direction for a tuition marketplace designed to surface quality tuition centres over marketing spend, from the first build through the current rebuild.",
+  "description": [
+    "Own product requirements, release scope, acceptance scenarios and roadmap for native coursework and provider-operations tooling. Work with an adviser on architecture and data modelling.",
+    "Evaluated six coursework approaches and chose to build natively rather than integrate Moodle, documenting trade-offs and conditions for revisiting the decision. Deferred live tutor Q&A to protect first-release scope.",
+    "Built an earlier Moodle-based course-recommendation engine with self-hosted Llama 2, moving from fine-tuning to retrieval-augmented generation using sentence-transformers and FastAPI to control hallucinations.",
+    "Received a ₹75,000 state-level grant through the Young Innovators Programme."
+  ]
+},
   {
     company: "UST Global",
     dates: "2018",

@@ -1,3 +1,8 @@
+import { profileSummary, skillGroups } from "@/data/profile";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata("About Abhilash George | Product Ownership & Engineering", "Technical Product Owner combining enterprise platform delivery, configuration automation, operational analytics and EdTech product ownership.", "/about");
+
 export default function AboutPage() {
   return (
     <main className="flex min-h-screen flex-col pt-16">
@@ -7,27 +12,16 @@ export default function AboutPage() {
             About Me
           </h2>
           <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
-            <p>
-              Product Owner and Digital Functional Engineer at Signify Digital, Bangalore.
-              Lean Six Sigma Green Belt and Google-certified Project Management professional.
-            </p>
-            <p>
-              At Signify, I evaluated a dormant ~€50K platform and mapped how it could
-              consolidate documentation workflows under the Adobe ecosystem. Built the vendor
-              business case, analysed RFPs from five firms, and currently manage the full
-              implementation lifecycle across twelve people and five teams. In parallel, I
-              built an observability layer from scratch, facilitated Scrum across a distributed
-              India-Netherlands team, and automated deployment processes that previously took
-              weeks.
-            </p>
-            <p>
-              Before Signify, I spent four years in college not just studying Computer Science
-              but leading — six leadership roles across student organisations, a state-winning
-              startup (Athena, Rs. 75K grant), a life-sized rover built by a team of ten, and
-              a guest talk at CUSAT while still in ninth grade. The most valuable skills I&apos;ve
-              picked up weren&apos;t taught in classrooms: how to align people, how to pitch an
-              idea, and how to ship something real under constraints.
-            </p>
+            {profileSummary.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            <h3 className="pt-4 text-2xl font-semibold">Skills</h3>
+            <dl className="space-y-4">
+              {skillGroups.map((group) => (
+                <div key={group.category}>
+                  <dt className="font-semibold">{group.category}</dt>
+                  <dd>{group.items.join(" · ")}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
 
           <div className="mt-12 border-t border-gray-200 pt-8">

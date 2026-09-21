@@ -1,6 +1,9 @@
+import { pageMetadata, profileTitle, profileDescription } from "@/lib/seo";
 // Import the Client Component wrapper that now handles all sections
 import ClientSections from "@/components/ClientSections";
 import { getPortfolioData } from "@/lib/getPortfolioData";
+
+export const metadata = pageMetadata(profileTitle, profileDescription, "/");
 
 export default function Home() {
   const portfolioProjects = getPortfolioData();

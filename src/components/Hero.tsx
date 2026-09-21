@@ -31,12 +31,13 @@ const Hero: React.FC = () => {
                 Abhilash George
               </h1>
               <h2 className="text-primary mb-6 text-2xl font-semibold md:text-3xl">
-                Product Owner & Digital Functional Engineer
+                Technical Product Owner
               </h2>
               <p className="mb-8 text-lg text-gray-700">
-                Driving platform adoption, vendor delivery, and operational visibility at enterprise scale — at Signify Digital, Bangalore.
+                Enterprise Platforms · Automation &amp; Data Analytics<br />
+                Owning requirements, release scope and delivery at Signify Digital, Bangalore. Founder of Athena.
               </p>
-              <div className="flex justify-center gap-4 md:justify-start">
+              <div className="flex flex-wrap justify-center gap-4 md:justify-start">
                 <Link
                   href="/contact"
                   className="rounded bg-gray-700 px-4 py-2 font-bold text-white shadow transition duration-300 hover:bg-gray-800"
@@ -44,19 +45,19 @@ const Hero: React.FC = () => {
                   Contact Me
                 </Link>
                 <a
-                  href="/Abhilash_George_Resume.pdf"
+                  href="/Abhilash_George_Resume.docx"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="rounded border border-primary px-4 py-2 font-bold text-primary shadow transition duration-300 hover:bg-primary/10"
                   download
                 >
-                  View Resume
+                  Download Resume (DOCX)
                 </a>
               </div>
             </div>
 
             <div className="flex justify-center md:w-1/2">
-              <div className="relative h-[400px] w-[400px] overflow-hidden rounded-full border-4 border-white shadow-xl">
+              <div className="relative aspect-square w-[min(400px,85vw)] overflow-hidden rounded-full border-4 border-white shadow-xl">
                 <Image
                   src="/images/profile.jpg"
                   alt="Abhilash George profile picture"

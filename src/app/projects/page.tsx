@@ -1,10 +1,8 @@
+import { pageMetadata } from "@/lib/seo";
 import Portfolio from "@/components/Portfolio";
 import { getPortfolioData } from "@/lib/getPortfolioData";
 
-export const metadata = {
-  title: "Projects | Abhilash George",
-  description: "Featured work and enterprise delivery by Abhilash George.",
-};
+export const metadata = pageMetadata("Projects | Abhilash George — Enterprise Platforms & Automation", "Explore AEM Guides delivery, Configit CPQ configuration automation, Datadog observability and Power BI fault-analysis projects.", "/projects");
 
 export default function ProjectsPage() {
   const allProjects = getPortfolioData();

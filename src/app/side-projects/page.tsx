@@ -1,12 +1,10 @@
+import { pageMetadata } from "@/lib/seo";
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import Portfolio from "@/components/Portfolio";
 
-export const metadata = {
-  title: "DIY Projects | Abhilash George",
-  description: "Hackathons, hardware, and tinkering by Abhilash George.",
-};
+export const metadata = pageMetadata("Independent Products & DIY Projects | Abhilash George", "Athena tuition marketplace product ownership, native coursework and RAG experiments, alongside hardware and DIY projects by Abhilash George.", "/side-projects");
 
 export default function SideProjectsPage() {
   const sideProjectSlugs = ["athena", "ecosift", "iroc-rover", "speaker-building"];

@@ -1,12 +1,26 @@
 ---
-title: "Athena: Two Systems, Both Broken"
+title: "Athena: Tuition Marketplace Product Ownership"
 date: "2026-03-19"
-description: "The full story of a supplementary education platform — from survey validation through self-hosted prototype to AWS deployment, with a custom LLM chatbot and a social impact model that rewards quality over marketing."
-tags: ["Ed-Tech", "Startup", "Moodle", "LLM", "AWS", "Product Design", "Social Impact"]
+description: "A state-grant-backed tuition marketplace: product requirements, native coursework, provider operations and lessons from an earlier Moodle and RAG recommendation engine."
+tags: ["Product Ownership", "EdTech", "Tuition Marketplace", "Roadmapping", "Release Scope", "LMS", "FastAPI", "RAG"]
 contentType: "case-study"
 traits: ["startup", "social-impact", "product-design", "case-study", "architecture"]
 heroImage: "/images/athena-logo.jpg"
 ---
+
+### Current product direction
+
+As founder and Product Owner, I lead Athena's requirements, release scope, acceptance scenarios and roadmap. The marketplace is designed to surface quality tuition centres over marketing spend. Architecture and data modelling are developed with an adviser.
+
+The current rebuild is scoped around two modules: native coursework and provider-operations tooling. I evaluated six coursework approaches and chose to build natively rather than integrate Moodle, documenting the trade-offs and conditions for revisiting that decision. Live tutor Q&A is deferred to protect first-release scope.
+
+Athena received a ₹75,000 Young Innovators Programme state-level grant. An earlier version used Moodle and a self-hosted Llama 2 recommendation engine, moving from fine-tuning to retrieval-augmented generation with sentence-transformers and FastAPI to control hallucinations.
+
+### Earlier version and product exploration
+
+The account below describes the earlier implementation and the ideas explored at that stage, including its Moodle architecture. It is not the current rebuild's release scope.
+
+
 
 <div style={{textAlign: 'center', margin: '2rem auto', maxWidth: '280px'}}>
   <img src="/images/athena-logo.jpg" alt="Athena — Supplementary Educational Center Aggregator" style={{width: '100%', borderRadius: '12px'}} />

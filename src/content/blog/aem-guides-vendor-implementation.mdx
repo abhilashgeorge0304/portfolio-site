@@ -1,17 +1,8 @@
 ---
-title: 'AEM Guides: From Dormant Platform to Managed Implementation'
+title: "AEM Guides: Product Ownership and Release Readiness"
 date: '2026-03-19'
-description: >-
-  How I took an unused enterprise content platform and drove it to active
-  implementation — from diagnosing the problem as a Functional Engineer to
-  owning the full vendor lifecycle as Product Owner.
-tags:
-  - AEM
-  - Product Owner
-  - Vendor Management
-  - DITA
-  - Content Operations
-  - Stakeholder Management
+description: "Restarting a stalled enterprise platform adoption effort through requirements, vendor evaluation, first-release scope and delivery across 15+ contributors in five teams."
+tags: ["Technical Product Ownership", "AEM Guides", "Enterprise Platforms", "Acceptance Criteria", "Vendor Evaluation", "Release Planning", "Stakeholder Management"]
 contentType: case-study
 traits:
   - vendor-lifecycle
@@ -21,11 +12,23 @@ traits:
 heroImage: "/images/blog/aem-guides-vendor-implementation-hero.svg"
 ---
 
+### Product ownership and release readiness
+
+Since September 2025, I have owned AEM Guides delivery and production readiness at Signify Digital. The platform represents an approximately €50,000-per-year investment. I coordinate 15+ contributors across five teams, including authoring, technical delivery and external testing dependencies.
+
+With the technical lead, I built the specialist implementation business case and led a five-firm evaluation. I validated requirements and acceptance criteria for reusable content, branding and publishing outputs, then prioritised first-release scope. Deferring machine-translation integration protected the cost and timeline.
+
+Weekly build–test–feedback cycles with the partner support that delivery. I cleared onboarding, access and package-transfer blockers to protect end-to-end testing, and declined a deployment that would have bypassed agreed first-release testing. Shared release calendars and cross-team syncs align Assets, Guides and the HCL testing team.
+
+The earlier implementation work below explains how the adoption effort began.
+
+
+
 {/* Hero section */}
 
-### A €50K Platform Gathering Dust
+### An Enterprise Platform Gathering Dust
 
-AEM Guides had been part of our organisation's content stack for nearly two years — officially adopted, practically unused. The platform runs on DITA-OT, a structured authoring format with its own technical demands, and a customised Antora CSS layer on top. The team's technical writers simply didn't have the expertise to work with it. A €50K investment was going nowhere.
+AEM Guides had been part of our organisation's content stack for nearly two years — officially adopted, practically unused. The platform runs on DITA-OT, a structured authoring format with its own technical demands, and a customised Antora CSS layer on top. The team's technical writers simply didn't have the expertise to work with it. An approximately €50,000-per-year platform investment was going unused.
 
 Nobody had been formally assigned to fix this. I took it on anyway — first as a Functional Engineer trying to solve it technically, and later as Product Owner driving the full implementation. This is the story of the decisions, dependencies, and coordination that got it there.
 
@@ -116,7 +119,7 @@ I also ran a formal skills audit across the organisation. Nobody had DITA expert
 
 ### Decision 2: Which Vendor?
 
-With internal options exhausted, I built the business case for a €40K specialist vendor engagement and presented it to senior leadership. Getting approval meant showing not just why we needed a vendor, but why the €50K already invested in the platform was at risk of being written off entirely.
+With internal options exhausted, I built the business case for a €40K specialist vendor engagement and presented it to senior leadership. Getting approval meant showing not just why we needed a vendor, but why continued annual platform spending needed a viable adoption plan.
 
 **The first round didn't give us what we needed.** We evaluated five firms through a structured scoring process — analysing the RFPs submitted by each against the specific requirements of an AEM Guides implementation designed to consolidate our documentation workflows and bring everything under the Adobe ecosystem. I coordinated discussions between Digital and Business stakeholders and ran scope-of-work, budget, and technical conversations with senior representatives at each firm. To make the evaluation rigorous, I designed a scoring matrix across five technical dimensions — each scored out of 10 independently by the cross-functional team.
 
@@ -294,7 +297,7 @@ Before the vendor engagement could start, I needed to understand — and make vi
   <rect x="200" y="420" width="360" height="36" rx="6" fill="#1F4E79" opacity="0.08" stroke="#1F4E79" strokeWidth="1"/>
   <text x="380" y="443" textAnchor="middle" fontSize="10" fontWeight="600" fill="#1F4E79" fontFamily="sans-serif">Single point of contact across all teams — weekly/biweekly sync cadence</text>
 
-  <text x="380" y="480" textAnchor="middle" fontSize="9" fill="#6b7280" fontFamily="sans-serif">12 people coordinated: 7 internal + 5 vendor specialists</text>
+  <text x="380" y="480" textAnchor="middle" fontSize="9" fill="#6b7280" fontFamily="sans-serif">Initial implementation team: 7 internal + 5 vendor specialists</text>
 </svg>
 
 <span style={{display: 'block', textAlign: 'center', fontSize: '0.85rem', color: '#6b7280', marginTop: '-0.5rem', marginBottom: '2rem'}}>Ecosystem map — systems, teams, and access dependencies that all needed to come together</span>
